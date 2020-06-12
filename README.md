@@ -3,6 +3,7 @@
 ![Maintenance](https://img.shields.io/maintenance/yes/2020)
 [![Discord Bots](https://top.gg/api/widget/status/715047504126804000.svg)](https://top.gg/bot/715047504126804000)
 [![Discord Bots](https://top.gg/api/widget/upvotes/715047504126804000.svg)](https://top.gg/bot/715047504126804000)
+[![Run on Repl.it](https://repl.it/badge/github/gubareve/trivia-bot)](https://repl.it/github/gubareve/trivia-bot)
 
 ## [Invite Link:](https://discord.com/api/oauth2/authorize?client_id=715047504126804000&redirect_uri=https%3A%2F%2Fdiscord.com%2Foauth2%2Fauthorize%3Fclient_id%3D715047504126804000%26scope%3Dbot%26permissions%3D537263168&response_type=code&scope=identify)  
 

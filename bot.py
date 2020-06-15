@@ -483,6 +483,12 @@ async def ping(ctx):
 	await ctx.send(embed=embed)
 
 @client.command(pass_context=True)
+async def test(ctx):
+	ping = round(client.latency * 1000)
+	embed=discord.Embed(title=None, description='TEST!'', color=0xd75b45)
+	await ctx.send(embed=embed)
+
+@client.command(pass_context=True)
 async def info(ctx, user: discord.Member=None):
     if user is None:
         await ctx.send('Please input a user.')

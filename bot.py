@@ -915,7 +915,7 @@ async def help(ctx):
     g = 91
     b = 69
     embed = discord.Embed(color=discord.Colour.from_rgb(r, g, b))
-    embed.set_author(name="Triva Bot Command List")
+    embed.set_author(name="Trivia Bot Command List")
     embed.add_field(
         name="`;vote       `", value="Vote for Trivia Bot!     ", inline=True
     )
@@ -964,6 +964,7 @@ async def help(ctx):
     embed.add_field(
         name="`;setprefix   `", value="Set the guild prefix    ", inline=True
     )
+    embed.set_footer(text="Command invoked by {} || https://triviabot.tech/".format(ctx.message.author.name))
     await ctx.send(embed=embed)
 
 
@@ -973,7 +974,7 @@ async def shop(ctx):
     g = 91
     b = 69
     embed = discord.Embed(color=discord.Colour.from_rgb(r, g, b))
-    embed.set_author(name="Triva Bot Points Shop")
+    embed.set_author(name="Trivia Bot Points Shop")
     embed.add_field(
         name="`;buy viprole       `",
         value="Buy the vip role in the support sever! (250 points). Must do ;givemevip to activate once purchased.",
@@ -1212,6 +1213,12 @@ async def ping(ctx):
     )
     await ctx.send(embed=embed)
 
+@client.command(pass_context=True)
+async def website(ctx):
+    embed = discord.Embed(
+        title=None, description="[TriviaBot](https://triviabot.tech/)", color=0xD75B45
+    )
+    await ctx.send(embed=embed)
 
 @client.command(pass_context=True)
 async def info(ctx, user: discord.Member = None):

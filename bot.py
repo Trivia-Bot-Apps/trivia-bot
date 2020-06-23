@@ -222,6 +222,7 @@ def tbperms(statement, user, key):
             return False
     if statement == "give":
         triviadb.hmset(str(user) + "-" + str(key) + "-data", {1: 1})
+
 def tbprefix(statement, guild, setto=None):
     if statement == "get":
         try:
@@ -234,6 +235,19 @@ def tbprefix(statement, guild, setto=None):
             return defaultprefix
     elif statement == "set" and not setto == None:
         triviadb.hmset(str(guild)+ "-prefix", {"prefix":setto})
+
+def tbbroadcast(statement, guild, setto=None):
+    if statement == "get":
+        try:
+            bytedata = triviadb.hgetall(str(guid) + "-broadcast")
+            data = {}
+            for key in bytedata.keys():
+                data[key.decode("ascii")] = bytedata[key].decode("ascii")
+            return data["broadcast"]
+        except:
+            return True
+    elif statement == "set" and not setto == None:
+        triviadb.hmset(str(guild) + "-broadcast", {"broadcast":setto})
 
 @client.event
 async def on_guild_join(guild):
@@ -283,6 +297,14 @@ async def setprefix(ctx, prefix):
         await ctx.send("There was an issue setting your prefix!".format(prefix))
 
 @client.command()
+@commands.guild_only()
+async def opt(ctx):
+    if tbbroadcast("get", ctx.guild.id):
+        tbbroadcast("set", ctx.guild.id, False)
+    else:
+        tbbroadcast("set", ctx.guild.id, True)
+
+@client.command()
 async def bottedservers(ctx):
     devs = ["247594208779567105", "692652688407527474", "677343881351659570"]
     if str(ctx.message.author.id) in devs:
@@ -290,7 +312,6 @@ async def bottedservers(ctx):
         for guild in client.guilds:
             if len(guild.members) < 3:
                 await ctx.send("{} owned by <@{}>".format(str(guild.name), str(guild.owner.id)))
-
 
 @client.command()
 async def trivia(ctx, category=None):
@@ -1213,6 +1234,21 @@ async def servers(ctx):
         await ctx.send("Servers connected to:")
         for server in client.guilds:
             await ctx.send(server.name)
+
+@client.command(pass_context=True)
+async def broadcast(ctx, *, message):
+    devs = ["247594208779567105", "692652688407527474", "677343881351659570"]
+    if str(ctx.message.author.id) in devs:
+        for guild in client.guilds:
+            if tbbroadcast("get", str(ctx.guild.id)):
+                general = find(lambda x: x.name == "general", guild.text_channels)
+                if general and general.permissions_for(guild.me).send_messages:
+                    embed = discord.Embed(
+                        title='Broadcast',
+                        description=str(message),
+                        color=0xD75B45,
+                    )
+                    await general.send(embed=embed)
 
 @client.command()
 async def givepoints(ctx, member: discord.Member, points=0):

@@ -243,9 +243,12 @@ def tbbroadcast(statement, guild, setto=None):
             data = {}
             for key in bytedata.keys():
                 data[key.decode("ascii")] = bytedata[key].decode("ascii")
-            return data["broadcast"]
+            if data["broadcast"] == "1":
+                return True
+            else:
+                return False
         except:
-            return True
+            return False
     elif statement == "set" and not setto == None:
         triviadb.hmset(str(guild) + "-broadcast", {"broadcast":setto})
 
@@ -260,6 +263,9 @@ async def on_guild_join(guild):
             title="Thank you for adding Trivia Bot!",
             description="Please do ;help for info and ;trivia to start playing!",
             color=discord.Colour.from_rgb(r, g, b),
+        )
+        embed.add_field(
+            name = "Opt-in for announcements", value = "If you would like to opt-in for Trivia Bot updates/announcements, please do `;opt` to toggle it on as it is disabled by default. **Note: This is reccomended as Trivia Bot is in Beta and we have a huge update almost every day**"
         )
         embed.set_thumbnail(
             url="https://cdn.discordapp.com/attachments/699123435514888243/715285709187186688/icons8-brain-96.png"
@@ -300,9 +306,9 @@ async def setprefix(ctx, prefix):
 @commands.guild_only()
 async def opt(ctx):
     if tbbroadcast("get", ctx.guild.id):
-        tbbroadcast("set", ctx.guild.id, False)
+        tbbroadcast("set", ctx.guild.id, "0")
     else:
-        tbbroadcast("set", ctx.guild.id, True)
+        tbbroadcast("set", ctx.guild.id, "1")
 
 @client.command()
 async def bottedservers(ctx):

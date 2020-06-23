@@ -1,0 +1,5 @@
+site_name: Trivia-Bot Docs
+
+theme:
+  name: material
+  logo: https://cdn.discordapp.com/attachments/699123435514888243/715285709187186688/icons8-brain-96.png

@@ -204,7 +204,7 @@ async def get_reaction_answer(msg, author, q, a, ctx):
         qembed = discord.Embed(
             title="Answered Problem",
             description="This problem has expired",
-            color=0xFF0000,
+            color=discord.Colour.from_rgb(r, g, b)
         )
         qembed.add_field(name="The Question Was:", value=str(q), inline=False)
         qembed.add_field(name="The Submitted Answer Was", value="Expired", inline=False)

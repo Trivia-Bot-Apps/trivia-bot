@@ -1238,6 +1238,18 @@ async def invite(ctx):
     await ctx.send(embed=embed)
 
 
+@client.command(brief="Support Server", aliases=["support"], pass_context="True")
+async def server(ctx):
+    serverlink = "[Server Link](https://discord.gg/UHQ33Qe)"
+    r = 215
+    g = 91
+    b = 69
+    embed = discord.Embed(color=discord.Colour.from_rgb(r, g, b))
+    embed.set_author(name="Support Server Link:")
+    embed.add_field(name="Support Server", value=serverlink, inline=False)
+    await ctx.send(embed=embed)
+
+
 @client.command(brief="Invite Link", aliases=["question"], pass_context="True")
 async def feedback(ctx):
     link = "[Feedback Link (We will reply to every message.)](https://github.com/gubareve/trivia-bot/issues/new/choose)"

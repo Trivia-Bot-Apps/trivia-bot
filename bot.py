@@ -168,6 +168,7 @@ async def get_multi_reaction_answer(msg, author, ctx):
     r = 215
     g = 91
     b = 69
+
     def checkreaction(reaction, user):
         return (
             (user.id == author.id or not userspecific)
@@ -190,6 +191,7 @@ async def get_reaction_answer(msg, author, q, a, ctx):
     r = 215
     g = 91
     b = 69
+
     def checkreaction(reaction, user):
         return (
             (user.id == author or not userspecific)
@@ -1163,7 +1165,7 @@ async def receive(ctx, key, value):
         else:
             embed = discord.Embed(
                 title="Notice.",
-                description="Incorrect Key",
+                description="Incorrect Key / Used Key",
                 color=discord.Colour.from_rgb(r, g, b),
             )
     else:

@@ -841,8 +841,11 @@ async def globalleaderboard(ctx, number=None):
     b = 69
     if number == None:
         check = True
-    if int(number) == 3:
-        check = True
+    try:
+        if int(number) == 3:
+            check = True
+    except:
+        print("oh well")
     if check:
         data = tbpoints("data", 0, 0)
         datalist = data.items()

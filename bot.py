@@ -1589,7 +1589,7 @@ async def website(ctx):
 
 
 @client.command(pass_context=True)
-async def info(ctx, user: discord.Member = None):
+async def userinfo(ctx, user: discord.Member = None):
     if str(ctx.message.author.id) in devs:
         if user is None:
             await ctx.send("Please input a user.")

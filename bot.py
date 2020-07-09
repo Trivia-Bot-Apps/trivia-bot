@@ -797,7 +797,7 @@ async def triviadebug(ctx):
     await ctx.send(str(data))
 
 
-@client.command(pass_context=True, aliases=["botstats", "botinfo", "stats"])
+@client.command(pass_context=True, aliases=["botstats", "botinfo", "stats", "info"])
 async def botstatus(ctx):
 
     start = time.perf_counter()

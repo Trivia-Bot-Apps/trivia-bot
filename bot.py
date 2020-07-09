@@ -59,6 +59,8 @@ pf.set_censor("#")
 
 homoglyphs = hg.Homoglyphs(languages={"en"}, strategy=hg.STRATEGY_LOAD)
 
+devs = ["247594208779567105", "692652688407527474", "677343881351659570"]
+
 userspecific = True
 yesemoji = "👍"
 noemoji = "👎"
@@ -204,7 +206,7 @@ async def get_reaction_answer(msg, author, q, a, ctx):
         qembed = discord.Embed(
             title="Answered Problem",
             description="This problem has expired",
-            color=discord.Colour.from_rgb(r, g, b)
+            color=discord.Colour.from_rgb(r, g, b),
         )
         qembed.add_field(name="The Question Was:", value=str(q), inline=False)
         qembed.add_field(name="The Submitted Answer Was", value="Expired", inline=False)
@@ -368,7 +370,6 @@ async def setprefix(ctx, prefix):
 
 @client.command()
 async def bottedservers(ctx):
-    devs = ["247594208779567105", "692652688407527474", "677343881351659570"]
     if str(ctx.message.author.id) in devs:
         await ctx.send("Servers with only 1 person:")
         for guild in client.guilds:
@@ -380,7 +381,6 @@ async def bottedservers(ctx):
 
 @client.command()
 async def delete(ctx, channel_id, message_id):
-    devs = ["247594208779567105", "692652688407527474", "677343881351659570"]
     if str(ctx.message.author.id) in devs:
         channel = client.get_channel(int(channel_id))
         msg = await channel.fetch_message(message_id)
@@ -839,7 +839,11 @@ async def globalleaderboard(ctx, number=None):
     r = 215
     g = 91
     b = 69
-    if int(number) == 3 or number == None:
+    if number == None:
+        check = True
+    if int(number) == 3:
+        check = True
+    if check:
         data = tbpoints("data", 0, 0)
         datalist = data.items()
         sorteddata = sorted(datalist, key=itemgetter(1), reverse=True)
@@ -1181,7 +1185,6 @@ async def privacy(ctx):
 
 @client.command(pass_context=True)
 async def botservers(ctx):
-    devs = ["247594208779567105", "692652688407527474", "677343881351659570"]
     if str(ctx.message.author.id) in devs:
         await ctx.send("I'm in " + str(len(client.guilds)) + " servers!")
     else:
@@ -1193,7 +1196,6 @@ async def botservers(ctx):
 
 @client.command(brief="Credits!", aliases=["credits"], pass_context="True")
 async def about(ctx):
-    devs = ["247594208779567105", "692652688407527474", "677343881351659570"]
     r = 215
     g = 91
     b = 69
@@ -1588,7 +1590,6 @@ async def website(ctx):
 
 @client.command(pass_context=True)
 async def info(ctx, user: discord.Member = None):
-    devs = ["247594208779567105", "692652688407527474", "677343881351659570"]
     if str(ctx.message.author.id) in devs:
         if user is None:
             await ctx.send("Please input a user.")
@@ -1604,7 +1605,6 @@ async def info(ctx, user: discord.Member = None):
 
 @client.command(pass_context=True)
 async def servers(ctx):
-    devs = ["247594208779567105", "692652688407527474", "677343881351659570"]
     if str(ctx.message.author.id) in devs:
         await ctx.send("Servers connected to:")
         for server in client.guilds:
@@ -1613,7 +1613,6 @@ async def servers(ctx):
 
 @client.command()
 async def givepoints(ctx, member: discord.Member, points=0):
-    devs = ["247594208779567105", "692652688407527474", "677343881351659570"]
     if str(ctx.message.author.id) in devs:
         tbpoints("give", str(member.id), points)
         await ctx.send("Gave {} points to <@{}>".format(points, str(member.id)))
@@ -1621,7 +1620,6 @@ async def givepoints(ctx, member: discord.Member, points=0):
 
 @client.command()
 async def setpoints(ctx, member: discord.Member, points=0):
-    devs = ["247594208779567105", "692652688407527474", "677343881351659570"]
     if str(ctx.message.author.id) in devs:
         tbpoints("set", str(member.id), points)
         await ctx.send("Set <@{}>'s points to {}.".format(str(member.id), points))
@@ -1629,7 +1627,6 @@ async def setpoints(ctx, member: discord.Member, points=0):
 
 @client.command()
 async def ban(ctx, member: discord.Member):
-    devs = ["247594208779567105", "692652688407527474", "677343881351659570"]
     if str(ctx.message.author.id) in devs:
         tbpoints("set", str(member.id), -100000000000)
         await ctx.send("Banned <@{}>!".format(str(member.id)))
@@ -1654,7 +1651,6 @@ async def uptime(ctx):
 
 @client.command(pass_context=True)
 async def setplaying(ctx, message=None):
-    devs = ["247594208779567105", "692652688407527474", "677343881351659570"]
     if str(ctx.message.author.id) in devs:
         if message == None:
             await ctx.send("Nothing Provided")
@@ -1668,7 +1664,6 @@ async def setplaying(ctx, message=None):
 
 @client.command(pass_context=True, aliases=["eval", "run"])
 async def _eval(ctx, *, code="You need to input code."):
-    devs = ["247594208779567105", "692652688407527474", "677343881351659570"]
     if str(ctx.message.author.id) in devs:
         global_vars = globals().copy()
         global_vars["bot"] = client

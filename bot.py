@@ -397,6 +397,7 @@ async def trivia(ctx, category=None):
 
 @client.command(aliases=["tf"])
 async def truefalse(ctx, category=None):
+    triviadb.incr("trivia_question_count")
     command_startup = time.perf_counter()
     global triviatoken
     if category == None:
@@ -657,6 +658,7 @@ async def truefalse(ctx, category=None):
 
 @client.command(aliases=["multi", "multiplechoice", "multiple"])
 async def multichoice(ctx, category=None):
+    triviadb.incr("trivia_question_count")
     command_startup = time.perf_counter()
     if not category in categories.keys():
         r = requests.get(
@@ -1579,6 +1581,19 @@ async def ping(ctx):
     ping = round(client.latency * 1000)
     embed = discord.Embed(
         title=None, description="Ping: {}".format(str(ping)), color=0xD75B45
+    )
+    await ctx.send(embed=embed)
+
+
+@client.command(pass_context=True)
+async def count(ctx):
+    amount = triviadb.get("trivia_question_count").decode("utf-8")
+    embed = discord.Embed(
+        title=None,
+        description="Number of questions server by Trivia Bot since Jul 8, 2020: {}".format(
+            str(amount)
+        ),
+        color=0xD75B45,
     )
     await ctx.send(embed=embed)
 

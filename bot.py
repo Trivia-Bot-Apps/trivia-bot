@@ -165,6 +165,9 @@ def checkvote(userid):
 
 
 async def get_multi_reaction_answer(msg, author, ctx):
+    r = 215
+    g = 91
+    b = 69
     def checkreaction(reaction, user):
         return (
             (user.id == author.id or not userspecific)
@@ -184,6 +187,9 @@ async def get_multi_reaction_answer(msg, author, ctx):
 
 
 async def get_reaction_answer(msg, author, q, a, ctx):
+    r = 215
+    g = 91
+    b = 69
     def checkreaction(reaction, user):
         return (
             (user.id == author or not userspecific)

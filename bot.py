@@ -849,6 +849,7 @@ async def globalleaderboard(ctx, number=None):
     r = 215
     g = 91
     b = 69
+    check = False
     if number == None:
         check = True
     try:

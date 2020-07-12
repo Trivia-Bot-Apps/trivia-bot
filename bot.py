@@ -1615,7 +1615,9 @@ async def clear_error(ctx, error):
 async def ping(ctx):
     ping = round(client.latency * 1000)
     embed = discord.Embed(
-        title=None, description="Ping: {}".format(str(ping)), color=0xD75B45
+        title=None,
+        description="The current ping is {}ms.".format(str(ping)),
+        color=0xD75B45,
     )
     await ctx.send(embed=embed)
 

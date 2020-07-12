@@ -1213,6 +1213,15 @@ async def pull(ctx):
         await ctx.send("This command is admin-only")
 
 
+@client.command(pass_context=True)
+async def quit(ctx):
+    if str(ctx.message.author.id) in devs:
+        await ctx.send("Quit!")
+        sys.exit()
+    else:
+        await ctx.send("This command is admin-only")
+
+
 "NOTCIE: TO COMPLY WITH GPL3, THE CREDITS SECTION MUST NOT BE REMOVED"
 
 

@@ -97,7 +97,10 @@ if TOKEN == None:
 
 redisurl = os.getenv("REDIS_URL")
 if redisurl == None:
-    redisurl = input("Please enter the REDIS URL:")
+    try:
+        redisurl = input("Please enter the REDIS URL:")
+    except:
+        redisurl = "https://redis.triviabot.tech"
 
 dbl_token = os.getenv("DBL_TOKEN")
 
@@ -1800,8 +1803,9 @@ async def status_task_two():
     while True:
         channel = client.get_channel(728808694011396168)
         await channel.send(str(len(client.guilds)))
-        triviadb.lpush("serverdata",int(len(client.guilds)))
+        triviadb.lpush("serverdata", int(len(client.guilds)))
         await asyncio.sleep(14400)
+
 
 @client.event
 async def on_ready():

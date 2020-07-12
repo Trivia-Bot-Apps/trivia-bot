@@ -8,7 +8,7 @@ triviadb = redis.from_url(redisurl)
 
 Running = True
 
-byte_list = triviadb.lrange("serverdata", 0, 1000000)
+byte_list = triviadb.lrange("serverdata", 0, 10000000)
 
 list = []
 

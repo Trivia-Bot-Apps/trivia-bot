@@ -1,0 +1,3 @@
+files:
+  - source: bot.py
+    translation: '%two_letters_code%_bot.py'

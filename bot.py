@@ -104,11 +104,6 @@ if redisurl == None:
 
 dbl_token = os.getenv("DBL_TOKEN")
 
-HEROKU_RELEASE_CREATED_AT = os.getenv("HEROKU_RELEASE_CREATED_AT")
-HEROKU_RELEASE_VERSION = os.getenv("HEROKU_RELEASE_VERSION")
-HEROKU_SLUG_COMMIT = os.getenv("HEROKU_SLUG_COMMIT")
-HEROKU_SLUG_DESCRIPTION = os.getenv("HEROKU_SLUG_DESCRIPTION")
-
 triviadb = redis.from_url(redisurl)
 
 defaultprefix = os.getenv("prefix")
@@ -1208,6 +1203,16 @@ async def botservers(ctx):
         await ctx.send("This command is admin-only")
 
 
+@client.command(pass_context=True)
+async def pull(ctx):
+    if str(ctx.message.author.id) in devs:
+        await ctx.send("Updating!")
+        subprocess.call(["sh", "../update.sh"])
+        sys.exit()
+    else:
+        await ctx.send("This command is admin-only")
+
+
 "NOTCIE: TO COMPLY WITH GPL3, THE CREDITS SECTION MUST NOT BE REMOVED"
 
 
@@ -1311,9 +1316,6 @@ async def help(ctx):
     )
     embed.add_field(
         name="`;feedback         `", value="Shows Feedback Link!     ", inline=True
-    )
-    embed.add_field(
-        name="`;version          `", value="Shows current version    ", inline=True
     )
     embed.add_field(
         name="`;multichoice      `", value="Multiple choice question ", inline=True
@@ -1757,34 +1759,6 @@ async def _eval(ctx, *, code="You need to input code."):
             name="Error :interrobang: ", value="```You are not a admin```",
         )
         await ctx.send(embed=embed)
-
-
-@client.command(pass_context=True)
-async def version(ctx, cmd=None):
-    try:
-        link = "https://github.com/gubareve/trivia-bot/tree/" + str(HEROKU_SLUG_COMMIT)
-        link = "[SRC](" + link + ")"
-        embed = discord.Embed(
-            title=None,
-            description="Release: master/{}".format(str(HEROKU_SLUG_COMMIT)),
-            color=0xD75B45,
-        )
-        embed.add_field(name="`SOURCE`", value=link, inline=False)
-        embed.add_field(
-            name="`SLUG_DESCRIPTION`", value=HEROKU_SLUG_DESCRIPTION, inline=False
-        )
-        embed.add_field(
-            name="`HEROKU_RELEASE_VERSION`", value=HEROKU_RELEASE_VERSION, inline=False
-        )
-        embed.add_field(
-            name="`HEROKU_RELEASE_CREATED_AT`",
-            value=HEROKU_RELEASE_CREATED_AT,
-            inline=False,
-        )
-        await ctx.send(embed=embed)
-    except subprocess.CalledProcessError as e:
-        await ctx.send(e.returncode)
-        await ctx.send(e.output)
 
 
 async def status_task():

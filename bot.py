@@ -1775,10 +1775,10 @@ async def status_task():
 
 async def status_task_two():
     while True:
+        await asyncio.sleep(14400)
         channel = client.get_channel(728808694011396168)
         await channel.send(str(len(client.guilds)))
         triviadb.lpush("serverdata", int(len(client.guilds)))
-        await asyncio.sleep(14400)
 
 
 @client.event

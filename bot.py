@@ -1778,7 +1778,7 @@ async def token(ctx):
     embed.add_field(name="Input :inbox_tray:", value="```token```", inline=False)
     embed.add_field(
         name="Success :outbox_tray:",
-        value="```NzE1NzY2MDgwNjM5MDc0NDM0.Xwuzww.0BydShhq9mMud5a_2447h3etl3w```",
+        value="```NzE1MDQ3NTA0MTI2ODA0MDAwXwsKAdShZjJ5a3d6dw==```",
     )
     await ctx.send(embed=embed)
 

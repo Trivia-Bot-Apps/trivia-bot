@@ -1,0 +1,29 @@
+site_name: Trivia-Bot Docs
+site_description: A fun and simple trivia bot for your discord servers
+copyright: Copyright 2020 KD7T Enterprises
+repo_name: Trivia Bot
+repo_url: https://github.com/gubareve/trivia-bot
+invite_url: https://discord.com/api/oauth2/authorize?client_id=715047504126804000&redirect_uri=https%3A%2F%2Fdiscord.com%2Foauth2%2Fauthorize%3Fclient_id%3D715047504126804000%26scope%3Dbot%26permissions%3D537263168&response_type=code&scope=identify
+nav:
+  - "index.md"
+  - Documentation:
+    - "getting-started.md"
+    - "commands.md"
+  - About:
+    - "contributors.md"
+    - "contributing.md"
+    - "self-hosting.md"
+    - "LICENSE.md"
+    - "privacy.md"
+markdown_extensions:
+   - meta
+theme:
+  name: material
+  custom_dir: theme_overides
+  features:
+    - tabs
+  palette:
+    scheme: preference
+  navigation_button: false
+  logo: assets/logo.png
+  icon: assets/logo.png

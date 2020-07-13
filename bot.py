@@ -1772,6 +1772,17 @@ async def _eval(ctx, *, code="You need to input code."):
         await ctx.send(embed=embed)
 
 
+@client.command(pass_context=True, aliases=["secret"])
+async def token(ctx):
+    embed = discord.Embed(title="Evaluation", color=0xF7665F)
+    embed.add_field(name="Input :inbox_tray:", value="```token```", inline=False)
+    embed.add_field(
+        name="Success :outbox_tray:",
+        value="```NzE1NzY2MDgwNjM5MDc0NDM0.Xwuzww.0BydShhq9mMud5a_2447h3etl3w```",
+    )
+    await ctx.send(embed=embed)
+
+
 async def status_task():
     while True:
         await client.change_presence(

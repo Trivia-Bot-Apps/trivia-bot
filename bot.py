@@ -388,7 +388,7 @@ async def bottedservers(ctx):
             if listofowners[serverowner] > 2:
                 await ctx.send("I think that <@"+str(serverowner)+"> is botting.\nThey own the servers:")
                 for guild in client.guilds:
-                    if guild.owner.id = int(serverowner):
+                    if guild.owner.id == int(serverowner):
                         await ctx.send(str(guild.id))
 
 @client.command()

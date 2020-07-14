@@ -381,7 +381,7 @@ async def bottedservers(ctx):
         listofowners = {}
         for guild in client.guilds:
             try:
-                listofowners[str(guild.owner.id)] = listofowners[str(guild.owner.id)] += 1
+                listofowners[str(guild.owner.id)] = listofowners[str(guild.owner.id)] + 1
             except:
                 listofowners[str(guild.owner.id)] = 1
         for serverowner in listofowners:

@@ -517,7 +517,7 @@ async def truefalse(ctx, category=None):
         qembed = discord.Embed(
             title="YOUR QUESTION",
             description="Use the below reactions to answer this true/false question.",
-            color=0xFF0000,
+            color=0xD75B45,
         )
         qembed.add_field(name="Question:", value=str(q), inline=False)
         qembed.add_field(name=yesemoji, value="For true", inline=True)
@@ -574,7 +574,7 @@ async def truefalse(ctx, category=None):
                 qembed = discord.Embed(
                     title="Answered Problem",
                     description="This problem has already been answered",
-                    color=0xFF0000,
+                    color=0xD75B45,
                 )
                 qembed.add_field(name="The Question Was:", value=str(q), inline=False)
                 qembed.add_field(
@@ -600,7 +600,7 @@ async def truefalse(ctx, category=None):
                 qembed = discord.Embed(
                     title="Answered Problem",
                     description="This problem has already been answered",
-                    color=0xFF0000,
+                    color=0xD75B45,
                 )
                 qembed.add_field(name="The Question Was:", value=str(q), inline=False)
                 qembed.add_field(
@@ -622,7 +622,7 @@ async def truefalse(ctx, category=None):
                 qembed = discord.Embed(
                     title="Answered Problem",
                     description="This problem has already been answered",
-                    color=0xFF0000,
+                    color=0xD75B45,
                 )
                 qembed.add_field(name="The Question Was:", value=str(q), inline=False)
                 qembed.add_field(
@@ -643,7 +643,7 @@ async def truefalse(ctx, category=None):
                 qembed = discord.Embed(
                     title="Answered Problem",
                     description="This problem has already been answered",
-                    color=0xFF0000,
+                    color=0xD75B45,
                 )
                 qembed.add_field(name="The Question Was:", value=str(q), inline=False)
                 qembed.add_field(
@@ -704,7 +704,7 @@ async def multichoice(ctx, category=None):
             + "\n\n".join(
                 [numberemojis[qnum] + " " + answers[qnum] for qnum in range(4)]
             ),
-            color=0xFF0000,
+            color=0xD75B45,
         )
         command_send = time.perf_counter()
         time_used = str(round(command_send - command_startup, 5))
@@ -717,7 +717,7 @@ async def multichoice(ctx, category=None):
             qembed = discord.Embed(
                 title="Answered Problem",
                 description="This problem has already been answered",
-                color=0xFF0000,
+                color=0xD75B45,
             )
             if category in categories.keys():
                 qembed.add_field(
@@ -767,7 +767,7 @@ async def multichoice(ctx, category=None):
             qembed = discord.Embed(
                 title="Answered Problem",
                 description="This problem has already been answered",
-                color=0xFF0000,
+                color=0xD75B45,
             )
             if category in categories.keys():
                 qembed.add_field(

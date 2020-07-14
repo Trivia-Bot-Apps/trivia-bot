@@ -385,8 +385,8 @@ async def bottedservers(ctx):
             except:
                 listofowners[str(guild.owner.id)] = 1
         for serverowner in listofowners:
-            if listofowners[serverowner] > 3:
-                ctx.send("<@"+str(serverowner)+">")
+            if listofowners[serverowner] > 2:
+                await ctx.send("<@"+str(serverowner)+">")
 
 @client.command()
 async def delete(ctx, channel_id, message_id):

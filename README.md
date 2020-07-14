@@ -10,7 +10,7 @@
   
 ## [Invite Link:](https://discord.com/api/oauth2/authorize?client_id=715047504126804000&redirect_uri=https%3A%2F%2Fdiscord.com%2Foauth2%2Fauthorize%3Fclient_id%3D715047504126804000%26scope%3Dbot%26permissions%3D537263168&response_type=code&scope=identify)  
 
-A easy to use multiple choice and true/false trivia bot for discord the includes a global leaderboard, categories, server leaderboards, and a infinite amount of control. You can copy this bot if you keep the credit command.
+A easy to use multiple choice and true/false trivia bot for discord the includes a global leaderboard, categories, server leaderboards, and a infinite amount of control. **You can use the code if you credit us, by the original creators discretion.**
 
 ## Getting Started:
 

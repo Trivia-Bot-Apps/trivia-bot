@@ -386,7 +386,10 @@ async def bottedservers(ctx):
                 listofowners[str(guild.owner.id)] = 1
         for serverowner in listofowners:
             if listofowners[serverowner] > 2:
-                await ctx.send("<@"+str(serverowner)+">")
+                await ctx.send("I think that <@"+str(serverowner)+"> is botting.\nThey own the servers:")
+                for guild in client.guilds:
+                    if guild.owner.id = int(serverowner):
+                        await ctx.send(str(guild.id))
 
 @client.command()
 async def delete(ctx, channel_id, message_id):

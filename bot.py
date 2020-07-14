@@ -377,13 +377,16 @@ async def setprefix(ctx, prefix):
 @client.command()
 async def bottedservers(ctx):
     if str(ctx.message.author.id) in devs:
-        await ctx.send("Servers with only 1 person:")
+        await ctx.send("Botted Servers:")
+        listofowners = {}
         for guild in client.guilds:
-            if len(guild.members) < 3:
-                await ctx.send(
-                    "{} owned by <@{}>".format(str(guild.name), str(guild.owner.id))
-                )
-
+            try:
+                listofowners[str(guild.owner.id)] = listofowners[str(guild.owner.id)] += 1
+            except:
+                listofowners[str(guild.owner.id)] = 1
+        for serverowner in listofowners:
+            if listofowners[serverowner] > 3:
+                ctx.send("<@"+str(serverowner)+">")
 
 @client.command()
 async def delete(ctx, channel_id, message_id):

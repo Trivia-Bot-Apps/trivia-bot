@@ -1187,7 +1187,7 @@ async def privacy(ctx):
         color=discord.Colour.from_rgb(r, g, b),
     )
     embed.add_field(
-        name="triviabot.tech", value="https://triviabot.tech/privacy_policy/"
+        name="triviabot.tech", value="https://triviabot.tech/privacy/"
     )
     embed.set_thumbnail(
         url="https://cdn.discordapp.com/attachments/699123435514888243/715285709187186688/icons8-brain-96.png"

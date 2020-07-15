@@ -359,6 +359,7 @@ async def on_guild_remove(guild):
 
 @client.command()
 @commands.guild_only()
+@has_permissions(manage_guild=True)
 async def setprefix(ctx, prefix):
     error = False
     try:
@@ -372,6 +373,11 @@ async def setprefix(ctx, prefix):
     else:
         await ctx.message.add_reaction(noemoji)
         await ctx.send("There was an issue setting your prefix!".format(prefix))
+
+@setprefix.error
+async def clear_error(ctx, error):
+    if isinstance(error, MissingPermissions):
+        await ctx.send("Sorry, you do not have permissions to set the prefix (`manage_guild`)!")
 
 
 @client.command()

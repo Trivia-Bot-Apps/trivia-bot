@@ -1295,7 +1295,7 @@ async def feedback(ctx):
 
 
 @client.remove_command("help")
-@client.command(pass_context=True)
+@client.command(aliases=["cmds","commands"], pass_context=True)
 async def help(ctx):
     r = 215
     g = 91

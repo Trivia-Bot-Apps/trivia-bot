@@ -359,7 +359,7 @@ async def on_guild_remove(guild):
 @client.command()
 @commands.guild_only()
 @has_permissions(manage_guild=True)
-async def setprefix(ctx, prefix):
+async def setprefix(ctx, prefix=None):
     error = False
     if prefix == None:
         error = True

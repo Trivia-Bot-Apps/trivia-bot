@@ -185,7 +185,7 @@ async def get_multi_reaction_answer(msg, author, ctx):
     return numberemojis.index(str(reaction.emoji))
 
 
-@bot.event
+@client.event
 async def on_message(message):
   if "bad bot" == message.content:
     await bot.send_message(message.channel, "noooo please im good")

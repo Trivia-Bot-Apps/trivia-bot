@@ -185,6 +185,12 @@ async def get_multi_reaction_answer(msg, author, ctx):
     return numberemojis.index(str(reaction.emoji))
 
 
+@bot.event
+async def on_message(message):
+  if "bad bot" == message.content:
+    await bot.send_message(message.channel, "noooo please im good")
+
+
 async def get_reaction_answer(msg, author, q, a, ctx):
     r = 215
     g = 91
@@ -377,7 +383,7 @@ async def setprefix(ctx, prefix):
 @setprefix.error
 async def clear_error(ctx, error):
     if isinstance(error, MissingPermissions):
-        await ctx.send("Sorry, you do not have permissions to set the prefix (`manage_guild`)!")
+        await ctx.send("Sorry, you do not have permissions to set this server's prefix (`manage_guild`)!")
 
 
 @client.command()

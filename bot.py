@@ -361,17 +361,20 @@ async def on_guild_remove(guild):
 @has_permissions(manage_guild=True)
 async def setprefix(ctx, prefix):
     error = False
-    try:
-        tbprefix("set", ctx.guild.id, prefix)
-    except Exception:
-        traceback.print_exc()
+    if prefix == None:
         error = True
+    else:
+        try:
+            tbprefix("set", ctx.guild.id, prefix)
+        except Exception:
+            traceback.print_exc()
+            error = True
     if not error:
         await ctx.message.add_reaction(yesemoji)
         await ctx.send("Set guild prefix to {}".format(prefix))
     else:
         await ctx.message.add_reaction(noemoji)
-        await ctx.send("There was an issue setting your prefix!".format(prefix))
+        await ctx.send("There was an issue setting your prefix! (`;setprefix [yourprefix]`)".format(prefix))
 
 @setprefix.error
 async def clear_error(ctx, error):

@@ -1696,6 +1696,15 @@ async def givepoints(ctx, member: discord.Member, points=0):
         tbpoints("give", str(member.id), points)
         await ctx.send("Gave {} points to <@{}>".format(points, str(member.id)))
 
+@client.command()
+async def approve(ctx, member: discord.Member):
+    if str(ctx.message.author.id) in devs:
+        await member.send('Your question has been approved! Nice job!')
+
+@client.command()
+async def deny(ctx, member: discord.Member):
+    if str(ctx.message.author.id) in devs:
+        await member.send('Your question has been denied! Sorry about that :(.)')    
 
 @client.command()
 async def setpoints(ctx, member: discord.Member, points=0):

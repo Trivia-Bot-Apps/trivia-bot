@@ -381,6 +381,17 @@ async def clear_error(ctx, error):
     if isinstance(error, MissingPermissions):
         await ctx.send("Sorry, you do not have permissions to set this server's prefix (`manage_guild`)!")
 
+@client.event
+async def on_message(message):
+    id = client.get_guild(ID)
+
+    if message.content == "bad bot":
+        await message.channel.send("take that back")
+
+    if message.content == "<@715047504126804000>":
+        await message.channel.send("My prefix for this server is `" + str(tbprefix("get", message.guild.id)) + "`.")
+
+    await client.process_commands(message)
 
 @client.command()
 async def bottedservers(ctx):

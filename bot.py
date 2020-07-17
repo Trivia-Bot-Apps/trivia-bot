@@ -1715,7 +1715,7 @@ async def givepoints(ctx, member: discord.Member, points=0):
         tbpoints("give", str(member.id), points)
         await ctx.send("Gave {} points to <@{}>".format(points, str(member.id)))
 
-@client.command()
+@client.command(aliases=["accept"])
 async def approve(ctx, id):
     if str(ctx.message.author.id) in devs:
         try:

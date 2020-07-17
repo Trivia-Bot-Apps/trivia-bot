@@ -387,7 +387,7 @@ async def on_message(message):
     if message.content == "bad bot":
         await message.channel.send("take that back")
 
-    if message.content == "<@715047504126804000>":
+    if message.content == "<@!715047504126804000>":
         await message.channel.send("My prefix for this server is `" + str(tbprefix("get", message.guild.id)) + "`.")
 
     await client.process_commands(message)

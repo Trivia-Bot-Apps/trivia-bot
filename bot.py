@@ -388,7 +388,7 @@ async def on_message(message):
         await message.channel.send("take that back")
 
     if message.content == "<@!715047504126804000>":
-        await message.channel.send("My prefix for this server is `" + str(tbprefix("get", message.guild.id)) + "`.")
+        await message.channel.send("My prefix for this server is `" + str(tbprefix("get", message.guild.id)) + "`.\nPlease do `" + str(tbprefix("get", message.guild.id)) + "help` to get more info.")
 
     await client.process_commands(message)
 

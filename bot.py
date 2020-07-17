@@ -1704,7 +1704,7 @@ async def approve(ctx, member: discord.Member):
 @client.command()
 async def deny(ctx, member: discord.Member):
     if str(ctx.message.author.id) in devs:
-        await member.send('Your question has been denied! Sorry about that :(.)')    
+        await member.send('Your question has been denied! Sorry about that :(')
 
 @client.command()
 async def setpoints(ctx, member: discord.Member, points=0):

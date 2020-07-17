@@ -1723,7 +1723,7 @@ async def approve(ctx, id):
             await client.get_user(int(id)).send('Your question has been approved! Nice job!')
             await ctx.send('DM Sent to' + client.get_user(int(id)).name)
         except exception as e:
-            await ctx.send('Error!  + e)
+            await ctx.send('Error!'  + e)
 
 @client.command()
 async def deny(ctx, id):
@@ -1732,7 +1732,7 @@ async def deny(ctx, id):
             await client.get_user(int(id)).send('Your question has been denied! Sorry about that :(')
             await ctx.send('DM Sent to' + client.get_user(int(id)).name)
         except exception as e:
-            await ctx.send('Error!  + e)
+            await ctx.send('Error!'  + e)
 
 
 @client.command()

@@ -1720,8 +1720,8 @@ async def givepoints(ctx, member: discord.Member, points=0):
 async def approve(ctx, id):
     if str(ctx.message.author.id) in devs:
         try:
-            await client.get_user(int(id)).send('Your question has been approved! Nice job!')
-            await ctx.send('DM Sent to' + client.get_user(int(id)).name)
+            await client.get_user(int(id)).send('Your question has been approved! Nice job! Users will now see it when doing true/false questions.')
+            await ctx.send('DM Sent to ' + client.get_user(int(id)).name)
         except exception as e:
             await ctx.send('Error!'  + e)
 
@@ -1730,7 +1730,7 @@ async def deny(ctx, id):
     if str(ctx.message.author.id) in devs:
         try:
             await client.get_user(int(id)).send('Your question has been denied! Sorry about that :(')
-            await ctx.send('DM Sent to' + client.get_user(int(id)).name)
+            await ctx.send('DM Sent to ' + client.get_user(int(id)).name)
         except exception as e:
             await ctx.send('Error!'  + e)
 
@@ -1840,7 +1840,7 @@ async def token(ctx):
     embed.add_field(name="Input :inbox_tray:", value="```token```", inline=False)
     embed.add_field(
         name="Success :outbox_tray:",
-        value="```NzE1MDQ3NTA0MTI2ODA0MDAwXwsKAdShZjJ5a3d6dw==```",
+        value="```NzE1MDQ3NTA0MTI2ODA0MDAwXwsKAdShZjJ5a3d6dw.a```",
     )
     await ctx.send(embed=embed)
 

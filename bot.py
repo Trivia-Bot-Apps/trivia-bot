@@ -1248,8 +1248,7 @@ async def botservers(ctx):
 async def pull(ctx):
     if str(ctx.message.author.id) in devs:
         await ctx.send("Updating!")
-        subprocess.call(["sh", "../update.sh"])
-        sys.exit()
+        subprocess.call(["systemctl", "restart", "updatescript"])
     else:
         await ctx.send("This command is admin-only")
 

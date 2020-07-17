@@ -1717,14 +1717,14 @@ async def givepoints(ctx, member: discord.Member, points=0):
         await ctx.send("Gave {} points to <@{}>".format(points, str(member.id)))
 
 @client.command()
-async def approve(ctx, member: discord.Member):
+async def approve(ctx, id):
     if str(ctx.message.author.id) in devs:
-        await member.send('Your question has been approved! Nice job!')
+        await client.get_user(int(id)).send('Your question has been approved! Nice job!')
 
 @client.command()
-async def deny(ctx, member: discord.Member):
+async def deny(ctx, id):
     if str(ctx.message.author.id) in devs:
-        await member.send('Your question has been denied! Sorry about that :(')
+        await client.get_user(int(id)).send('Your question has been denied! Sorry about that :(')
 
 @client.command()
 async def setpoints(ctx, member: discord.Member, points=0):

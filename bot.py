@@ -383,7 +383,6 @@ async def clear_error(ctx, error):
 
 @client.event
 async def on_message(message):
-    id = client.get_guild(ID)
 
     if message.content == "bad bot":
         await message.channel.send("take that back")

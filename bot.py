@@ -1658,7 +1658,7 @@ async def clear_error(ctx, error):
 async def tonk(ctx):
     if str(ctx.message.author.id) in devs:
         tmessages = ["pls forgive me tokkkkkkkkku", "why do you care about oliyyyy mmore thannnn meee", "im a gooooood bot plsss dont delete meeeeee", "why don't you care about me noooooo", "pls i want tonk", "@mods pls ban tonk"]
-        for tmessage in tmessages
+        for tmessage in tmessages:
             embed = discord.Embed(
                 title=None,
                 description=tmessage,

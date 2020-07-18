@@ -1655,18 +1655,6 @@ async def clear_error(ctx, error):
 
 
 @client.command(pass_context=True)
-async def tonk(ctx):
-    if str(ctx.message.author.id) in devs:
-        tmessages = ["pls forgive me tokkkkkkkkku", "why do you care about oliyyyy mmore thannnn meee", "im a gooooood bot plsss dont delete meeeeee", "why don't you care about me noooooo", "pls i want tonk", "@mods pls ban tonk", "@oliy @oliy @oliy @oliy @oliy @oliy @oliy @oliy @oliy @oliy @oliy @oliy @oliy @oliy @oliy ", "this was velds idea", "im a bad bot pls forgive meee"]
-        for i in range(30):
-            embed = discord.Embed(
-                title=None,
-                description=random.choice(tmessages),
-                color=0xD75B45,
-            )
-            await ctx.send(embed=embed)
-
-@client.command(pass_context=True)
 async def ping(ctx):
     ping = round(client.latency * 1000)
     embed = discord.Embed(

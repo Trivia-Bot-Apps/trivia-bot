@@ -1163,22 +1163,6 @@ async def vote(ctx):
     await ctx.send(embed=embed)
 
 
-@client.command()
-async def submit(ctx):
-    r = 215
-    g = 91
-    b = 69
-    embed = discord.Embed(
-        title="Submit a question for Trivia Bot",
-        description="Submit a question by going to this link.",
-        color=discord.Colour.from_rgb(r, g, b),
-    )
-    embed.add_field(name="Submit A question", value="https://submit.triviabot.tech")
-    embed.set_thumbnail(
-        url="https://cdn.discordapp.com/attachments/699123435514888243/715285709187186688/icons8-brain-96.png"
-    )
-    await ctx.send(embed=embed)
-
 
 @client.command()
 async def receive(ctx, key, value):
@@ -1383,9 +1367,6 @@ async def help(ctx):
     )
     embed.add_field(
         name="`;withdraw [number]`", value="Give points to others.   ", inline=True
-    )
-    embed.add_field(
-        name="`;submit           `", value="Submit your own questions", inline=True
     )
     embed.set_footer(
         text="Command invoked by {} || https://triviabot.tech/".format(

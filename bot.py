@@ -1655,15 +1655,27 @@ async def clear_error(ctx, error):
 
 
 @client.command(pass_context=True)
-async def ping(ctx):
-    ping = round(client.latency * 1000)
+async def tonk(ctx):
+    if str(ctx.message.author.id) in devs:
+        tmessages = ["pls forgive me tokkkkkkkkku", "why do you care about oliyyyy mmore thannnn meee", "im a gooooood bot plsss dont delete meeeeee", "why don't you care about me noooooo", "pls i want tonk", "@mods pls ban tonk"]
+        for tmessage in tmessages
+            embed = discord.Embed(
+                title=None,
+                description=tmessage,
+                color=0xD75B45,
+            )
+            await ctx.send(embed=embed)
+
+@client.command(pass_context=True)
+async def tonk(ctx):
+    if ctx.author.id
+    messages =
     embed = discord.Embed(
         title=None,
         description="The current ping is {}ms.".format(str(ping)),
         color=0xD75B45,
     )
     await ctx.send(embed=embed)
-
 
 @client.command(pass_context=True)
 async def count(ctx):

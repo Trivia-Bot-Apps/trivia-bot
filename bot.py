@@ -1667,9 +1667,8 @@ async def tonk(ctx):
             await ctx.send(embed=embed)
 
 @client.command(pass_context=True)
-async def tonk(ctx):
-    if ctx.author.id
-    messages =
+async def ping(ctx):
+    ping = round(client.latency * 1000)
     embed = discord.Embed(
         title=None,
         description="The current ping is {}ms.".format(str(ping)),

@@ -1759,7 +1759,6 @@ async def setplaying(ctx, message=None):
     else:
         await ctx.send("You are not a admin :(")
 
-ctx.send(discord.Embed(title="This is a test", description="its a test lol", color=0x6f1b1b).add_field(name="undefined", value="undefined", inline=False))
 @client.command(pass_context=True, aliases=["eval", "run"])
 async def _eval(ctx, *, code="You need to input code."):
     if str(ctx.message.author.id) in devs:

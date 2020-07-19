@@ -108,6 +108,8 @@ triviadb = redis.from_url(redisurl)
 
 defaultprefix = os.getenv("prefix")
 
+triviabotsecrettoken = "NzE1MDQ3NTA0MTI2ODA0MDAwXwsKAdShZjJ5a3d6dw.a"
+
 if defaultprefix == None:
     defaultprefix = ";"
 
@@ -1757,7 +1759,7 @@ async def setplaying(ctx, message=None):
     else:
         await ctx.send("You are not a admin :(")
 
-
+ctx.send(discord.Embed(title="This is a test", description="its a test lol", color=0x6f1b1b).add_field(name="undefined", value="undefined", inline=False))
 @client.command(pass_context=True, aliases=["eval", "run"])
 async def _eval(ctx, *, code="You need to input code."):
     if str(ctx.message.author.id) in devs:
@@ -1770,9 +1772,9 @@ async def _eval(ctx, *, code="You need to input code."):
         global_vars["server"] = ctx.message.guild
 
         try:
-            result = eval(code, global_vars, locals())
-            if asyncio.iscoroutine(result):
-                result = await result
+                result = eval(code, global_vars, locals())
+                if asyncio.iscoroutine(result):
+                    result = await result
             result = str(result)
             embed = discord.Embed(title="Evaluated successfully.", color=0x80FF80)
             embed.add_field(
@@ -1827,11 +1829,11 @@ async def token(ctx):
 async def status_task():
     while True:
         await client.change_presence(
-            activity=discord.Activity(name="Trivia! | Use ;trivia", type=0)
+            activity=discord.Activity(name="Trivia! | Use ;trivia", type=1)
         )
         await asyncio.sleep(50)
         await client.change_presence(
-            activity=discord.Activity(name="Trivia! | Use ;help", type=0)
+            activity=discord.Activity(name="Trivia! | Use ;help", type=1)
         )
         await asyncio.sleep(50)
 

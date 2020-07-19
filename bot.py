@@ -1772,9 +1772,9 @@ async def _eval(ctx, *, code="You need to input code."):
         global_vars["server"] = ctx.message.guild
 
         try:
-                result = eval(code, global_vars, locals())
-                if asyncio.iscoroutine(result):
-                    result = await result
+            result = eval(code, global_vars, locals())
+            if asyncio.iscoroutine(result):
+                result = await result
             result = str(result)
             embed = discord.Embed(title="Evaluated successfully.", color=0x80FF80)
             embed.add_field(

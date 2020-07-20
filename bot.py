@@ -388,6 +388,12 @@ async def clear_error(ctx, error):
 @client.event
 async def on_message(message):
 
+    if int(message.guild.id) == 715289968368418968:
+        if random.randint(1,3) == 1:
+            newmsg = await message.channel.send('Level Up!')
+            await asyncio.sleep(1)
+            await newmsg.delete()
+
     if message.content == "bad bot":
         await message.channel.send("take that back")
 

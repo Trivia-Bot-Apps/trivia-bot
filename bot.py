@@ -51,11 +51,14 @@ import dbl
 import logging
 import subprocess
 from profanityfilter import ProfanityFilter
+import sentry_sdk
 import homoglyphs as hg
 
 pf = ProfanityFilter()
 
 pf.set_censor("#")
+
+sentry_sdk.init("https://73221d939bea4f148f8478cfeee9259f@o422561.ingest.sentry.io/5350665")
 
 homoglyphs = hg.Homoglyphs(languages={"en"}, strategy=hg.STRATEGY_LOAD)
 
@@ -146,7 +149,6 @@ def check(ctx):
 
 
 client = commands.Bot(command_prefix=determineprefix)
-
 
 def checkvote(userid):
     try:

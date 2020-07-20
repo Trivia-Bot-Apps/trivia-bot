@@ -1641,7 +1641,7 @@ async def clear_error(ctx, error):
 
 @client.command(pass_context=True)
 async def ping(ctx):
-    ping = round(client.latency * 1000)
+    ping = ad.round(client.latency * 1000)
     embed = discord.Embed(
         title=None,
         description="The current ping is {}ms.".format(str(ping)),

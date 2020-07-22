@@ -734,7 +734,7 @@ async def multichoice(ctx, category=None):
             )
             await ctx.send(embed=embed)
     except exeption as e:
-        ctx.send(str(e))
+        await ctx.send(str(e))
     else:
         answers = [urllib.parse.unquote(r["results"][0]["correct_answer"])] + [
             urllib.parse.unquote(x) for x in r["results"][0]["incorrect_answers"]

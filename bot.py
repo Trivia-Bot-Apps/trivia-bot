@@ -623,7 +623,7 @@ async def truefalse(ctx, category=None):
                 qembed.add_field(
                     name=translate_text(ctx, "The Submitted Answer Was"), value=translate_text(ctx, textanswer), inline=False
                 )
-                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was") + "  ", translate_text(ctx, value=a), inline=False)
+                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was") + "  " + translate_text(ctx, value=a), inline=False)
                 qembed.add_field(
                     name=translate_text(ctx, "Points"),
                     value=translate_text(ctx, "You got") + " "
@@ -649,7 +649,7 @@ async def truefalse(ctx, category=None):
                 qembed.add_field(
                     name=translate_text(ctx, "The Submitted Answer Was"), value=translate_text(ctx, textanswer), inline=False
                 )
-                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was") + "  ", value=translate_text(ctx, a), inline=False)
+                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was") + "  " + value=translate_text(ctx, a), inline=False)
                 qembed.add_field(
                     name=translate_text(ctx, "Points"), value=translate_text(ctx, "You lost 1 point! Sorry :("), inline=False
                 )
@@ -671,7 +671,7 @@ async def truefalse(ctx, category=None):
                 qembed.add_field(
                     name=translate_text(ctx, "The Submitted Answer Was"), value=translate_text(ctx, textanswer), inline=False
                 )
-                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was") + "  ", value=translate_text(ctx, a), inline=False)
+                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was") + "  " + value=translate_text(ctx, a), inline=False)
                 qembed.add_field(
                     name=translate_text(ctx, "Points"), value=translate_text(ctx, "You lost 1 point! Sorry :("), inline=False
                 )
@@ -692,7 +692,7 @@ async def truefalse(ctx, category=None):
                 qembed.add_field(
                     name=translate_text(ctx, "The Submitted Answer Was"), value=translate_text(ctx, textanswer), inline=False
                 )
-                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was") + "  ", value=translate_text(ctx, a), inline=False)
+                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was") + "  " + value=translate_text(ctx, a), inline=False)
                 qembed.add_field(
                     name=translate_text(ctx, "Points"),
                     value=translate_text(ctx, "You got") + " "

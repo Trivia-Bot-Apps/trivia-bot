@@ -1665,7 +1665,7 @@ async def ping(ctx):
     await ctx.send(embed=embed)
 
 @client.command(pass_context=True,aliases=["setlang", "set_lang", "setlangauge", "set_langauge"])
-async def lang(ctx, country_code):
+async def lang(ctx, lang_code):
     triviadb.set(str(ctx.guild.id)+'-lang-data', str(lang_code))
     embed = discord.Embed(
         title="Done",

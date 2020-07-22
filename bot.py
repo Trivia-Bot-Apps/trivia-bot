@@ -724,7 +724,6 @@ async def multichoice(ctx, category=None):
     if user_points > 50000:
         q = stop_copy(q)
     q = translate_text(ctx, q)
-    a = translate_text(ctx, a)
     if user_points < -10000000:
         embed = discord.Embed(
             title=None,
@@ -736,6 +735,11 @@ async def multichoice(ctx, category=None):
         answers = [urllib.parse.unquote(r["results"][0]["correct_answer"])] + [
             urllib.parse.unquote(x) for x in r["results"][0]["incorrect_answers"]
         ]
+        translated_answers = []
+        for answer in answers:
+            answer = translate_text(ctx, answer)
+            translated_answers.append(answer)
+        answers = translated_answers
         random.shuffle(answers)
         correct = answers.index(urllib.parse.unquote(r["results"][0]["correct_answer"]))
         uid = ctx.author.id

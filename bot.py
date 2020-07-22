@@ -709,32 +709,29 @@ async def truefalse(ctx, category=None):
 async def multichoice(ctx, category=None):
     triviadb.incr("trivia_question_count")
     command_startup = time.perf_counter()
-    try:
-        if not category in categories.keys():
-            r = requests.get(
-                "https://opentdb.com/api.php?amount=1&type=multiple&encode=url3986"
-            ).text
-        else:
-            r = requests.get(
-                "https://opentdb.com/api.php?amount=1&type=multiple&encode=url3986&category="
-                + str(categories[category])
-            ).text
-        r = json.loads(r)
-        q = urllib.parse.unquote(r["results"][0]["question"])
-        user_points = tbpoints("get", str(ctx.message.author.id), 0)
-        if user_points > 50000:
-                q = stop_copy(q)
-        q = translate_text(ctx, q)
-        a = translate_text(ctx, a)
-        if user_points < -10000000:
-            embed = discord.Embed(
-                title=None,
-                description="You have been banned from playing trivia. Join the support server using `;invite` to appeal",
-                color=0xD75B45,
-            )
-            await ctx.send(embed=embed)
-    except exception as e:
-        await ctx.send(str(e))
+    if not category in categories.keys():
+        r = requests.get(
+            "https://opentdb.com/api.php?amount=1&type=multiple&encode=url3986"
+        ).text
+    else:
+        r = requests.get(
+            "https://opentdb.com/api.php?amount=1&type=multiple&encode=url3986&category="
+            + str(categories[category])
+        ).text
+    r = json.loads(r)
+    q = urllib.parse.unquote(r["results"][0]["question"])
+    user_points = tbpoints("get", str(ctx.message.author.id), 0)
+    if user_points > 50000:
+        q = stop_copy(q)
+    q = translate_text(ctx, q)
+    a = translate_text(ctx, a)
+    if user_points < -10000000:
+        embed = discord.Embed(
+            title=None,
+            description="You have been banned from playing trivia. Join the support server using `;invite` to appeal",
+            color=0xD75B45,
+        )
+        await ctx.send(embed=embed)
     else:
         answers = [urllib.parse.unquote(r["results"][0]["correct_answer"])] + [
             urllib.parse.unquote(x) for x in r["results"][0]["incorrect_answers"]

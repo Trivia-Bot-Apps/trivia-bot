@@ -547,6 +547,8 @@ async def truefalse(ctx, category=None):
     user_points = tbpoints("get", str(ctx.message.author.id), 0)
     if user_points > 50000:
         q = stop_copy(q)
+    q = translate_text(ctx, q)
+    a = translate_text(ctx, a)
     if user_points < -10000000:
         embed = discord.Embed(
             title=None,
@@ -554,8 +556,6 @@ async def truefalse(ctx, category=None):
             color=0xD75B45,
         )
         await ctx.send(embed=embed)
-    q = translate_text(ctx, q)
-    a = translate_text(ctx, a)
     else:
         qembed = discord.Embed(
             title="YOUR QUESTION",

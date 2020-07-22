@@ -552,7 +552,7 @@ async def truefalse(ctx, category=None):
     if user_points < -10000000:
         embed = discord.Embed(
             title=None,
-            description="You have been banned from playing trivia. Join the support server using `;invite` to appeal",
+            description=translate_text(ctx, "You have been banned from playing trivia. Join the support server using `;invite` to appeal"),
             color=0xD75B45,
         )
         await ctx.send(embed=embed)
@@ -623,12 +623,12 @@ async def truefalse(ctx, category=None):
                 qembed.add_field(
                     name=translate_text(ctx, "The Submitted Answer Was"), value=translate_text(ctx, textanswer), inline=False
                 )
-                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was  "), translate_text(ctx, value=a), inline=False)
+                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was") + "  ", translate_text(ctx, value=a), inline=False)
                 qembed.add_field(
                     name=translate_text(ctx, "Points"),
-                    value=translate_text(ctx, "You got ")
+                    value=translate_text(ctx, "You got") + " "
                     + str(pointstogive)
-                    + translate_text(ctx, " point(s)! Nice Job!")
+                    + " " + translate_text(ctx, "point(s)! Nice Job!")
                     + translate_text(ctx, message),
                     inline=False,
                 )
@@ -649,7 +649,7 @@ async def truefalse(ctx, category=None):
                 qembed.add_field(
                     name=translate_text(ctx, "The Submitted Answer Was"), value=translate_text(ctx, textanswer), inline=False
                 )
-                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was  "), value=translate_text(ctx, a), inline=False)
+                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was") + "  ", value=translate_text(ctx, a), inline=False)
                 qembed.add_field(
                     name=translate_text(ctx, "Points"), value=translate_text(ctx, "You lost 1 point! Sorry :("), inline=False
                 )
@@ -671,7 +671,7 @@ async def truefalse(ctx, category=None):
                 qembed.add_field(
                     name=translate_text(ctx, "The Submitted Answer Was"), value=translate_text(ctx, textanswer), inline=False
                 )
-                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was  "), value=translate_text(ctx, a), inline=False)
+                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was") + "  ", value=translate_text(ctx, a), inline=False)
                 qembed.add_field(
                     name=translate_text(ctx, "Points"), value=translate_text(ctx, "You lost 1 point! Sorry :("), inline=False
                 )
@@ -692,12 +692,12 @@ async def truefalse(ctx, category=None):
                 qembed.add_field(
                     name=translate_text(ctx, "The Submitted Answer Was"), value=translate_text(ctx, textanswer), inline=False
                 )
-                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was  "), value=translate_text(ctx, a), inline=False)
+                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was") + "  ", value=translate_text(ctx, a), inline=False)
                 qembed.add_field(
                     name=translate_text(ctx, "Points"),
-                    value=translate_text(ctx, "You got ")
+                    value=translate_text(ctx, "You got") + " "
                     + str(pointstogive)
-                    + translate_text(ctx, " point(s)! Nice Job!")
+                    + " " + translate_text(ctx, "point(s)! Nice Job!")
                     + translate_text(ctx, message),
                     inline=False,
                 )

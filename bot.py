@@ -558,21 +558,21 @@ async def truefalse(ctx, category=None):
         await ctx.send(embed=embed)
     else:
         qembed = discord.Embed(
-            title="YOUR QUESTION",
-            description="Use the below reactions to answer this true/false question.",
+            title=translate_text(ctx, "YOUR QUESTION"),
+            description=translate_text(ctx, "Use the below reactions to answer this true/false question."),
             color=0xD75B45,
         )
         qembed.add_field(name="Question:", value=str(q), inline=False)
-        qembed.add_field(name=yesemoji, value="For true", inline=True)
-        qembed.add_field(name=noemoji, value="For false", inline=True)
+        qembed.add_field(name=yesemoji, value=translate_text(ctx, "For true"), inline=True)
+        qembed.add_field(name=noemoji, value=translate_text(ctx, "For false"), inline=True)
         try:
             diduservote = checkvote(ctx.message.author.id)
         except:
             diduservote = False
         if not diduservote:
             qembed.add_field(
-                name="Notice:",
-                value="Want to get 1.5 times the amount of points? Vote for us using ;vote",
+                name=translate_text(ctx, "Notice:"),
+                value=translate_text(ctx, "Want to get 1.5 times the amount of points? Vote for us using ;vote"),
                 inline=False,
             )
         command_send = time.perf_counter()
@@ -615,21 +615,21 @@ async def truefalse(ctx, category=None):
                 except:
                     hahalols = 1
                 qembed = discord.Embed(
-                    title="Answered Problem",
-                    description="This problem has already been answered",
+                    title=translate_text(ctx, "Answered Problem"),
+                    description=translate_text(ctx, "This problem has already been answered"),
                     color=0xD75B45,
                 )
                 qembed.add_field(name="The Question Was:", value=str(q), inline=False)
                 qembed.add_field(
-                    name="The Submitted Answer Was", value=textanswer, inline=False
+                    name=translate_text(ctx, "The Submitted Answer Was"), value=translate_text(ctx, textanswer), inline=False
                 )
-                qembed.add_field(name="The Correct Answer Was  ", value=a, inline=False)
+                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was  "), translate_text(ctx, value=a), inline=False)
                 qembed.add_field(
-                    name="Points",
-                    value="You got "
+                    name=translate_text(ctx, "Points"),
+                    value=translate_text(ctx, "You got ")
                     + str(pointstogive)
-                    + " point(s)! Nice Job!"
-                    + message,
+                    + translate_text(ctx, " point(s)! Nice Job!")
+                    + translate_text(ctx, message),
                     inline=False,
                 )
                 message = await msg.edit(embed=qembed)
@@ -641,17 +641,17 @@ async def truefalse(ctx, category=None):
                 except:
                     chatgoesboom = 12
                 qembed = discord.Embed(
-                    title="Answered Problem",
-                    description="This problem has already been answered",
+                    title=translate_text(ctx, "Answered Problem"),
+                    description=translate_text(ctx, "This problem has already been answered"),
                     color=0xD75B45,
                 )
-                qembed.add_field(name="The Question Was:", value=str(q), inline=False)
+                qembed.add_field(name=translate_text(ctx, "The Question Was:"), value=translate_text(ctx, str(q)), inline=False)
                 qembed.add_field(
-                    name="The Submitted Answer Was", value=textanswer, inline=False
+                    name=translate_text(ctx, "The Submitted Answer Was"), value=translate_text(ctx, textanswer), inline=False
                 )
-                qembed.add_field(name="The Correct Answer Was  ", value=a, inline=False)
+                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was  "), value=translate_text(ctx, a), inline=False)
                 qembed.add_field(
-                    name="Points", value="You lost 1 point! Sorry :(", inline=False
+                    name=translate_text(ctx, "Points"), value=translate_text(ctx, "You lost 1 point! Sorry :("), inline=False
                 )
                 message = await msg.edit(embed=qembed)
                 await msg.add_reaction("❌")
@@ -663,17 +663,17 @@ async def truefalse(ctx, category=None):
                 except:
                     waitwhat = 9
                 qembed = discord.Embed(
-                    title="Answered Problem",
-                    description="This problem has already been answered",
+                    title=translate_text(ctx, "Answered Problem"),
+                    description=translate_text(ctx, "This problem has already been answered"),
                     color=0xD75B45,
                 )
-                qembed.add_field(name="The Question Was:", value=str(q), inline=False)
+                qembed.add_field(name=translate_text(ctx, "The Question Was:"), value=translate_text(ctx, str(q)), inline=False)
                 qembed.add_field(
-                    name="The Submitted Answer Was", value=textanswer, inline=False
+                    name=translate_text(ctx, "The Submitted Answer Was"), value=translate_text(ctx, textanswer), inline=False
                 )
-                qembed.add_field(name="The Correct Answer Was  ", value=a, inline=False)
+                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was  "), value=translate_text(ctx, a), inline=False)
                 qembed.add_field(
-                    name="Points", value="You lost 1 point! Sorry :(", inline=False
+                    name=translate_text(ctx, "Points"), value=translate_text(ctx, "You lost 1 point! Sorry :("), inline=False
                 )
                 message = await msg.edit(embed=qembed)
                 await msg.add_reaction("❌")
@@ -684,21 +684,21 @@ async def truefalse(ctx, category=None):
                 except:
                     finaloneyay = 1993
                 qembed = discord.Embed(
-                    title="Answered Problem",
-                    description="This problem has already been answered",
+                    title=translate_text(ctx, "Answered Problem"),
+                    description=translate_text(ctx, "This problem has already been answered"),
                     color=0xD75B45,
                 )
-                qembed.add_field(name="The Question Was:", value=str(q), inline=False)
+                qembed.add_field(name=translate_text(ctx, "The Question Was:"), value=translate_text(ctx, str(q)), inline=False)
                 qembed.add_field(
-                    name="The Submitted Answer Was", value=textanswer, inline=False
+                    name=translate_text(ctx, "The Submitted Answer Was"), value=translate_text(ctx, textanswer), inline=False
                 )
-                qembed.add_field(name="The Correct Answer Was  ", value=a, inline=False)
+                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was  "), value=translate_text(ctx, a), inline=False)
                 qembed.add_field(
-                    name="Points",
-                    value="You got "
+                    name=translate_text(ctx, "Points"),
+                    value=translate_text(ctx, "You got ")
                     + str(pointstogive)
-                    + " point(s)! Nice Job!"
-                    + message,
+                    + translate_text(ctx, " point(s)! Nice Job!")
+                    + translate_text(ctx, message),
                     inline=False,
                 )
                 message = await msg.edit(embed=qembed)

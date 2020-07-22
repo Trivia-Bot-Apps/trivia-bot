@@ -403,9 +403,6 @@ async def clear_error(ctx, error):
 @client.event
 async def on_message(message):
 
-    if message.content == "bad bot":
-        await message.channel.send("take that back")
-
     if message.content == "<@!715047504126804000>":
         await message.channel.send("My prefix for this server is `" + str(tbprefix("get", message.guild.id)) + "`.\nPlease do `" + str(tbprefix("get", message.guild.id)) + "help` to get more info.")
 

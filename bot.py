@@ -53,6 +53,7 @@ import subprocess
 from profanityfilter import ProfanityFilter
 import sentry_sdk
 import homoglyphs as hg
+from googletrans import Translator
 
 pf = ProfanityFilter()
 
@@ -107,11 +108,23 @@ if redisurl == None:
 
 dbl_token = os.getenv("DBL_TOKEN")
 
+translator = Translator()
+
 triviadb = redis.from_url(redisurl)
 
 defaultprefix = os.getenv("prefix")
 
 triviabotsecrettoken = "NzE1MDQ3NTA0MTI2ODA0MDAwXwsKAdShZjJ5a3d6dw.a"
+
+def translate_text(ctx, message):
+    lang_code = triviadb.get(str(ctx.guild.id)+'-lang-data')
+    if lang_code = None:
+        return message
+    elif lang_code in ["af","ach","ak","am","ar","az","be","bem","bg","bh","bn","br","bs","ca","chr","ckb","co","crs","cs","cy","da","de","ee","el","en","eo","es","es-419","et","eu","fa","fi","fo","fr","fy","ga","gaa","gd","gl","gn","gu","ha","haw","hi","hr","ht","hu","hy","ia","id","ig","is","it","iw","ja","jw","ka","kg","kk","km","kn","ko","kri","ku","ky","la","lg","ln","lo","loz","lt","lua","lv","mfe","mg","mi","mk","ml","mn","mo","mr","ms","mt","ne","nl","nn","no","nso","ny","nyn","oc","om","or","pa","pcm","pl","ps","pt-BR","pt-PT","qu","rm","rn","ro","ru","rw","sd","sh","si","sk","sl","sn","so","sq","sr","sr-ME","st","su","sv","sw","ta","te","tg","th","ti","tk","tl","tn","to","tr","tt","tum","tw","ug","uk","ur","uz","vi","wo","xh","xx-bork","xx-elmer","xx-hacker","xx-klingon","xx-pirate","yi","yo","zh-CN","zh-TW","zu"]:
+        message = translator.translate(message, dest=lang_code)
+        return message
+    else:
+        return message
 
 if defaultprefix == None:
     defaultprefix = ";"
@@ -541,6 +554,8 @@ async def truefalse(ctx, category=None):
             color=0xD75B45,
         )
         await ctx.send(embed=embed)
+    q = translate_text(ctx, q)
+    a = translate_text(ctx, a)
     else:
         qembed = discord.Embed(
             title="YOUR QUESTION",
@@ -1645,6 +1660,16 @@ async def ping(ctx):
     embed = discord.Embed(
         title=None,
         description="The current ping is {}ms.".format(str(ping)),
+        color=0xD75B45,
+    )
+    await ctx.send(embed=embed)
+
+@client.command(pass_context=True,aliases=["setlang", "set_lang", "setlangauge", "set_langauge"])
+async def lang(ctx, country_code):
+    triviadb.set(str(ctx.guild.id)+'-lang-data', str(lang_code))
+    embed = discord.Embed(
+        title="Done",
+        description="Your language has been set to `"+lang_code+'`!',
         color=0xD75B45,
     )
     await ctx.send(embed=embed)

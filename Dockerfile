@@ -12,8 +12,8 @@ RUN apt-get update && \
     apt-get clean
    
 ENV redisurl=redis://localhost/
-ARG token
-ENV bottoken=$token
+
+EXPOSE 6379
 
 CMD ["redis-server", "--protected-mode no"]
 

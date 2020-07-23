@@ -585,7 +585,6 @@ async def truefalse(ctx, category=None):
         print('trace 5')
         answer = await get_reaction_answer(msg, ctx.message.author.id, q, a, ctx)
         print('trace 6')
-        print(str(anwer))
         uid = ctx.message.author.id
         if answer == 1:
             textanswer = yesemoji

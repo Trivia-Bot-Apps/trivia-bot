@@ -120,7 +120,7 @@ def translate_text(ctx, message):
     lang_code = triviadb.get(str(ctx.guild.id)+'-lang-data').decode('utf-8')
     if lang_code == None:
         return message
-    elif len(lang_code) in [2,3]:
+    elif len(lang_code) in [2,3] and lang_code != "en":
         message = translator.translate(message, dest=lang_code).text
         return message
     else:
@@ -1684,7 +1684,7 @@ async def lang(ctx, lang_code=None):
         triviadb.set(str(ctx.guild.id)+'-lang-data', str(lang_code))
         embed = discord.Embed(
             title="Done",
-            description="Your language has been set to `"+lang_code+'`! Try doing `;`',
+            description="Your language has been set to `"+lang_code+'`! Try doing `;trivia`',
             color=0xD75B45,
         )
     else:

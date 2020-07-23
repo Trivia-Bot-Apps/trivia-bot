@@ -960,7 +960,7 @@ async def globalleaderboard(ctx, number=None):
         embed.add_field(name=translate_text(ctx, "1st Place"), value=translate_text(ctx, firstmessage), inline=False)
         embed.add_field(name=translate_text(ctx, "2nd Place"), value=translate_text(ctx, secondmessage), inline=False)
         embed.add_field(name=translate_text(ctx, "3rd Place"), value=translate_text(ctx, thirdmessage), inline=False)
-        embed.add_field(name=translate_text(ctx, "Your Position)", value=translate_text(ctx, position), inline=False)
+        embed.add_field(name=translate_text(ctx, "Your Position"), value=translate_text(ctx, position), inline=False)
     elif int(number) > 3 and int(number) <= 15:
         data = tbpoints("data", 0, 0)
         datalist = data.items()

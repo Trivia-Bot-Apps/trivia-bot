@@ -1,12 +1,10 @@
-ARG request_domain=127.0.0.1  
+FROM redis
+COPY redis.conf /usr/local/etc/redis/redis.conf
+CMD [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
 
 ENV redisurl=redis://localhost/
 ARG token
 ENV bottoken=$token
-
-FROM redis
-COPY redis.conf /usr/local/etc/redis/redis.conf
-CMD [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
 
 FROM python:3.7.8-buster
 

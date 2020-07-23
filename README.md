@@ -6,7 +6,6 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-6f42c1.svg)](http://makeapullrequest.com)
 ![CircleCi](https://circleci.com/gh/gubareve/trivia-bot.svg?style=svg)
 ![Syntax Check](https://github.com/gubareve/trivia-bot/workflows/Syntax%20Check/badge.svg)
-[![Build Status](https://dev.azure.com/evchik2007/com.kd7t.triviabot/_apis/build/status/gubareve.trivia-bot?branchName=master)](https://dev.azure.com/evchik2007/com.kd7t.triviabot/_build/latest?definitionId=1&branchName=master)
 
   
 ## [Invite Link:](https://discord.com/api/oauth2/authorize?client_id=715047504126804000&redirect_uri=https%3A%2F%2Fdiscord.com%2Foauth2%2Fauthorize%3Fclient_id%3D715047504126804000%26scope%3Dbot%26permissions%3D537263168&response_type=code&scope=identify)  

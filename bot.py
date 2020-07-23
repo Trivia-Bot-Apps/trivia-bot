@@ -1684,13 +1684,13 @@ async def lang(ctx, lang_code=None):
         triviadb.set(str(ctx.guild.id)+'-lang-data', str(lang_code))
         embed = discord.Embed(
             title="Done",
-            description="Your language has been set to `"+lang_code+'`!',
+            description="Your language has been set to `"+lang_code+'`! Try doing `;trivia`',
             color=0xD75B45,
         )
     else:
         embed = discord.Embed(
             title="Error",
-            description="You have not specified your language. Do it buy doing `;setlang en` or `;setlang fr`",
+            description="You have not specified your language. Do it by doing `;setlang en` or `;setlang fr`",
             color=0xD75B45,
         )
     await ctx.send(embed=embed)

@@ -1688,7 +1688,7 @@ async def lang(ctx, lang_code=None):
     else:
         embed = discord.Embed(
             title="Error",
-            description="You have not specified your language. Do it by doing `;setlang en` or `;setlang fr`",
+            description="You have not specified your language. Do it by doing `;setlang en` (English) or `;setlang fr` (French) or `;setlang zh-CN` (Chinese)",
             color=0xD75B45,
         )
     await ctx.send(embed=embed)

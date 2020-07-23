@@ -207,11 +207,16 @@ async def get_reaction_answer(msg, author, q, a, ctx):
     b = 69
 
     def checkreaction(reaction, user):
-        return (True)
+        return (
+            (user.id == author or not userspecific)
+            and reaction.message.id == msg.id
+            and str(reaction.emoji) in [yesemoji, noemoji]
+        )
 
     await msg.add_reaction(yesemoji)
     await msg.add_reaction(noemoji)
     try:
+        print('trace 1')
         reaction, user = await client.wait_for(
             "reaction_add", timeout=20.0, check=checkreaction
         )
@@ -235,6 +240,7 @@ async def get_reaction_answer(msg, author, q, a, ctx):
             inline=False,
         )
         message = await msg.edit(embed=qembed)
+    print('trace 2')
     return [yesemoji, noemoji].index(str(reaction.emoji)) + 1
 
 
@@ -437,6 +443,7 @@ async def trivia(ctx, category=None):
 
 @client.command(aliases=["tf"])
 async def truefalse(ctx, category=None):
+    print('trace 3')
     triviadb.incr("trivia_question_count")
     command_startup = time.perf_counter()
     global triviatoken
@@ -574,7 +581,9 @@ async def truefalse(ctx, category=None):
             text="Time Took: {} || https://triviabot.tech/".format(time_used)
         )
         msg = await ctx.send(embed=qembed)
+        print('trace 5')
         answer = await get_reaction_answer(msg, ctx.message.author.id, q, a, ctx)
+        print('trace 6')
         uid = ctx.message.author.id
         if answer == 1:
             textanswer = yesemoji

@@ -829,7 +829,7 @@ async def multichoice(ctx, category=None):
                 name=translate_text(ctx, "The Submitted Answer Was:"), value=answers[answered], inline=False
             )
             qembed.add_field(
-                name=translate_text(ctx, "Points"),
+                name="Points",
                 value="You {0} {1} point{2}!".format(
                     "lost" if pointchange < 0 else "gained",
                     str(abs(pointchange)).replace(".0", ""),
@@ -1684,7 +1684,7 @@ async def lang(ctx, lang_code=None):
         triviadb.set(str(ctx.guild.id)+'-lang-data', str(lang_code))
         embed = discord.Embed(
             title="Done",
-            description="Your language has been set to `"+lang_code+'`! Try doing `;trivia`',
+            description="Your language has been set to `"+lang_code+'`! Try doing `;`',
             color=0xD75B45,
         )
     else:

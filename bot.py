@@ -1682,7 +1682,7 @@ async def lang(ctx, lang_code=None):
         triviadb.set(str(ctx.guild.id)+'-lang-data', str(lang_code))
         embed = discord.Embed(
             title="Done",
-            description="Your language has been set to `"+lang_code+'`! Try doing `;trivia`.\nPlease note that translations are a experimental feature and may not function correctly. If you notice any buys please report them to `https://discord.gg/UHQ33Qe`',
+            description="Your language has been set to `"+lang_code+'`! Try doing `;trivia`.\nPlease note that translations are a experimental feature and may not function correctly. If you notice any bugs please report them to `https://discord.gg/UHQ33Qe`',
             color=0xD75B45,
         )
     else:

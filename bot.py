@@ -737,13 +737,13 @@ async def multichoice(ctx, category=None):
         answers = [urllib.parse.unquote(r["results"][0]["correct_answer"])] + [
             urllib.parse.unquote(x) for x in r["results"][0]["incorrect_answers"]
         ]
-        translated_answers = []
-        answers = translated_answers
         random.shuffle(answers)
         correct = answers.index(urllib.parse.unquote(r["results"][0]["correct_answer"]))
+        translated_answers = []
         for answer in answers:
             answer = translate_text(ctx, answer)
             translated_answers.append(answer)
+        answers = translated_answers
         uid = ctx.author.id
         qembed = discord.Embed(
             title=translate_text(ctx, "YOUR QUESTION FROM CATEGORY ") + category.upper()

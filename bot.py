@@ -117,8 +117,11 @@ defaultprefix = os.getenv("prefix")
 triviabotsecrettoken = "NzE1MDQ3NTA0MTI2ODA0MDAwXwsKAdShZjJ5a3d6dw.a"
 
 def translate_text(ctx, message):
-    lang_code = triviadb.get(str(ctx.guild.id)+'-lang-data').decode('utf-8')
-    if lang_code == None or lang_code == "en":
+    try:
+        lang_code = triviadb.get(str(ctx.guild.id)+'-lang-data').decode('utf-8')
+    except:
+        lang_code = "en"
+    if lang_code == "en":
         return message
     else:
         message = translator.translate(message, dest=lang_code).text

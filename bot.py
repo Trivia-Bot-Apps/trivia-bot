@@ -544,6 +544,7 @@ async def truefalse(ctx, category=None):
     q = urllib.parse.unquote(loads(r)["results"][0]["question"])
     a = urllib.parse.unquote(loads(r)["results"][0]["correct_answer"])
     b = q + a
+    backupofa = a
     user_points = tbpoints("get", str(ctx.message.author.id), 0)
     if user_points > 50000:
         q = stop_copy(q)
@@ -582,7 +583,7 @@ async def truefalse(ctx, category=None):
         )
         msg = await ctx.send(embed=qembed)
         print('trace 5')
-        answer = await get_reaction_answer(msg, ctx.message.author.id, q, a, ctx)
+        answer = await get_reaction_answer(msg, ctx.message.author.id, q, a, backupofa, ctx)
         print('trace 6')
         print(str(anwer))
         uid = ctx.message.author.id
@@ -610,7 +611,7 @@ async def truefalse(ctx, category=None):
             if diduservote:
                 message = " (Voted)"
 
-        if a == "True":
+        if backupofa == "True":
             if answer == 1:
                 tbpoints("give", str(uid), pointstogive)
                 try:
@@ -660,7 +661,7 @@ async def truefalse(ctx, category=None):
                 )
                 message = await msg.edit(embed=qembed)
                 await msg.add_reaction("❌")
-        elif a == "False":
+        elif backupofa == "False":
             if answer == 1:
                 tbpoints("give", str(uid), -1)
                 try:

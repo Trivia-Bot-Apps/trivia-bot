@@ -1692,7 +1692,7 @@ async def lang(ctx, lang_code=None):
             title="Error",
             description="You have not specified your language. Do it buy doing `;setlang en` or `;setlang fr`",
             color=0xD75B45,
-        }
+        )
     await ctx.send(embed=embed)
 
 @lang.error

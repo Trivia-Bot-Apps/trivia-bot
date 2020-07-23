@@ -207,11 +207,7 @@ async def get_reaction_answer(msg, author, q, a, ctx):
     b = 69
 
     def checkreaction(reaction, user):
-        return (
-            (user.id == author or not userspecific)
-            and reaction.message.id == msg.id
-            and str(reaction.emoji) in [yesemoji, noemoji]
-        )
+        return (True)
 
     await msg.add_reaction(yesemoji)
     await msg.add_reaction(noemoji)
@@ -232,7 +228,7 @@ async def get_reaction_answer(msg, author, q, a, ctx):
         )
         qembed.add_field(name=translate_text(ctx, "The Question Was:"), value=str(q), inline=False)
         qembed.add_field(name=translate_text(ctx, "The Submitted Answer Was"), value="Expired", inline=False)
-        qembed.add_field(name=translate_text(ctx, "The Correct Answer Was  "), value=translate_text(ctx, a), inline=False)
+        qembed.add_field(name=translate_text(ctx, "The Correct Answer Was"), value=translate_text(ctx, a), inline=False)
         qembed.add_field(
             name=translate_text(ctx, "Points"),
             value=translate_text(ctx, "You lost a point since this question expired! Sorry :("),

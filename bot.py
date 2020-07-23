@@ -830,11 +830,11 @@ async def multichoice(ctx, category=None):
             )
             qembed.add_field(
                 name=translate_text(ctx, "Points"),
-                value=translate_text(ctx, "You {0} {1} point{2}!".format(
+                value="You {0} {1} point{2}!".format(
                     "lost" if pointchange < 0 else "gained",
                     str(abs(pointchange)).replace(".0", ""),
                     "s" if abs(pointchange) > 1 else "",
-                )),
+                ),
                 inline=False,
             )
             qembed.add_field(

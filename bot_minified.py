@@ -71,15 +71,14 @@ _D='ascii'
 _C=None
 _B=True
 _A=False
-import smtplib,discord,base64
+import discord,base64
 from operator import itemgetter
-import requests,random,asyncio,aiohttp,psutil,urllib,datetime,random,sys,traceback,urllib.parse,urllib.request,re
-from discord import Game
+import requests,random,asyncio,psutil,urllib,datetime,random,sys,traceback,urllib.parse,urllib.request
 from json import loads
-from discord.ext.commands import Bot,has_permissions,MissingPermissions
-from discord.ext import commands,tasks
+from discord.ext.commands import has_permissions,MissingPermissions
+from discord.ext import commands
 from discord.utils import find
-import time,redis,os,json,dbl,logging,subprocess
+import time,redis,os,json,subprocess
 from profanityfilter import ProfanityFilter
 import homoglyphs as hg
 pf=ProfanityFilter()

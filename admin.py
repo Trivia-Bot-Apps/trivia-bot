@@ -20,25 +20,13 @@
  # along with this program. If not, see <http://www.gnu.org/licenses/>.
  #
 
-import smtplib
-import discord
 from operator import itemgetter
-import requests
 import random
-import asyncio
-import aiohttp
-import urllib
-import random
-import urllib.parse, urllib.request, re
-from discord import Game
-from json import loads
-from discord.ext.commands import Bot
+import urllib.parse, urllib.request
 from discord.ext import commands
 import sys
-import time
 import redis
 import os
-import json
 
 TOKEN = os.getenv("bottoken")
 if TOKEN == None:

@@ -329,7 +329,7 @@ async def on_message_delete(message):
     author = message.author.id
     sniped_messages[guild] = "```" + str(message_text) + "``` Said by <@" + str(author) + ">"
 
-    client.process_commands(message)
+    await client.process_commands(message)
 
 @client.command()
 @commands.guild_only()

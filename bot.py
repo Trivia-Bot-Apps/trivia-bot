@@ -327,14 +327,17 @@ async def on_message_delete(message):
     message_text = message.content
     guild = message.guild.id
     author = message.author.id
-    sniped_messages[guild] = str(message) + " Said by <@" + str(guild) + ">"
+    sniped_messages[guild] = "```" + str(message) + "``` Said by <@" + str(author) + ">"
 
-    await client.process_commands(mFessage)
+    client.process_commands(message)
 
 @client.command()
 @commands.guild_only()
 async def snipe(ctx):
-    ctx.send(str(sniped_messages[ctx.guild.id]))
+    try:
+        await ctx.send(str(sniped_messages[ctx.guild.id]))
+    except:
+        await ctx.send('No messages found. :()')
 
 @client.event
 async def on_guild_join(guild):

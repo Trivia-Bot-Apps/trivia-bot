@@ -844,11 +844,11 @@ async def multichoice(ctx, category=None):
             message = await msg.edit(embed=qembed)
 
 
-@client.command(aliases=["debug"])
-async def triviadebug(ctx):
-    data = tbpoints("data", 0, 0)
-    datalist = data.items()
-    await ctx.send(str(data))
+# @client.command(aliases=["debug"])
+# async def triviadebug(ctx):
+#     data = tbpoints("data", 0, 0)
+#     datalist = data.items()
+#     await ctx.send(str(data))
 
 
 @client.command(pass_context=True, aliases=["botstats", "botinfo", "stats", "info"])

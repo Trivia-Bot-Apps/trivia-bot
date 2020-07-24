@@ -20,11 +20,14 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+import smtplib
 import discord
+import base64
 from operator import itemgetter
 import requests
 import random
 import asyncio
+import aiohttp
 import psutil
 import urllib
 import datetime
@@ -34,15 +37,18 @@ import traceback
 import string
 import random
 import secrets
-import urllib.parse, urllib.request
+import urllib.parse, urllib.request, re
+from discord import Game
 from json import loads
-from discord.ext.commands import has_permissions, MissingPermissions
-from discord.ext import commands
+from discord.ext.commands import Bot, has_permissions, MissingPermissions
+from discord.ext import commands, tasks
 from discord.utils import find
 import time
 import redis
 import os
 import json
+import dbl
+import logging
 import subprocess
 from profanityfilter import ProfanityFilter
 import sentry_sdk
@@ -58,6 +64,8 @@ sentry_sdk.init("https://73221d939bea4f148f8478cfeee9259f@o422561.ingest.sentry.
 homoglyphs = hg.Homoglyphs(languages={"en"}, strategy=hg.STRATEGY_LOAD)
 
 devs = ["247594208779567105", "692652688407527474", "677343881351659570"]
+
+sniped_messages = {}
 
 userspecific = True
 yesemoji = "👍"
@@ -314,6 +322,17 @@ def tbprefix(statement, guild, setto=None):
     elif statement == "set" and not setto == None:
         triviadb.hmset(str(guild) + "-prefix", {"prefix": setto})
 
+@client.event
+async def on_message_delete(message):
+    message_text = message.context
+    guild = message.guild.id
+    author = message.author.id
+    sniped_messages[guild] = str(message) + " Said by <@" + str(guild) ">"
+
+client.command()
+@commands.guild_only()
+async def snipe(ctx, prefix=None):
+    ctx.send(str(sniped_messages[ctx.guild.id]))
 
 @client.event
 async def on_guild_join(guild):
@@ -844,11 +863,11 @@ async def multichoice(ctx, category=None):
             message = await msg.edit(embed=qembed)
 
 
-# @client.command(aliases=["debug"])
-# async def triviadebug(ctx):
-#     data = tbpoints("data", 0, 0)
-#     datalist = data.items()
-#     await ctx.send(str(data))
+@client.command(aliases=["debug"])
+async def triviadebug(ctx):
+    data = tbpoints("data", 0, 0)
+    datalist = data.items()
+    await ctx.send(str(data))
 
 
 @client.command(pass_context=True, aliases=["botstats", "botinfo", "stats", "info"])

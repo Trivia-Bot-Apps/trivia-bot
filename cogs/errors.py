@@ -1,7 +1,6 @@
 import traceback
 import sys
 from discord.ext import commands
-import discord
 
 
 class CommandErrorHandler(commands.Cog):

@@ -20,14 +20,11 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-import smtplib
 import discord
-import base64
 from operator import itemgetter
 import requests
 import random
 import asyncio
-import aiohttp
 import psutil
 import urllib
 import datetime
@@ -37,18 +34,15 @@ import traceback
 import string
 import random
 import secrets
-import urllib.parse, urllib.request, re
-from discord import Game
+import urllib.parse, urllib.request
 from json import loads
-from discord.ext.commands import Bot, has_permissions, MissingPermissions
-from discord.ext import commands, tasks
+from discord.ext.commands import has_permissions, MissingPermissions
+from discord.ext import commands
 from discord.utils import find
 import time
 import redis
 import os
 import json
-import dbl
-import logging
 import subprocess
 from profanityfilter import ProfanityFilter
 import sentry_sdk

@@ -324,7 +324,7 @@ def tbprefix(statement, guild, setto=None):
 
 @client.event
 async def on_message_delete(message):
-    message_text = message.context
+    message_text = message.content
     guild = message.guild.id
     author = message.author.id
     sniped_messages[guild] = str(message) + " Said by <@" + str(guild) + ">"

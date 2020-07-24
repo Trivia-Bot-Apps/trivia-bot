@@ -329,11 +329,11 @@ async def on_message_delete(message):
     author = message.author.id
     sniped_messages[guild] = str(message) + " Said by <@" + str(guild) + ">"
 
-    await client.process_commands(message)
+    await client.process_commands(mFessage)
 
-client.command()
+@client.command()
 @commands.guild_only()
-async def snipe(ctx, prefix=None):
+async def snipe(ctx):
     ctx.send(str(sniped_messages[ctx.guild.id]))
 
 @client.event

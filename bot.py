@@ -335,6 +335,11 @@ async def on_message_delete(message):
 @commands.guild_only()
 async def snipe(ctx):
     try:
+        embed = discord.Embed(
+            title="Thank you for adding Trivia Bot!",
+            description="Please do ;help for info and ;trivia to start playing!",
+            color=discord.Colour.from_rgb(r, g, b),
+        )
         await ctx.send(str(sniped_messages[ctx.guild.id]))
     except:
         await ctx.send('No messages found. :()')
@@ -452,6 +457,9 @@ async def delete(ctx, channel_id, message_id):
 
 @client.command()
 async def trivia(ctx, category=None):
+    random_number = random.randint(1,250)
+    if random_number = 69:
+        await ctx.send('**Pro Tip:** Subscribe to Trivia Bot updates using `;subscribe` to get the most important updates!')
     if random.randint(1, 3) > 1:
         await multichoice(ctx, category)
     else:
@@ -1396,6 +1404,9 @@ async def help(ctx):
         name="`;ping             `", value="Displays Ping            ", inline=True
     )
     embed.add_field(
+        name="`;subscribe        `", value="Subscribes to updates    ", inline=True
+    )
+    embed.add_field(
         name="`;feedback         `", value="Shows Feedback Link!     ", inline=True
     )
     embed.add_field(
@@ -1685,6 +1696,20 @@ async def clear_error(ctx, error):
     if isinstance(error, MissingPermissions):
         await ctx.send("Sorry, you do not have permissions to clear messages!")
 
+@client.command(aliases=["follow"], brief="Subscirbe to updates")
+@has_permissions(manage_guild=True)
+async def subscribe(ctx, amount):
+    try:
+        await client.get_channel(715442979623665695).follow(destination=ctx.channel)
+        await ctx.send('Successfully followed updates! The most important updates will appear in this channel.')
+    except:
+        await ctx.send('Trivia bot needs `manage guild` permission to do this. Please grant Trivia Bot this perm and try again.')
+
+
+@clear.error
+async def subscribe_error(ctx, error):
+    if isinstance(error, MissingPermissions):
+        await ctx.send("Sorry, you do not have permissions to follow updates. (`manage_guild`)")
 
 @client.command(pass_context=True)
 async def ping(ctx):

@@ -1404,9 +1404,6 @@ async def help(ctx):
         name="`;ping             `", value="Displays Ping            ", inline=True
     )
     embed.add_field(
-        name="`;subscribe        `", value="Subscribes to updates    ", inline=True
-    )
-    embed.add_field(
         name="`;feedback         `", value="Shows Feedback Link!     ", inline=True
     )
     embed.add_field(
@@ -1429,6 +1426,12 @@ async def help(ctx):
     )
     embed.add_field(
         name="`;setlang          `", value="Set language used by bot.", inline=True
+    )
+    embed.add_field(
+        name="`;stats            `", value="Show bot stats.          ", inline=True
+    )
+    embed.add_field(
+        name="`;subscribe        `", value="Subscribes to updates    ", inline=True
     )
     embed.set_footer(
         text="Command invoked by {} || https://triviabot.tech/".format(

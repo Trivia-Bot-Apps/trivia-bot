@@ -1706,7 +1706,7 @@ async def subscribe(ctx):
         await ctx.send('Trivia bot needs `manage guild` permission to do this. Please grant Trivia Bot this perm and try again.')
 
 
-@clear.error
+@subscribe.error
 async def subscribe_error(ctx, error):
     if isinstance(error, MissingPermissions):
         await ctx.send("Sorry, you do not have permissions to follow updates. (`manage_guild`)")

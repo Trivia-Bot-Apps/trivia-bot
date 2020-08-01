@@ -1706,7 +1706,7 @@ async def subscribe(ctx):
         await client.get_channel(715442979623665695).follow(destination=ctx.channel)
         await ctx.send('Successfully followed updates! The most important updates will appear in this channel.')
     except:
-        await ctx.send('Trivia bot needs `manage guild` permission to do this. Please grant Trivia Bot this perm and try again.')
+        await ctx.send('Trivia Bot needs `manage_guild` permission to do this. Please grant Trivia Bot this perm and try again.')
 
 
 @subscribe.error

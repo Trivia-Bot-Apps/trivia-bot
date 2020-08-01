@@ -1698,7 +1698,7 @@ async def clear_error(ctx, error):
 
 @client.command(aliases=["follow"], brief="Subscirbe to updates")
 @has_permissions(manage_guild=True)
-async def subscribe(ctx, amount):
+async def subscribe(ctx):
     try:
         await client.get_channel(715442979623665695).follow(destination=ctx.channel)
         await ctx.send('Successfully followed updates! The most important updates will appear in this channel.')

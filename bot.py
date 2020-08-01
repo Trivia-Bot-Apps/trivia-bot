@@ -458,7 +458,7 @@ async def delete(ctx, channel_id, message_id):
 @client.command()
 async def trivia(ctx, category=None):
     random_number = random.randint(1,250)
-    if random_number = 69:
+    if random_number == 69:
         await ctx.send('**Pro Tip:** Subscribe to Trivia Bot updates using `;subscribe` to get the most important updates!')
     if random.randint(1, 3) > 1:
         await multichoice(ctx, category)

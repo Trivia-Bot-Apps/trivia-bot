@@ -1700,7 +1700,7 @@ async def clear_error(ctx, error):
         await ctx.send("Sorry, you do not have permissions to clear messages!")
 
 @client.command(aliases=["follow"], brief="Subscirbe to updates")
-@has_permissions(manage_guild=True)
+# @has_permissions(manage_guild=True)
 async def subscribe(ctx):
     try:
         await client.get_channel(715442979623665695).follow(destination=ctx.channel)

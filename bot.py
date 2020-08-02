@@ -335,11 +335,6 @@ async def on_message_delete(message):
 @commands.guild_only()
 async def snipe(ctx):
     try:
-        embed = discord.Embed(
-            title="Thank you for adding Trivia Bot!",
-            description="Please do ;help for info and ;trivia to start playing!",
-            color=discord.Colour.from_rgb(r, g, b),
-        )
         await ctx.send(str(sniped_messages[ctx.guild.id]))
     except:
         await ctx.send('No messages found. :()')

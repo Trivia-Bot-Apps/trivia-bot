@@ -1319,7 +1319,7 @@ async def about(ctx):
     embed.add_field(name="Originally Coded by", value=" , ".join(names), inline=False)
     embed.add_field(
         name="Privacy Policy:",
-        value="https://triviabot.tech/privacy_policy/",
+        value="https://triviabot.tech/privacy/",
         inline=False,
     )
     await ctx.send(embed=embed)

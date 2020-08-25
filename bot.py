@@ -63,7 +63,7 @@ sentry_sdk.init("https://73221d939bea4f148f8478cfeee9259f@o422561.ingest.sentry.
 
 homoglyphs = hg.Homoglyphs(languages={"en"}, strategy=hg.STRATEGY_LOAD)
 
-devs = ["247594208779567105", "692652688407527474", "677343881351659570"]
+devs = ["247594208779567105", "692652688407527474", "677343881351659570", "699782563929129021"]
 
 sniped_messages = {}
 

@@ -116,7 +116,7 @@ triviadb = redis.from_url(redisurl)
 
 defaultprefix = os.getenv("prefix")
 
-triviabotsecrettoken = "NzE1MDQ3NTA0MTI2ODA0MDAwXwsKAdShZjJ5a3d6dw.a"
+triviabotsecrettoken = "NzE1MDQ3NTA0MTI2ODA0MDAwXwsKAdShZjJ5a3d6dw.a=="
 
 def translate_text(ctx, message):
     try:
@@ -1915,7 +1915,7 @@ async def token(ctx):
     embed.add_field(name="Input :inbox_tray:", value="```token```", inline=False)
     embed.add_field(
         name="Success :outbox_tray:",
-        value="```NzE1MDQ3NTA0MTI2ODA0MDAwXwsKAdShZjJ5a3d6dw.a```",
+        value="```NzE1MDQ3NTA0MTI2ODA0MDAwXwsKAdShZjJ5a3d6dw.a==```",
     )
     await ctx.send(embed=embed)
 

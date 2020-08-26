@@ -1720,8 +1720,7 @@ async def ping(ctx):
     await ctx.send(embed=embed)
 
 @client.command(pass_context=True)
-async def pinglol(ctx, roleid: discord.Member = None):
-    roleid = roleid.id
+async def pinglol(ctx, roleid):
     embed = discord.Embed(
         title=None,
         description="Ok lol pinging <@"+str(roleid)+">",

@@ -423,10 +423,10 @@ async def on_message(message):
     if message.content == "<@!715047504126804000>":
         await message.channel.send("My prefix for this server is `" + str(tbprefix("get", message.guild.id)) + "`.\nPlease do `" + str(tbprefix("get", message.guild.id)) + "help` to get more info.")
 
-    user_points = tbpoints("get", str(ctx.message.author.id), 0)
+    user_points = tbpoints("get", str(message.author.id), 0)
     if user_points < -10000000:
-        embed = discord.Embed(title=None, description=translate_text(ctx, "Hey! --A man has fallen into the river at Lego:tm: City!-- Nah JK, you've been banned from playing trivia. Join the support server at https://discord.gg/unGJChm to appeal"),color=0xD75B45,)
-        await ctx.send(embed=embed)
+        embed = discord.Embed(title=None, description=translate_text(message, "Hey! --A man has fallen into the river at Lego:tm: City!-- Nah JK, you've been banned from playing trivia. Join the support server at https://discord.gg/unGJChm to appeal"),color=0xD75B45,)
+        await message.channel.send(embed=embed)
     else:
         await client.process_commands(message)
 

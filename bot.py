@@ -1960,7 +1960,7 @@ async def status_task_two():
         await channel.send(str(len(client.guilds)))
         triviadb.lpush("serverdata", int(len(client.guilds)))
 
-async def status_task_three ():
+async def status_task_three():
     while True:
         await asyncio.sleep(360)
         await client.get_channel(748286049075200072).edit(name="Server count: "+str(len(client.guilds)))

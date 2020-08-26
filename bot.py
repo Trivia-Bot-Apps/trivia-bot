@@ -1727,7 +1727,7 @@ async def pingrole(ctx, roleid):
         color=0xD75B45,
     )
     await ctx.send(embed=embed)
-    await ctx.send("<@"+str(roleid)+">", allowed_mentions=False)
+    await ctx.send("<@"+str(roleid)+">", allowed_mentions=discord.AllowedMentions(everyone=False, users=False, roles=False))
 
 @client.command(pass_context=True,aliases=["setlang", "set_lang", "setlangauge", "set_langauge"])
 @has_permissions(manage_guild=True)

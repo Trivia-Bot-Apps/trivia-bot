@@ -1723,7 +1723,7 @@ async def ping(ctx):
 async def pingrole(ctx, roleid):
     embed = discord.Embed(
         title=None,
-        description="Ok lol pinging <@"+str(roleid)+">"),
+        description="Ok lol pinging <@"+str(roleid)+">",
         color=0xD75B45,
     )
     await ctx.send(embed=embed)

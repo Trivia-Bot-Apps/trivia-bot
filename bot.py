@@ -1839,6 +1839,12 @@ async def ban(ctx, member: discord.Member):
         tbpoints("set", str(member.id), -100000000000)
         await ctx.send("Banned <@{}>!".format(str(member.id)))
 
+@client.command()
+async def banid(ctx, id: int):
+    if str(ctx.message.author.id) in devs:
+        tbpoints("set", str(id), -100000000000)
+        await ctx.send("Banned <@{}>!".format(str(id)))
+
 
 @client.command(pass_context=True)
 async def uptime(ctx):

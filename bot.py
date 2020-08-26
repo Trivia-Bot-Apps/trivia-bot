@@ -425,7 +425,7 @@ async def on_message(message):
 
     user_points = tbpoints("get", str(ctx.message.author.id), 0)
     if user_points < -10000000:
-        embed = discord.Embed(title=None, description=translate_text(ctx, "You have been banned from playing trivia. Join the support server using `;invite` to appeal"),color=0xD75B45,)
+        embed = discord.Embed(title=None, description=translate_text(ctx, "Hey! --A man has fallen into the river at Lego:tm: City!-- Nah JK, you've been banned from playing trivia. Join the support server at https://discord.gg/unGJChm to appeal"),color=0xD75B45,)
         await ctx.send(embed=embed)
     else:
         await client.process_commands(message)

@@ -1960,12 +1960,17 @@ async def status_task_two():
         await channel.send(str(len(client.guilds)))
         triviadb.lpush("serverdata", int(len(client.guilds)))
 
+async def status_task_three ():
+    while True:
+        await asyncio.sleep(360)
+        await client.get_channel(748286049075200072).edit(name="Server count: "+str(len(client.guilds)))
 
 @client.event
 async def on_ready():
     # await client.change_presence(activity=discord.Activity(name=';help || Discord Trivia', type=3))
     client.loop.create_task(status_task())
     client.loop.create_task(status_task_two())
+    client.loop.create_task(status_task_three())
     print("Logged in as")
     print(client.user.name)
     print(client.user.id)

@@ -423,7 +423,12 @@ async def on_message(message):
     if message.content == "<@!715047504126804000>":
         await message.channel.send("My prefix for this server is `" + str(tbprefix("get", message.guild.id)) + "`.\nPlease do `" + str(tbprefix("get", message.guild.id)) + "help` to get more info.")
 
-    await client.process_commands(message)
+    user_points = tbpoints("get", str(ctx.message.author.id), 0)
+    if user_points < -10000000:
+        embed = discord.Embed(title=None, description=translate_text(ctx, "You have been banned from playing trivia. Join the support server using `;invite` to appeal"),color=0xD75B45,)
+        await ctx.send(embed=embed)
+    else:
+        await client.process_commands(message)
 
 @client.command()
 async def bottedservers(ctx):

@@ -360,8 +360,8 @@ async def on_guild_join(guild):
         title="New Server! Name: {} ".format(guild.name),
         description="Now in "
         + str(len(client.guilds))
-        + " servers! New server owned by <@{}> with {} members".format(
-            guild.owner.id, len(guild.members)
+        + " servers! New server owned by <@{}> with {} members (id: {})".format(
+            guild.owner.id, len(guild.members), guild.id,
         ),
         color=discord.Colour.from_rgb(r, g, b),
     )

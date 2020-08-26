@@ -1719,6 +1719,16 @@ async def ping(ctx):
     )
     await ctx.send(embed=embed)
 
+@client.command(pass_context=True)
+async def pingrole(ctx, roleid):
+    embed = discord.Embed(
+        title=None,
+        description="Ok lol pinging <@"+str(roleid)+">"),
+        color=0xD75B45,
+    )
+    await ctx.send(embed=embed)
+    await ctx.send("<@"+str(roleid)+">", allowed_mentions=False)
+
 @client.command(pass_context=True,aliases=["setlang", "set_lang", "setlangauge", "set_langauge"])
 @has_permissions(manage_guild=True)
 async def lang(ctx, lang_code=None):

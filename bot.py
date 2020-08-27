@@ -1964,6 +1964,7 @@ async def status_task_three():
     while True:
         await asyncio.sleep(360)
         await client.get_channel(748286049075200072).edit(name="Server count: "+str(len(client.guilds)))
+        await client.get_channel(748339726041219082).edit(name="Question count: "+str(triviadb.get("trivia_question_count").decode("utf-8")))
 
 @client.event
 async def on_ready():

@@ -1762,7 +1762,7 @@ async def count(ctx):
     amount = triviadb.get("trivia_question_count").decode("utf-8")
     embed = discord.Embed(
         title=None,
-        description="Number of questions served by Trivia Bot since Jul 8, 2020: {}".format(
+        description="Number of questions served by Trivia Bot since Jul 8, 2020: **{}**".format(
             str(amount)
         ),
         color=0xD75B45,

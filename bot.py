@@ -1332,7 +1332,7 @@ async def about(ctx):
 
 @client.command(brief="Invite Link", aliases=["link"], pass_context="True")
 async def invite(ctx):
-    link = "[Invite Link](https://discord.com/api/oauth2/authorize?client_id=715047504126804000&redirect_uri=https%3A%2F%2Fdiscord.com%2Foauth2%2Fauthorize%3Fclient_id%3D715047504126804000%26scope%3Dbot%26permissions%3D537263168&response_type=code&scope=identify)"
+    link = "[Invite Link](https://discord.com/oauth2/authorize?client_id=715047504126804000&scope=bot&permissions=289856)"
     serverlink = "[Server Link](https://discord.gg/UHQ33Qe)"
     r = 215
     g = 91

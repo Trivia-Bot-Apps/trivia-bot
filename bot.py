@@ -1151,6 +1151,18 @@ async def points(ctx, member: discord.Member = None):
         await ctx.send(embed=embed)        
 
 
+@points.error
+async def points_error(ctx, error):
+    r = 215
+    g = 91
+    b = 69
+    embed = discord.Embed(
+        title="Points Lookup Failed :(",
+        description="Try using `;points` @mention",
+        color=discord.Colour.from_rgb(r, g, b),
+    )
+    await ctx.send(embed=embed)            
+        
 @client.command()
 async def withdraw(ctx, points=None):
     r = 215

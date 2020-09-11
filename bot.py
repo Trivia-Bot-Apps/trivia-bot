@@ -1121,7 +1121,7 @@ async def points(ctx, member: discord.Member = None):
         r = 215
         g = 91
         b = 69
-        if member is not None:
+        if member is None:
             uid = ctx.message.author.id
             title = "Lookup Points"
             description = "Lookup other user's points."

@@ -370,7 +370,7 @@ async def on_guild_join(guild):
 
 @client.event
 async def on_command_error(ctx, error):
-    client.get_channel(716471339145363577).send(str(error))
+    await client.get_channel(716471339145363577).send(str(error))
     
 @client.event
 async def on_guild_remove(guild):

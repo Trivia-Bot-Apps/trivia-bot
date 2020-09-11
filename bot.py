@@ -1230,7 +1230,7 @@ async def vote(ctx):
 
 
 @client.command()
-async def receive(ctx, key, value):
+async def receive(ctx, key=None, value=None):
     r = 215
     g = 91
     b = 69

@@ -1140,6 +1140,9 @@ async def points(ctx, member: discord.Member = None):
         embed.add_field(name=translate_text(ctx, "Points"), value=current_points)
         await ctx.send(embed=embed)
     except:
+        r = 215
+        g = 91
+        b = 69
         embed = discord.Embed(
             title="Points Lookup Failed :(",
             description="Try using `;points` @mention",

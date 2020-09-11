@@ -164,7 +164,7 @@ def check(ctx):
     return lambda m: m.author == ctx.author and m.channel == ctx.channel
 
 
-client = commands.Bot(command_prefix=determineprefix)
+client = commands.Bot(command_prefix=determineprefix, allowed_mentions=discord.AllowedMentions(roles=False, users=True, everyone=False))
 
 def checkvote(userid):
     try:
@@ -1114,27 +1114,35 @@ async def serverleaderboard(ctx):
 
 @client.command()
 async def points(ctx, member: discord.Member = None):
-    r = 215
-    g = 91
-    b = 69
-    if not member:
-        uid = ctx.message.author.id
-        title = "Lookup Points"
-        description = "Lookup other user's points."
-    else:
-        uid = member.id
-        title = "Your Points"
-        description = "Check your points."
-    username = "<@" + str(uid) + ">"
-    current_points = tbpoints("get", str(uid), 0)
-    embed = discord.Embed(
-        title="Your Points",
-        description="Lookup user points.",
-        color=discord.Colour.from_rgb(r, g, b),
-    )
-    embed.add_field(name=translate_text(ctx, "Username"), value=username)
-    embed.add_field(name=translate_text(ctx, "Points"), value=current_points)
-    await ctx.send(embed=embed)
+    try:
+        r = 215
+        g = 91
+        b = 69
+        if not member:
+            uid = ctx.message.author.id
+            title = "Lookup Points"
+            description = "Lookup other user's points."
+        else:
+            uid = member.id
+            title = "Your Points"
+            description = "Check your points."
+        username = "<@" + str(uid) + ">"
+        current_points = tbpoints("get", str(uid), 0)
+        embed = discord.Embed(
+            title="Your Points",
+            description="Lookup user points.",
+            color=discord.Colour.from_rgb(r, g, b),
+        )
+        embed.add_field(name=translate_text(ctx, "Username"), value=username)
+        embed.add_field(name=translate_text(ctx, "Points"), value=current_points)
+        await ctx.send(embed=embed)
+    except:
+        embed = discord.Embed(
+            title="Points Lookup Failed :(",
+            description="Try using `;points` @mention",
+            color=discord.Colour.from_rgb(r, g, b),
+        )
+        await ctx.send(embed=embed)        
 
 
 @client.command()
@@ -1223,35 +1231,42 @@ async def receive(ctx, key, value):
     r = 215
     g = 91
     b = 69
-    if key != None and value != None:
-        if triviadb.get(key).decode("utf-8") == value:
-            tbpoints("give", str(ctx.message.author.id), int(triviadb.get(value)))
-            embed = discord.Embed(
-                title="Notice!",
-                description="You have gotten "
-                + str(triviadb.get(value).decode("utf-8"))
-                + " points.",
-                color=discord.Colour.from_rgb(r, g, b),
-            )
-            triviadb.set(
-                key,
-                "".join(
-                    secrets.choice(string.ascii_uppercase + string.digits)
-                    for i in range(8)
-                ),
-            )
+    try:
+        if key != None and value != None:
+            if triviadb.get(key).decode("utf-8") == value:
+                tbpoints("give", str(ctx.message.author.id), int(triviadb.get(value)))
+                embed = discord.Embed(
+                    title="Notice!",
+                    description="You have gotten "
+                    + str(triviadb.get(value).decode("utf-8"))
+                    + " points.",
+                    color=discord.Colour.from_rgb(r, g, b),
+                )
+                triviadb.set(
+                    key,
+                    "".join(
+                        secrets.choice(string.ascii_uppercase + string.digits)
+                        for i in range(8)
+                    ),
+                )
+            else:
+                embed = discord.Embed(
+                    title="Notice.",
+                    description="Incorrect Key / Used Key",
+                    color=discord.Colour.from_rgb(r, g, b),
+                )
         else:
             embed = discord.Embed(
-                title="Notice.",
-                description="Incorrect Key / Used Key",
+                title="Notice:",
+                description="You must get a receive command from the `;withdraw` command first.",
                 color=discord.Colour.from_rgb(r, g, b),
             )
-    else:
+    except:
         embed = discord.Embed(
             title="Notice:",
             description="You must get a receive command from the `;withdraw` command first.",
             color=discord.Colour.from_rgb(r, g, b),
-        )
+        )        
     await ctx.send(embed=embed)
 
 
@@ -1735,7 +1750,7 @@ async def pinglol(ctx, roleid):
 @client.command(pass_context=True,aliases=["setlang", "set_lang", "setlangauge", "set_langauge"])
 @has_permissions(manage_guild=True)
 async def lang(ctx, lang_code=None):
-    if lang_code != None:
+    if lang_code != None and lang_code in ['en','fr','zh-CN','ru']:
         triviadb.set(str(ctx.guild.id)+'-lang-data', str(lang_code))
         embed = discord.Embed(
             title="Done",

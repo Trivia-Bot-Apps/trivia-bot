@@ -1249,42 +1249,35 @@ async def receive(ctx, key=None, value=None):
     r = 215
     g = 91
     b = 69
-    try:
-        if key != None and value != None:
-            if triviadb.get(key).decode("utf-8") == value:
-                tbpoints("give", str(ctx.message.author.id), int(triviadb.get(value)))
-                embed = discord.Embed(
-                    title="Notice!",
-                    description="You have gotten "
-                    + str(triviadb.get(value).decode("utf-8"))
-                    + " points.",
-                    color=discord.Colour.from_rgb(r, g, b),
-                )
-                triviadb.set(
-                    key,
-                    "".join(
-                        secrets.choice(string.ascii_uppercase + string.digits)
-                        for i in range(8)
-                    ),
-                )
-            else:
-                embed = discord.Embed(
-                    title="Notice.",
-                    description="Incorrect Key / Used Key",
-                    color=discord.Colour.from_rgb(r, g, b),
-                )
-        else:
+    if key != None and value != None:
+        if triviadb.get(key).decode("utf-8") == value:
+            tbpoints("give", str(ctx.message.author.id), int(triviadb.get(value)))
             embed = discord.Embed(
-                title="Notice:",
-                description="You must get a receive command from the `;withdraw` command first.",
+                title="Notice!",
+                description="You have gotten "
+                + str(triviadb.get(value).decode("utf-8"))
+                + " points.",
                 color=discord.Colour.from_rgb(r, g, b),
             )
-    except:
+            triviadb.set(
+                key,
+                "".join(
+                    secrets.choice(string.ascii_uppercase + string.digits)
+                    for i in range(8)
+                ),
+            )
+        else:
+            embed = discord.Embed(
+                title="Notice.",
+                description="Incorrect Key / Used Key",
+                color=discord.Colour.from_rgb(r, g, b),
+            )
+    else:
         embed = discord.Embed(
             title="Notice:",
             description="You must get a receive command from the `;withdraw` command first.",
             color=discord.Colour.from_rgb(r, g, b),
-        )        
+        )
     await ctx.send(embed=embed)
 
 

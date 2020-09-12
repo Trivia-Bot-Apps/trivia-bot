@@ -1251,7 +1251,7 @@ async def receive(ctx, key=None, value=None):
     b = 69
     if key != None and value != None:
         if triviadb.get(key).decode("utf-8") == value:
-            tbpoints("give", str(ctx.message.author.id), int(triviadb.get(value)))
+            tbpoints("give", str(ctx.message.author.id), float(triviadb.get(value)))
             embed = discord.Embed(
                 title="Notice!",
                 description="You have gotten "

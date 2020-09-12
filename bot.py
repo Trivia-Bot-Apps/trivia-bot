@@ -2015,4 +2015,8 @@ try:
     client.load_extension("cogs.errors")
 except:
     print("Error Cog Loading Failed")
+try:
+    client.load_extension("cogs.stat")
+except:
+    print("Stats Cog Loading Failed")
 client.run(TOKEN)

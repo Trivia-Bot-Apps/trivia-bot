@@ -163,8 +163,10 @@ async def determineprefix(bot, message):
 def check(ctx):
     return lambda m: m.author == ctx.author and m.channel == ctx.channel
 
+intents = discord.Intents.all()
+intents.presences = False
 
-client = commands.Bot(intents=discord.Intents.all(), command_prefix=determineprefix, allowed_mentions=discord.AllowedMentions(roles=False, users=True, everyone=False))
+client = commands.Bot(intents=intents, command_prefix=determineprefix, allowed_mentions=discord.AllowedMentions(roles=False, users=True, everyone=False))
 
 def checkvote(userid):
     try:

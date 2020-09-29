@@ -164,7 +164,7 @@ def check(ctx):
     return lambda m: m.author == ctx.author and m.channel == ctx.channel
 
 
-client = commands.Bot(command_prefix=determineprefix, allowed_mentions=discord.AllowedMentions(roles=False, users=True, everyone=False))
+client = commands.Bot(intents=discord.Intents.all(), command_prefix=determineprefix, allowed_mentions=discord.AllowedMentions(roles=False, users=True, everyone=False))
 
 def checkvote(userid):
     try:

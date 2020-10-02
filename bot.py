@@ -40,7 +40,7 @@ import secrets
 import urllib.parse, urllib.request, re
 from discord import Game
 from json import loads
-from discord.ext.commands import Bot, has_permissions, MissingPermissions
+from discord.ext.commands import Bot, has_permissions, MissingPermissions, AutoShardedBot
 from discord.ext import commands, tasks
 from discord.utils import find
 import time
@@ -166,7 +166,7 @@ def check(ctx):
 intents = discord.Intents.all()
 intents.presences = False
 
-client = commands.Bot(intents=intents, command_prefix=determineprefix, allowed_mentions=discord.AllowedMentions(roles=False, users=True, everyone=False))
+client = commands.AutoShardedBot(intents=intents, command_prefix=determineprefix, allowed_mentions=discord.AllowedMentions(roles=False, users=True, everyone=False))
 
 def checkvote(userid):
     try:

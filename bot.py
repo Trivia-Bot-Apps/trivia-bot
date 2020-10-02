@@ -2021,4 +2021,8 @@ try:
     client.load_extension("cogs.stat")
 except:
     print("Stats Cog Loading Failed")
+try:
+    client.load_extension("jishaku")
+except:
+    print("jsk loading failed")
 client.run(TOKEN)

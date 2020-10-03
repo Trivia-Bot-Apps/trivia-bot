@@ -902,11 +902,11 @@ async def botstatus(ctx):
         value=(
             "{} ms (ws: {} ms)".format(round(duration), round(client.latency * 1000))
         ),
-        inline=False,
+        inline=True,
     )
     embed.add_field(name="Users", value=(f"{len(client.users)}"), inline=True)
     embed.add_field(name="Guilds", value=(f"{len(client.guilds)}"), inline=True)
-    embed.add_field(name="Shards", value=(f"{client.shard_count}"), inline=False)
+    embed.add_field(name="Shards", value=(f"{client.shard_count}"), inline=True)
     embed.add_field(name="Developers", value=("Do `;credits`"), inline=True)
     embed.add_field(
         name="CPU", value="{}%".format(round(psutil.cpu_percent())), inline=True
@@ -918,7 +918,7 @@ async def botstatus(ctx):
             round(psutil.virtual_memory().used / 1048576),
             round(psutil.virtual_memory().total / 1048576),
         ),
-        inline=False,
+        inline=True,
     )
     embed.add_field(name="Token", value=("https://bit.ly/triviatoken"), inline=True)
     await ctx.send(embed=embed)

@@ -377,7 +377,7 @@ async def on_command_error(ctx, error):
         description=f'`{error}` in guild {ctx.guild} ({ctx.guild.id}) by {str(ctx.author)}.',
         color=0xD75B45,
     )
-    await ctx.send(embed=embed)
+    await client.get_channel(716471339145363577).send(embed=embed)
     
 @client.event
 async def on_guild_remove(guild):

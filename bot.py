@@ -483,7 +483,7 @@ async def quickfire(ctx, number=None):
         else:
             await ctx.send('You can only do between one and 20 questions at a time. Try `;quickfire 15`')
     else:
-        await ctx.send('You must choose the number of questions. Try `;quickfire 15`.`)
+        await ctx.send('You must choose the number of questions. Try `;quickfire 15`.')
         
 @client.command(aliases=["tf"])
 async def truefalse(ctx, category=None):

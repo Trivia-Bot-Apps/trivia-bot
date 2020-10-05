@@ -1501,7 +1501,7 @@ async def shop(ctx):
     )
     embed.add_field(
         name="`;buy 1.5x       `",
-        value="Buy a 1.5x point multiplier! (2000 points). Stacks multiplicatively with voting",
+        value="Buy a 1.5x point multiplier! (500 points). Stacks multiplicatively with voting",
         inline=True,
     )
     embed.add_field(
@@ -1634,7 +1634,7 @@ async def buy(ctx, product=None):
     else:
         products = ["1.5x", "viprole", "pog", "kappa", "lmao", "cmon"]
         prices = {
-            "1.5x": 2000,
+            "1.5x": 500,
             "viprole": 250,
             "pog": 25,
             "lmao": 25,

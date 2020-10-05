@@ -479,7 +479,7 @@ async def quickfire(ctx, number=None):
     if not None:
         if 0 < number < 19:
             for x in range(number):
-                await trivia()
+                await trivia(ctx)
         else:
             await ctx.send('You can only do between one and 20 questions at a time. Try `;quickfire 15`')
     else:
@@ -1475,6 +1475,9 @@ async def help(ctx):
     )
     embed.add_field(
         name="`;subscribe        `", value="Subscribes to updates    ", inline=True
+    )
+    embed.add_field(
+        name="`;quickfire        `", value="Play multiple questions. ", inline=True
     )
     embed.set_footer(
         text="Command invoked by {} || https://triviabot.tech/".format(

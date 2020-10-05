@@ -473,7 +473,18 @@ async def trivia(ctx, category=None):
     else:
         await truefalse(ctx, category)
 
-
+@client.command(aliases=['qf'])
+async def quickfire(ctx, number=None):
+    number = int(number)
+    if not None:
+        if 0 < number < 19:
+            for x in range(number):
+                await trivia()
+        else:
+            await ctx.send('You can only do between one and 20 questions at a time. Try `;quickfire 15`')
+    else:
+        await ctx.send('You must choose the number of questions. Try `;quickfire 15`.`)
+        
 @client.command(aliases=["tf"])
 async def truefalse(ctx, category=None):
     triviadb.incr("trivia_question_count")

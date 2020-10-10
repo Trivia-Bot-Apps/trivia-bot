@@ -1,0 +1,9 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Issue Contribution Guidelines
+    url: https://github.com/Trivia-Bot-Discord/trivia-bot/issues/69
+    about: Please read this before creating issues
+  - name: Discord Community
+    url: https://discord.gg/UHQ33Qe
+    about: Any general questions (not bug reports or new features) about using the bot can go here
+  

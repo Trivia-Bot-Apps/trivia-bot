@@ -1990,11 +1990,11 @@ async def token(ctx):
 async def status_task():
     while True:
         await client.change_presence(
-            activity=discord.Game(name="Trivia! | Use ;trivia")
+            activity=discord.Game(name=f"Trivia! | Use {defaultprefix}trivia")
         )
         await asyncio.sleep(50)
         await client.change_presence(
-            activity=discord.Game(name="Trivia! | Use ;help")
+            activity=discord.Game(name=f"Trivia! | Use {defaultprefix}help")
         )
         await asyncio.sleep(50)
 

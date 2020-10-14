@@ -476,7 +476,8 @@ async def trivia(ctx, category=None):
 @client.command(aliases=['qf'])
 async def quickfire(ctx, number=None):
     number = int(number)
-    if not None:
+    if number is not None:
+        number = int(number)
         if 0 < number < 19:
             for x in range(number):
                 await trivia(ctx)

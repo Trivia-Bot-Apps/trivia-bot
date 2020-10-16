@@ -472,7 +472,8 @@ async def trivia(ctx, category=None):
         await multichoice(ctx, category)
     else:
         await truefalse(ctx, category)
-
+         
+        
 @client.command(aliases=['qf'])
 async def quickfire(ctx, number=None):
     if number is not None:
@@ -485,6 +486,8 @@ async def quickfire(ctx, number=None):
     else:
         await ctx.send('You must choose the number of questions. Try `;quickfire 15`.')
         
+       
+@commands.cooldown(7, 5, commands.BucketType.user)
 @client.command(aliases=["tf"])
 async def truefalse(ctx, category=None):
     triviadb.incr("trivia_question_count")
@@ -751,8 +754,22 @@ async def truefalse(ctx, category=None):
                 )
                 message = await msg.edit(embed=qembed)
                 await msg.add_reaction("✅")
+                
+         
+@truefalse.error
+async def truefalse_error(ctx, error):
+    r = 215
+    g = 91
+    b = 69
+    embed = discord.Embed(
+        title="You are currently on a cooldown",
+        description="Try again in 5 seconds.",
+        color=discord.Colour.from_rgb(r, g, b),
+    )
+    await ctx.send(embed=embed)   
 
-
+    
+@commands.cooldown(7, 5, commands.BucketType.user)    
 @client.command(aliases=["multi", "multiplechoice", "multiple"])
 async def multichoice(ctx, category=None):
     triviadb.incr("trivia_question_count")
@@ -893,7 +910,19 @@ async def multichoice(ctx, category=None):
                     inline=False,
                 )
             message = await msg.edit(embed=qembed)
-
+            
+            
+@multichoice.error
+async def multiplechoice_error(ctx, error):
+    r = 215
+    g = 91
+    b = 69
+    embed = discord.Embed(
+        title="You are currently on a cooldown",
+        description="Try again in 5 seconds.",
+        color=discord.Colour.from_rgb(r, g, b),
+    )
+    await ctx.send(embed=embed)   
 
 @client.command(aliases=["debug"])
 async def triviadebug(ctx):
@@ -941,6 +970,7 @@ async def botstatus(ctx):
 
 
 @client.command(aliases=["top"])
+@commands.cooldown(1, 5, commands.BucketType.user)
 async def globalleaderboard(ctx, number=None):
     r = 215
     g = 91
@@ -1059,6 +1089,17 @@ async def globalleaderboard(ctx, number=None):
         )
     await ctx.send(embed=embed)
 
+@globalleaderboard.error
+async def globalleaderboard_error(ctx, error):
+    r = 215
+    g = 91
+    b = 69
+    embed = discord.Embed(
+        title="You are currently on a cooldown",
+        description="Try again in 5 seconds.",
+        color=discord.Colour.from_rgb(r, g, b),
+    )
+    await ctx.send(embed=embed)    
 
 @client.command(aliases=["servertop"])
 async def serverleaderboard(ctx):

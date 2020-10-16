@@ -487,7 +487,7 @@ async def quickfire(ctx, number=None):
         await ctx.send('You must choose the number of questions. Try `;quickfire 15`.')
         
        
-@commands.cooldown(7, 5, commands.BucketType.user)
+@commands.cooldown(4, 3, commands.BucketType.user)
 @client.command(aliases=["tf"])
 async def truefalse(ctx, category=None):
     triviadb.incr("trivia_question_count")
@@ -769,7 +769,7 @@ async def truefalse_error(ctx, error):
     await ctx.send(embed=embed)   
 
     
-@commands.cooldown(7, 5, commands.BucketType.user)    
+@commands.cooldown(4, 3, commands.BucketType.user)    
 @client.command(aliases=["multi", "multiplechoice", "multiple"])
 async def multichoice(ctx, category=None):
     triviadb.incr("trivia_question_count")
@@ -970,7 +970,7 @@ async def botstatus(ctx):
 
 
 @client.command(aliases=["top"])
-@commands.cooldown(1, 5, commands.BucketType.user)
+@commands.cooldown(1, 10, commands.BucketType.user)
 async def globalleaderboard(ctx, number=None):
     r = 215
     g = 91
@@ -1095,7 +1095,7 @@ async def globalleaderboard_error(ctx, error):
     g = 91
     b = 69
     embed = discord.Embed(
-        title="You are currently on a cooldown",
+        title="You are currently on a ;trivia",
         description="Try again in 5 seconds.",
         color=discord.Colour.from_rgb(r, g, b),
     )

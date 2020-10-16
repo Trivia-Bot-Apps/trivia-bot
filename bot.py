@@ -763,7 +763,7 @@ async def truefalse_error(ctx, error):
     b = 69
     embed = discord.Embed(
         title="You are currently on a cooldown",
-        description="Try again in 5 seconds.",
+        description="Try again in 15 seconds.",
         color=discord.Colour.from_rgb(r, g, b),
     )
     await ctx.send(embed=embed)   
@@ -919,7 +919,7 @@ async def multiplechoice_error(ctx, error):
     b = 69
     embed = discord.Embed(
         title="You are currently on a cooldown",
-        description="Try again in 5 seconds.",
+        description="Try again in 15 seconds.",
         color=discord.Colour.from_rgb(r, g, b),
     )
     await ctx.send(embed=embed)   

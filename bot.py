@@ -487,8 +487,8 @@ async def quickfire(ctx, number=None):
         await ctx.send('You must choose the number of questions. Try `;quickfire 15`.')
         
        
-@commands.cooldown(7, 5, commands.BucketType.user)
 @client.command(aliases=["tf"])
+@commands.cooldown(7, 5, commands.BucketType.user)
 async def truefalse(ctx, category=None):
     triviadb.incr("trivia_question_count")
     command_startup = time.perf_counter()
@@ -768,9 +768,9 @@ async def truefalse_error(ctx, error):
     )
     await ctx.send(embed=embed)   
 
-    
-@commands.cooldown(7, 5, commands.BucketType.user)    
+
 @client.command(aliases=["multi", "multiplechoice", "multiple"])
+@commands.cooldown(7, 5, commands.BucketType.user)    
 async def multichoice(ctx, category=None):
     triviadb.incr("trivia_question_count")
     command_startup = time.perf_counter()

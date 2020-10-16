@@ -1,10 +1,9 @@
-# Trivia Bot
+<p align="center"><img src=https://triviabot.tech/assets/logo.png /><h1 align="center">Trivia Bot</h1></p>
 
 ![Maintenance](https://img.shields.io/maintenance/yes/2020)
 [![Discord Bots](https://top.gg/api/widget/status/715047504126804000.svg)](https://top.gg/bot/715047504126804000)
 [![Discord Bots](https://top.gg/api/widget/upvotes/715047504126804000.svg)](https://top.gg/bot/715047504126804000)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-6f42c1.svg)](http://makeapullrequest.com)
-![CircleCi](https://circleci.com/gh/gubareve/trivia-bot.svg?style=svg)
 ![Syntax Check](https://github.com/gubareve/trivia-bot/workflows/Syntax%20Check/badge.svg)
 
   

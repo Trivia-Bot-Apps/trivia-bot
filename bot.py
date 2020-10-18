@@ -63,7 +63,7 @@ sentry_sdk.init("https://73221d939bea4f148f8478cfeee9259f@o422561.ingest.sentry.
 
 homoglyphs = hg.Homoglyphs(languages={"en"}, strategy=hg.STRATEGY_LOAD)
 
-devs = ["247594208779567105", "692652688407527474", "677343881351659570", "699782563929129021"]
+devs = ["247594208779567105", "692652688407527474", "677343881351659570"]
 
 sniped_messages = {}
 
@@ -1401,7 +1401,7 @@ async def about(ctx):
     names = []
     for userid in devs:
         user = client.get_user(int(userid))
-        if gld.get_member(int(userid)) == None:
+        if not gld.id == 715289968368418968:
             names.append(str(user))
         else:
             names.append("<@{}>".format(userid))

@@ -1109,6 +1109,8 @@ async def globalleaderboard_error(ctx, error):
 @client.command(aliases=["servertop"])
 async def serverleaderboard(ctx):
     try:
+        if not ctx.guild.chunked:
+            await ctx.guild.chunk(cache=True)
         data = tbpoints("data", 0, 0)
         server_members = []
         first_found = False

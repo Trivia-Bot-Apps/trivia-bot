@@ -1110,7 +1110,9 @@ async def globalleaderboard_error(ctx, error):
 async def serverleaderboard(ctx):
     try:
         if not ctx.guild.chunked:
+            sent_message_x = await ctx.send('*Caching guild members, this should only take a couple seconds.*')
             await ctx.guild.chunk(cache=True)
+            await sent_message_x.delete()
         data = tbpoints("data", 0, 0)
         server_members = []
         first_found = False

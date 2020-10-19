@@ -371,6 +371,11 @@ async def on_guild_join(guild):
     await channel.send(embed=embed)
 
 @client.event
+async def on_member_join(member):
+    if member.guild.id == 715289968368418968:
+        member.add_roles(member.guild.get_role(728055031512825856))
+    
+@client.event
 async def on_command_error(ctx, error):
     embed = discord.Embed(
         title=None,

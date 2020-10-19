@@ -373,7 +373,7 @@ async def on_guild_join(guild):
 @client.event
 async def on_member_join(member):
     if member.guild.id == 715289968368418968:
-        member.add_roles(member.guild.get_role(728055031512825856))
+        await member.add_roles(member.guild.get_role(728055031512825856))
     
 @client.event
 async def on_command_error(ctx, error):

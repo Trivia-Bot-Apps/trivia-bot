@@ -781,7 +781,7 @@ async def multichoice(ctx, category=None):
     command_startup = time.perf_counter()
     f = open('custom_questions.json','r')
     custom_data = json.load(f) 
-    if not category in categories.keys and not category in list(custom_data['multi']):
+    if not category in categories.keys and not category in :
         r = requests.get(
             "https://opentdb.com/api.php?amount=1&type=multiple&encode=url3986"
         ).text
@@ -940,6 +940,7 @@ async def multiplechoice_error(ctx, error):
         description="Try again in 15 seconds.",
         color=discord.Colour.from_rgb(r, g, b),
     )
+    print(error)
     await ctx.send(embed=embed)   
 
 @client.command(aliases=["debug"])

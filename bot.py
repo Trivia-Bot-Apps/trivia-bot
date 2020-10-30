@@ -794,7 +794,7 @@ async def multichoice(ctx, category=None):
         question_metadata = category_questions[selected_question]
         results = {}
         results['response_code'] = 0
-        results['results'] = {'category':category, 'type': 'multiple', 'difficulty': 'Medium', 'question':q, 'correct_answer':question_metadata['correct_answer'], 'incorrect_answers':question_metadata['incorrect_answers']}
+        results['results'] = [{'category':category, 'type': 'multiple', 'difficulty': 'Medium', 'question':q, 'correct_answer':question_metadata['correct_answer'], 'incorrect_answers':question_metadata['incorrect_answers']}]
         r = results
     else:
         r = requests.get(

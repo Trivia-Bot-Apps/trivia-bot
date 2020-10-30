@@ -779,17 +779,30 @@ async def truefalse_error(ctx, error):
 async def multichoice(ctx, category=None):
     triviadb.incr("trivia_question_count")
     command_startup = time.perf_counter()
+    f = open('custom_questions.json',r)
+    custom_data = json.load(f) 
     if not category in categories.keys():
         r = requests.get(
             "https://opentdb.com/api.php?amount=1&type=multiple&encode=url3986"
         ).text
+        r = json.loads(r)
+        q = urllib.parse.unquote(r["results"][0]["question"])
+    elif category in list(custom_data['multi']):
+        category_questions = custom_data['multi'][category]
+        selected_question = random.choice(list(category_questions))
+        q = selected_question
+        question_metadata = category_questions[selected_question]
+        results = {}
+        results['response_code'] = 0
+        results['results'] = {'category':category, 'type': 'multiple', 'difficulty': 'Medium', 'question':q, 'correct_answer':question_metadata['correct_answer'], 'incorrect_answers':question_metadata['incorrect_answers']}
+        r = results
     else:
         r = requests.get(
             "https://opentdb.com/api.php?amount=1&type=multiple&encode=url3986&category="
             + str(categories[category])
         ).text
-    r = json.loads(r)
-    q = urllib.parse.unquote(r["results"][0]["question"])
+        r = json.loads(r)
+        q = urllib.parse.unquote(r["results"][0]["question"])
     user_points = tbpoints("get", str(ctx.message.author.id), 0)
     if user_points > 50000:
         q = stop_copy(q)
@@ -1545,7 +1558,7 @@ async def shop(ctx):
     embed = discord.Embed(color=discord.Colour.from_rgb(r, g, b))
     embed.set_author(name="Trivia Bot Points Shop")
     embed.add_field(
-        name="`;buy viprole       `",
+        name="`;buy viprole      `",
         value="Buy the vip role in the support sever! (250 points). Must do ;givemevip to activate once purchased.",
         inline=True,
     )

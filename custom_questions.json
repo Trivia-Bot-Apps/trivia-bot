@@ -1,0 +1,23 @@
+{
+    "tf": {
+        "meta": {
+            "This bot is coded in JavaScript.": false,
+            "Discord was created in 2017.": false,
+            "Voting can give you more points.": true,
+            "A 1.5x points multipler can be bought from the shop for 500 points": true,
+            "Roles in the support server can be bought from the shop": true
+        } 
+    },
+    "multi": {
+        "nfl": {
+            "What does NFL stand for?": {
+                "correct_answer": "National Football League",
+                "incorrect_answers": [
+                    "Nation's Football Legends",
+                    "New Football Lords",
+                    "NFL Flordia League"
+                ]
+            }
+        }
+    }
+}

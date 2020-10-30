@@ -781,7 +781,7 @@ async def multichoice(ctx, category=None):
     command_startup = time.perf_counter()
     f = open('custom_questions.json','r')
     custom_data = json.load(f) 
-    if not category in categories.keys and not category in :
+    if not category in categories.keys and not category in list(custom_data['multi']):
         r = requests.get(
             "https://opentdb.com/api.php?amount=1&type=multiple&encode=url3986"
         ).text

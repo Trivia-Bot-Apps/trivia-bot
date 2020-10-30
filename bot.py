@@ -779,7 +779,7 @@ async def truefalse_error(ctx, error):
 async def multichoice(ctx, category=None):
     triviadb.incr("trivia_question_count")
     command_startup = time.perf_counter()
-    f = open('custom_questions.json',r)
+    f = open('custom_questions.json','r')
     custom_data = json.load(f) 
     if not category in categories.keys():
         r = requests.get(

@@ -15,3 +15,6 @@ sentry-sdk==0.16.1
 googletrans==3.0.0
 statcord.py==3.0.4
 jishaku==1.19.1.200 
+aiohttp
+cchardet
+aiodns

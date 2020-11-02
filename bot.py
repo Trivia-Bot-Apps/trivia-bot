@@ -583,7 +583,7 @@ async def truefalse(ctx, category=None):
                 print("Content-type:", response.headers["content-type"])
 
                 r = await response.text()
-                print("Body:", html[:15], "...")
+                print("Body:", await response.text(), "...")
         lesspoints = False
     else:
         listofdata = {
@@ -624,7 +624,7 @@ async def truefalse(ctx, category=None):
                     print("Content-type:", response.headers["content-type"])
 
                     r = await response.text()
-                    print("Body:", html[:15], "...")
+                    print("Body:", await response.text(), "...")
             lesspoints = False
         else:
             async with aiohttp.ClientSession() as session:
@@ -637,7 +637,7 @@ async def truefalse(ctx, category=None):
                     print("Content-type:", response.headers["content-type"])
 
                     r = await response.text()
-                    print("Body:", html[:15], "...")
+                    print("Body:", await response.text(), "...")
             lesspoints = True
 
     rc = loads(r)["response_code"]
@@ -651,7 +651,7 @@ async def truefalse(ctx, category=None):
                 print("Content-type:", response.headers["content-type"])
 
                 n = await response.text()
-                print("Body:", html[:15], "...")
+                print("Body:", await response.text(), "...")
         triviatoken = urllib.parse.unquote(loads(n)["token"])
         if category == None:
             async with aiohttp.ClientSession() as session:
@@ -663,7 +663,7 @@ async def truefalse(ctx, category=None):
                     print("Content-type:", response.headers["content-type"])
 
                     r = await response.text()
-                    print("Body:", html[:15], "...")
+                    print("Body:", await response.text(), "...")
             lesspoints = False
         else:
             listofdata = {
@@ -704,7 +704,7 @@ async def truefalse(ctx, category=None):
                         print("Content-type:", response.headers["content-type"])
 
                         r = await response.text()
-                        print("Body:", html[:15], "...")
+                        print("Body:", await response.text(), "...")
                 lesspoints = False
     else:
         async with aiohttp.ClientSession() as session:
@@ -717,7 +717,7 @@ async def truefalse(ctx, category=None):
                 print("Content-type:", response.headers["content-type"])
 
                 r = await response.text()
-                print("Body:", html[:15], "...")
+                print("Body:", await response.text(), "...")
         lesspoints = True
     q = urllib.parse.unquote(loads(r)["results"][0]["question"])
     a = urllib.parse.unquote(loads(r)["results"][0]["correct_answer"])
@@ -981,7 +981,7 @@ async def multichoice(ctx, category=None):
                 print("Content-type:", response.headers["content-type"])
 
                 r = await response.text()
-                print("Body:", html[:15], "...")
+                print("Body:", await response.text(), "...")
         r = json.loads(r)
         q = urllib.parse.unquote(r["results"][0]["question"])
     elif category in list(custom_data["multi"]):
@@ -1013,7 +1013,7 @@ async def multichoice(ctx, category=None):
                 print("Content-type:", response.headers["content-type"])
 
                 r = await response.text()
-                print("Body:", html[:15], "...")
+                print("Body:", await response.text(), "...")
         r = json.loads(r)
         q = urllib.parse.unquote(r["results"][0]["question"])
     user_points = tbpoints("get", str(ctx.message.author.id), 0)
@@ -2424,7 +2424,7 @@ async def on_ready():
             print("Content-type:", response.headers["content-type"])
 
             n = await response.text()
-            print("Body:", html[:15], "...")
+            print("Body:", await response.text(), "...")
     global triviatoken
     triviatoken = urllib.parse.unquote(loads(n)["token"])
     print("OPENTDB TOKEN --> " + triviatoken)

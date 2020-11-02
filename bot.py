@@ -40,7 +40,13 @@ import secrets
 import urllib.parse, urllib.request, re
 from discord import Game
 from json import loads
-from discord.ext.commands import Bot, has_permissions, MissingPermissions, AutoShardedBot
+from discord.ext.commands import (
+    Bot,
+    has_permissions,
+    MissingPermissions,
+    AutoShardedBot,
+    CommandOnCooldown
+)
 from discord.ext import commands, tasks
 from discord.utils import find
 import time
@@ -59,7 +65,9 @@ pf = ProfanityFilter()
 
 pf.set_censor("#")
 
-sentry_sdk.init("https://73221d939bea4f148f8478cfeee9259f@o422561.ingest.sentry.io/5350665")
+sentry_sdk.init(
+    "https://73221d939bea4f148f8478cfeee9259f@o422561.ingest.sentry.io/5350665"
+)
 
 homoglyphs = hg.Homoglyphs(languages={"en"}, strategy=hg.STRATEGY_LOAD)
 
@@ -118,9 +126,10 @@ defaultprefix = os.getenv("prefix")
 
 triviabotsecrettoken = "NzE1MDQ3NTA0MTI2ODA0MDAwXwsKAdShZjJ5a3d6dw.a=="
 
+
 def translate_text(ctx, message):
     try:
-        lang_code = triviadb.get(str(ctx.guild.id)+'-lang-data').decode('utf-8')
+        lang_code = triviadb.get(str(ctx.guild.id) + "-lang-data").decode("utf-8")
     except:
         lang_code = None
     if lang_code == None or lang_code == "en":
@@ -128,6 +137,7 @@ def translate_text(ctx, message):
     else:
         message = translator.translate(message, dest=lang_code).text
         return message
+
 
 if defaultprefix == None:
     defaultprefix = ";"
@@ -163,25 +173,33 @@ async def determineprefix(bot, message):
 def check(ctx):
     return lambda m: m.author == ctx.author and m.channel == ctx.channel
 
+
 intents = discord.Intents.all()
 intents.presences = False
 
-client = commands.AutoShardedBot(intents=intents, command_prefix=determineprefix, allowed_mentions=discord.AllowedMentions(roles=False, users=True, everyone=False))
+client = commands.AutoShardedBot(
+    intents=intents,
+    command_prefix=determineprefix,
+    allowed_mentions=discord.AllowedMentions(roles=False, users=True, everyone=False),
+)
 
-def checkvote(userid):
+
+async def checkvote(userid):
     try:
         headers = {"Authorization": dbl_token}
-        voteurl = requests.get(
-            "https://top.gg/api/bots/715047504126804000/check?userId=" + str(userid),
-            headers=headers,
-        ).text
+        async with aiohttp.ClientSession(headers=headers) as session:
+            async with session.get(
+                "https://top.gg/api/bots/715047504126804000/check?userId=" + str(userid)
+            ) as response:
+
+                print("Status:", response.status)
+                print("Content-type:", response.headers["content-type"])
+
+                voteurl = await response.text()
         voted = int(loads(voteurl)["voted"])
     except:
         print(str(loads(voteurl)))
-    if voted == 1:
-        return True
-    else:
-        return False
+    return voted == 1
 
 
 async def get_multi_reaction_answer(msg, author, ctx):
@@ -205,6 +223,7 @@ async def get_multi_reaction_answer(msg, author, ctx):
     except asyncio.TimeoutError:
         return None
     return numberemojis.index(str(reaction.emoji))
+
 
 async def get_reaction_answer(msg, author, q, a, ctx):
     r = 215
@@ -235,12 +254,24 @@ async def get_reaction_answer(msg, author, q, a, ctx):
             description=translate_text(ctx, "This problem has expired"),
             color=discord.Colour.from_rgb(r, g, b),
         )
-        qembed.add_field(name=translate_text(ctx, "The Question Was:"), value=str(q), inline=False)
-        qembed.add_field(name=translate_text(ctx, "The Submitted Answer Was"), value="Expired", inline=False)
-        qembed.add_field(name=translate_text(ctx, "The Correct Answer Was"), value=translate_text(ctx, a), inline=False)
+        qembed.add_field(
+            name=translate_text(ctx, "The Question Was:"), value=str(q), inline=False
+        )
+        qembed.add_field(
+            name=translate_text(ctx, "The Submitted Answer Was"),
+            value="Expired",
+            inline=False,
+        )
+        qembed.add_field(
+            name=translate_text(ctx, "The Correct Answer Was"),
+            value=translate_text(ctx, a),
+            inline=False,
+        )
         qembed.add_field(
             name=translate_text(ctx, "Points"),
-            value=translate_text(ctx, "You lost a point since this question expired! Sorry :("),
+            value=translate_text(
+                ctx, "You lost a point since this question expired! Sorry :("
+            ),
             inline=False,
         )
         message = await msg.edit(embed=qembed)
@@ -324,12 +355,16 @@ def tbprefix(statement, guild, setto=None):
     elif statement == "set" and not setto == None:
         triviadb.hmset(str(guild) + "-prefix", {"prefix": setto})
 
+
 @client.event
 async def on_message_delete(message):
     message_text = message.content
     guild = message.guild.id
     author = message.author.id
-    sniped_messages[guild] = "```" + str(message_text) + "``` Said by <@" + str(author) + ">"
+    sniped_messages[guild] = (
+        "```" + str(message_text) + "``` Said by <@" + str(author) + ">"
+    )
+
 
 @client.command()
 @commands.guild_only()
@@ -337,7 +372,8 @@ async def snipe(ctx):
     try:
         await ctx.send(str(sniped_messages[ctx.guild.id]))
     except:
-        await ctx.send('No messages found. :()')
+        await ctx.send("No messages found. :()")
+
 
 @client.event
 async def on_guild_join(guild):
@@ -361,7 +397,9 @@ async def on_guild_join(guild):
         description="Now in "
         + str(len(client.guilds))
         + " servers! New server owned by <@{}> with {} members (id: {})".format(
-            guild.owner.id, len(guild.members), guild.id,
+            guild.owner.id,
+            len(guild.members),
+            guild.id,
         ),
         color=discord.Colour.from_rgb(r, g, b),
     )
@@ -370,20 +408,23 @@ async def on_guild_join(guild):
     )
     await channel.send(embed=embed)
 
+
 @client.event
 async def on_member_join(member):
     if member.guild.id == 715289968368418968:
         await member.add_roles(member.guild.get_role(716089610635051100))
-    
+
+
 @client.event
 async def on_command_error(ctx, error):
     embed = discord.Embed(
         title=None,
-        description=f'`{error}` in guild {ctx.guild} ({ctx.guild.id}) by {str(ctx.author)}.',
+        description=f"`{error}` in guild {ctx.guild} ({ctx.guild.id}) by {str(ctx.author)}.",
         color=0xD75B45,
     )
     await client.get_channel(716471339145363577).send(embed=embed)
-    
+
+
 @client.event
 async def on_guild_remove(guild):
     r = 215
@@ -423,25 +464,49 @@ async def setprefix(ctx, prefix=None):
         await ctx.send("Set guild prefix to {}".format(prefix))
     else:
         await ctx.message.add_reaction(noemoji)
-        await ctx.send("There was an issue setting your prefix! (`;setprefix [yourprefix]`)".format(prefix))
+        await ctx.send(
+            "There was an issue setting your prefix! (`;setprefix [yourprefix]`)".format(
+                prefix
+            )
+        )
+
 
 @setprefix.error
 async def clear_error(ctx, error):
     if isinstance(error, MissingPermissions):
-        await ctx.send("Sorry, you do not have permissions to set this server's prefix (`manage_guild`)!")
+        await ctx.send(
+            "Sorry, you do not have permissions to set this server's prefix (`manage_guild`)!"
+        )
+
 
 @client.event
 async def on_message(message):
 
     if message.content == "<@!715047504126804000>":
-        await message.channel.send("My prefix for this server is `" + str(tbprefix("get", message.guild.id)) + "`.\nPlease do `" + str(tbprefix("get", message.guild.id)) + "help` to get more info.")
+        await message.channel.send(
+            "My prefix for this server is `"
+            + str(tbprefix("get", message.guild.id))
+            + "`.\nPlease do `"
+            + str(tbprefix("get", message.guild.id))
+            + "help` to get more info."
+        )
 
     user_points = tbpoints("get", str(message.author.id), 0)
-    if user_points < -10000000 and message.content[0:len(tbprefix('get', message.guild.id))] == tbprefix('get', message.guild.id):
-        embed = discord.Embed(title=None, description=translate_text(message, "Hey! ~~A man has fallen into the river at Lego:tm: City!~~ Nah JK, you've been banned from playing trivia. Join the support server at https://discord.gg/unGJChm to appeal"),color=0xD75B45,)
+    if user_points < -10000000 and message.content[
+        0 : len(tbprefix("get", message.guild.id))
+    ] == tbprefix("get", message.guild.id):
+        embed = discord.Embed(
+            title=None,
+            description=translate_text(
+                message,
+                "Hey! ~~A man has fallen into the river at Lego:tm: City!~~ Nah JK, you've been banned from playing trivia. Join the support server at https://discord.gg/unGJChm to appeal",
+            ),
+            color=0xD75B45,
+        )
         await message.channel.send(embed=embed)
     else:
         await client.process_commands(message)
+
 
 @client.command()
 async def bottedservers(ctx):
@@ -450,15 +515,22 @@ async def bottedservers(ctx):
         listofowners = {}
         for guild in client.guilds:
             try:
-                listofowners[str(guild.owner.id)] = listofowners[str(guild.owner.id)] + 1
+                listofowners[str(guild.owner.id)] = (
+                    listofowners[str(guild.owner.id)] + 1
+                )
             except:
                 listofowners[str(guild.owner.id)] = 1
         for serverowner in listofowners:
             if listofowners[serverowner] > 2:
-                await ctx.send("I think that <@"+str(serverowner)+"> is botting.\nThey own the servers:")
+                await ctx.send(
+                    "I think that <@"
+                    + str(serverowner)
+                    + "> is botting.\nThey own the servers:"
+                )
                 for guild in client.guilds:
                     if guild.owner.id == int(serverowner):
                         await ctx.send(str(guild.id))
+
 
 @client.command()
 async def delete(ctx, channel_id, message_id):
@@ -470,16 +542,18 @@ async def delete(ctx, channel_id, message_id):
 
 @client.command()
 async def trivia(ctx, category=None):
-    random_number = random.randint(1,100)
+    random_number = random.randint(1, 100)
     if random_number == 69:
-        await ctx.send('**Pro Tip:** Subscribe to Trivia Bot updates using `;subscribe` to get the most important updates!')
+        await ctx.send(
+            "**Pro Tip:** Subscribe to Trivia Bot updates using `;subscribe` to get the most important updates!"
+        )
     if random.randint(1, 3) > 1:
         await multichoice(ctx, category)
     else:
         await truefalse(ctx, category)
-         
-        
-@client.command(aliases=['qf'])
+
+
+@client.command(aliases=["qf"])
 async def quickfire(ctx, number=None):
     if number is not None:
         number = int(number)
@@ -487,11 +561,13 @@ async def quickfire(ctx, number=None):
             for x in range(number):
                 await trivia(ctx)
         else:
-            await ctx.send('You can only do between one and 20 questions at a time. Try `;quickfire 15`')
+            await ctx.send(
+                "You can only do between one and 20 questions at a time. Try `;quickfire 15`"
+            )
     else:
-        await ctx.send('You must choose the number of questions. Try `;quickfire 15`.')
-        
-       
+        await ctx.send("You must choose the number of questions. Try `;quickfire 15`.")
+
+
 @client.command(aliases=["tf"])
 @commands.cooldown(7, 5, commands.BucketType.user)
 async def truefalse(ctx, category=None):
@@ -499,9 +575,16 @@ async def truefalse(ctx, category=None):
     command_startup = time.perf_counter()
     global triviatoken
     if category == None:
-        r = requests.get(
-            "https://opentdb.com/api.php?amount=1&type=boolean&encode=url3986"
-        ).text
+        async with aiohttp.ClientSession() as session:
+            async with session.get(
+                "https://opentdb.com/api.php?amount=1&type=boolean&encode=url3986"
+            ) as response:
+
+                print("Status:", response.status)
+                print("Content-type:", response.headers["content-type"])
+
+                r = await response.text()
+                print("Body:", await response.text(), "...")
         lesspoints = False
     else:
         listofdata = {
@@ -533,24 +616,41 @@ async def truefalse(ctx, category=None):
         try:
             categorynumber = listofdata[str(category)]
         except KeyError():
-            r = requests.get(
-                "https://opentdb.com/api.php?amount=1&type=boolean&encode=url3986"
-            ).text
+            async with aiohttp.ClientSession() as session:
+                async with session.get(
+                    "https://opentdb.com/api.php?amount=1&type=boolean&encode=url3986"
+                ) as response:
+
+                    print("Status:", response.status)
+                    print("Content-type:", response.headers["content-type"])
+
+                    r = await response.text()
+                    print("Body:", await response.text(), "...")
             lesspoints = False
-        else:
-            r = requests.get(
-                "https://opentdb.com/api.php?amount=1&type=boolean&encode=url3986&category="
-                + categorynumber
-            ).text
-            lesspoints = True
     rc = loads(r)["response_code"]
     if rc != 0:
-        n = requests.get("https://opentdb.com/api_token.php?command=request").text
+        async with aiohttp.ClientSession() as session:
+            async with session.get(
+                "https://opentdb.com/api_token.php?command=request"
+            ) as response:
+
+                print("Status:", response.status)
+                print("Content-type:", response.headers["content-type"])
+
+                n = await response.text()
+                print("Body:", await response.text(), "...")
         triviatoken = urllib.parse.unquote(loads(n)["token"])
         if category == None:
-            r = requests.get(
-                "https://opentdb.com/api.php?amount=1&type=boolean&encode=url3986"
-            ).text
+            async with aiohttp.ClientSession() as session:
+                async with session.get(
+                    "https://opentdb.com/api.php?amount=1&type=boolean&encode=url3986"
+                ) as response:
+
+                    print("Status:", response.status)
+                    print("Content-type:", response.headers["content-type"])
+
+                    r = await response.text()
+                    print("Body:", await response.text(), "...")
             lesspoints = False
         else:
             listofdata = {
@@ -582,16 +682,29 @@ async def truefalse(ctx, category=None):
             try:
                 categorynumber = listofdata[str(category)]
             except KeyError():
-                r = requests.get(
-                    "https://opentdb.com/api.php?amount=1&type=boolean&encode=url3986"
-                ).text
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(
+                        "https://opentdb.com/api.php?amount=1&type=boolean&encode=url3986"
+                    ) as response:
+
+                        print("Status:", response.status)
+                        print("Content-type:", response.headers["content-type"])
+
+                        r = await response.text()
+                        print("Body:", await response.text(), "...")
                 lesspoints = False
-            else:
-                r = requests.get(
-                    "https://opentdb.com/api.php?amount=1&type=boolean&encode=url3986"
-                    + categorynumbe
-                ).text
-                lesspoints = True
+    else:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(
+                "https://opentdb.com/api.php?amount=1&type=boolean&encode=url3986"
+            ) as response:
+
+                print("Status:", response.status)
+                print("Content-type:", response.headers["content-type"])
+
+                r = await response.text()
+                print("Body:", await response.text(), "...")
+        lesspoints = True
     q = urllib.parse.unquote(loads(r)["results"][0]["question"])
     a = urllib.parse.unquote(loads(r)["results"][0]["correct_answer"])
     b = q + a
@@ -604,21 +717,32 @@ async def truefalse(ctx, category=None):
     if user_points < -10000000:
         embed = discord.Embed(
             title=None,
-            description=translate_text(ctx, "You have been banned from playing trivia. Join the support server using `;invite` to appeal"),
+            description=translate_text(
+                ctx,
+                "You have been banned from playing trivia. Join the support server using `;invite` to appeal",
+            ),
             color=0xD75B45,
         )
         await ctx.send(embed=embed)
     else:
         qembed = discord.Embed(
             title=translate_text(ctx, "YOUR QUESTION"),
-            description=translate_text(ctx, "Use the below reactions to answer this true/false question."),
+            description=translate_text(
+                ctx, "Use the below reactions to answer this true/false question."
+            ),
             color=0xD75B45,
         )
-        qembed.add_field(name=translate_text(ctx, "Question:"), value=str(q), inline=False)
-        qembed.add_field(name=yesemoji, value=translate_text(ctx, "For true"), inline=True)
-        qembed.add_field(name=noemoji, value=translate_text(ctx, "For false"), inline=True)
+        qembed.add_field(
+            name=translate_text(ctx, "Question:"), value=str(q), inline=False
+        )
+        qembed.add_field(
+            name=yesemoji, value=translate_text(ctx, "For true"), inline=True
+        )
+        qembed.add_field(
+            name=noemoji, value=translate_text(ctx, "For false"), inline=True
+        )
         try:
-            diduservote = checkvote(ctx.message.author.id)
+            diduservote = await checkvote(ctx.message.author.id)
         except:
             diduservote = False
         if not diduservote:
@@ -668,14 +792,26 @@ async def truefalse(ctx, category=None):
                     hahalols = 1
                 qembed = discord.Embed(
                     title=translate_text(ctx, "Answered Problem"),
-                    description=translate_text(ctx, "This problem has already been answered"),
+                    description=translate_text(
+                        ctx, "This problem has already been answered"
+                    ),
                     color=0xD75B45,
                 )
-                qembed.add_field(name=translate_text(ctx, "The Question Was:"), value=str(q), inline=False)
                 qembed.add_field(
-                    name=translate_text(ctx, "The Submitted Answer Was"), value=translate_text(ctx, textanswer), inline=False
+                    name=translate_text(ctx, "The Question Was:"),
+                    value=str(q),
+                    inline=False,
                 )
-                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was  "), value=a, inline=False)
+                qembed.add_field(
+                    name=translate_text(ctx, "The Submitted Answer Was"),
+                    value=translate_text(ctx, textanswer),
+                    inline=False,
+                )
+                qembed.add_field(
+                    name=translate_text(ctx, "The Correct Answer Was  "),
+                    value=a,
+                    inline=False,
+                )
                 qembed.add_field(
                     name=translate_text(ctx, "Points"),
                     value=translate_text(ctx, "You got")
@@ -696,16 +832,30 @@ async def truefalse(ctx, category=None):
                     chatgoesboom = 12
                 qembed = discord.Embed(
                     title=translate_text(ctx, "Answered Problem"),
-                    description=translate_text(ctx, "This problem has already been answered"),
+                    description=translate_text(
+                        ctx, "This problem has already been answered"
+                    ),
                     color=0xD75B45,
                 )
-                qembed.add_field(name=translate_text(ctx, "The Question Was:"), value=translate_text(ctx, str(q)), inline=False)
                 qembed.add_field(
-                    name=translate_text(ctx, "The Submitted Answer Was"), value=translate_text(ctx, textanswer), inline=False
+                    name=translate_text(ctx, "The Question Was:"),
+                    value=translate_text(ctx, str(q)),
+                    inline=False,
                 )
-                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was  "), value=translate_text(ctx, a), inline=False)
                 qembed.add_field(
-                    name=translate_text(ctx, "Points"), value=translate_text(ctx, "You lost 1 point! Sorry :("), inline=False
+                    name=translate_text(ctx, "The Submitted Answer Was"),
+                    value=translate_text(ctx, textanswer),
+                    inline=False,
+                )
+                qembed.add_field(
+                    name=translate_text(ctx, "The Correct Answer Was  "),
+                    value=translate_text(ctx, a),
+                    inline=False,
+                )
+                qembed.add_field(
+                    name=translate_text(ctx, "Points"),
+                    value=translate_text(ctx, "You lost 1 point! Sorry :("),
+                    inline=False,
                 )
                 message = await msg.edit(embed=qembed)
                 await msg.add_reaction("❌")
@@ -718,16 +868,30 @@ async def truefalse(ctx, category=None):
                     waitwhat = 9
                 qembed = discord.Embed(
                     title=translate_text(ctx, "Answered Problem"),
-                    description=translate_text(ctx, "This problem has already been answered"),
+                    description=translate_text(
+                        ctx, "This problem has already been answered"
+                    ),
                     color=0xD75B45,
                 )
-                qembed.add_field(name=translate_text(ctx, "The Question Was:"), value=translate_text(ctx, str(q)), inline=False)
                 qembed.add_field(
-                    name=translate_text(ctx, "The Submitted Answer Was"), value=translate_text(ctx, textanswer), inline=False
+                    name=translate_text(ctx, "The Question Was:"),
+                    value=translate_text(ctx, str(q)),
+                    inline=False,
                 )
-                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was  "), value=translate_text(ctx, a), inline=False)
                 qembed.add_field(
-                    name=translate_text(ctx, "Points"), value=translate_text(ctx, "You lost 1 point! Sorry :("), inline=False
+                    name=translate_text(ctx, "The Submitted Answer Was"),
+                    value=translate_text(ctx, textanswer),
+                    inline=False,
+                )
+                qembed.add_field(
+                    name=translate_text(ctx, "The Correct Answer Was  "),
+                    value=translate_text(ctx, a),
+                    inline=False,
+                )
+                qembed.add_field(
+                    name=translate_text(ctx, "Points"),
+                    value=translate_text(ctx, "You lost 1 point! Sorry :("),
+                    inline=False,
                 )
                 message = await msg.edit(embed=qembed)
                 await msg.add_reaction("❌")
@@ -739,14 +903,26 @@ async def truefalse(ctx, category=None):
                     finaloneyay = 1993
                 qembed = discord.Embed(
                     title=translate_text(ctx, "Answered Problem"),
-                    description=translate_text(ctx, "This problem has already been answered"),
+                    description=translate_text(
+                        ctx, "This problem has already been answered"
+                    ),
                     color=0xD75B45,
                 )
-                qembed.add_field(name=translate_text(ctx, "The Question Was:"), value=translate_text(ctx, str(q)), inline=False)
                 qembed.add_field(
-                    name=translate_text(ctx, "The Submitted Answer Was"), value=translate_text(ctx, textanswer), inline=False
+                    name=translate_text(ctx, "The Question Was:"),
+                    value=translate_text(ctx, str(q)),
+                    inline=False,
                 )
-                qembed.add_field(name=translate_text(ctx, "The Correct Answer Was  "), value=translate_text(ctx, a), inline=False)
+                qembed.add_field(
+                    name=translate_text(ctx, "The Submitted Answer Was"),
+                    value=translate_text(ctx, textanswer),
+                    inline=False,
+                )
+                qembed.add_field(
+                    name=translate_text(ctx, "The Correct Answer Was  "),
+                    value=translate_text(ctx, a),
+                    inline=False,
+                )
                 qembed.add_field(
                     name=translate_text(ctx, "Points"),
                     value=translate_text(ctx, "You got")
@@ -759,48 +935,72 @@ async def truefalse(ctx, category=None):
                 )
                 message = await msg.edit(embed=qembed)
                 await msg.add_reaction("✅")
-                
-         
+
+
 @truefalse.error
 async def truefalse_error(ctx, error):
     r = 215
     g = 91
     b = 69
-    embed = discord.Embed(
-        title="You are currently on a cooldown",
-        description="Try again in 15 seconds.",
-        color=discord.Colour.from_rgb(r, g, b),
-    )
-    await ctx.send(embed=embed)   
+    if isinstance(error, CommandOnCooldown):
+        embed = discord.Embed(
+            title="You are currently on a cooldown",
+            description="Try again in 15 seconds.",
+            color=discord.Colour.from_rgb(r, g, b),
+        )
+        await ctx.send(embed=embed)
 
 
 @client.command(aliases=["multi", "multiplechoice", "multiple"])
-@commands.cooldown(7, 5, commands.BucketType.user)    
+@commands.cooldown(7, 5, commands.BucketType.user)
 async def multichoice(ctx, category=None):
     triviadb.incr("trivia_question_count")
     command_startup = time.perf_counter()
-    f = open('custom_questions.json','r')
-    custom_data = json.load(f) 
-    if not category in list(categories) and not category in list(custom_data['multi']):
-        r = requests.get(
-            "https://opentdb.com/api.php?amount=1&type=multiple&encode=url3986"
-        ).text
+    f = open("custom_questions.json", "r")
+    custom_data = json.load(f)
+    if not category in list(categories) and not category in list(custom_data["multi"]):
+        async with aiohttp.ClientSession() as session:
+            async with session.get(
+                "https://opentdb.com/api.php?amount=1&type=multiple&encode=url3986"
+            ) as response:
+
+                print("Status:", response.status)
+                print("Content-type:", response.headers["content-type"])
+
+                r = await response.text()
+                print("Body:", await response.text(), "...")
         r = json.loads(r)
         q = urllib.parse.unquote(r["results"][0]["question"])
-    elif category in list(custom_data['multi']):
-        category_questions = custom_data['multi'][category]
+    elif category in list(custom_data["multi"]):
+        category_questions = custom_data["multi"][category]
         selected_question = random.choice(list(category_questions))
         q = selected_question
         question_metadata = category_questions[selected_question]
         results = {}
-        results['response_code'] = 0
-        results['results'] = [{'category':category, 'type': 'multiple', 'difficulty': 'Medium', 'question':q, 'correct_answer':question_metadata['correct_answer'], 'incorrect_answers':question_metadata['incorrect_answers']}]
+        results["response_code"] = 0
+        results["results"] = [
+            {
+                "category": category,
+                "type": "multiple",
+                "difficulty": "Medium",
+                "question": q,
+                "correct_answer": question_metadata["correct_answer"],
+                "incorrect_answers": question_metadata["incorrect_answers"],
+            }
+        ]
         r = results
     else:
-        r = requests.get(
-            "https://opentdb.com/api.php?amount=1&type=multiple&encode=url3986&category="
-            + str(categories[category])
-        ).text
+        async with aiohttp.ClientSession() as session:
+            async with session.get(
+                "https://opentdb.com/api.php?amount=1&type=multiple&encode=url3986&category="
+                + str(categories[category])
+            ) as response:
+
+                print("Status:", response.status)
+                print("Content-type:", response.headers["content-type"])
+
+                r = await response.text()
+                print("Body:", await response.text(), "...")
         r = json.loads(r)
         q = urllib.parse.unquote(r["results"][0]["question"])
     user_points = tbpoints("get", str(ctx.message.author.id), 0)
@@ -810,7 +1010,10 @@ async def multichoice(ctx, category=None):
     if user_points < -10000000:
         embed = discord.Embed(
             title=None,
-            description=translate_text(ctx, "You have been banned from playing trivia. Join the support server using `;invite` to appeal"),
+            description=translate_text(
+                ctx,
+                "You have been banned from playing trivia. Join the support server using `;invite` to appeal",
+            ),
             color=0xD75B45,
         )
         await ctx.send(embed=embed)
@@ -830,7 +1033,10 @@ async def multichoice(ctx, category=None):
             title=translate_text(ctx, "YOUR QUESTION FROM CATEGORY ") + category.upper()
             if category in categories.keys()
             else translate_text(ctx, "YOUR QUESTION"),
-            description=translate_text(ctx, "Use the below reactions to answer this multiple choice question:\n")
+            description=translate_text(
+                ctx,
+                "Use the below reactions to answer this multiple choice question:\n",
+            )
             + q
             + "\n\n\n"
             + "\n\n".join(
@@ -848,28 +1054,42 @@ async def multichoice(ctx, category=None):
         if answered == None:
             qembed = discord.Embed(
                 title=translate_text(ctx, "Answered Problem"),
-                description=translate_text(ctx, "This problem has already been answered"),
+                description=translate_text(
+                    ctx, "This problem has already been answered"
+                ),
                 color=0xD75B45,
             )
             if category in categories.keys():
                 qembed.add_field(
-                    name=translate_text(ctx, "The Chosen Category Was:"), value=translate_text(ctx, str(category)), inline=False
+                    name=translate_text(ctx, "The Chosen Category Was:"),
+                    value=translate_text(ctx, str(category)),
+                    inline=False,
                 )
-            qembed.add_field(name=translate_text(ctx, "The Question Was:"), value=translate_text(ctx, str(q)), inline=False)
+            qembed.add_field(
+                name=translate_text(ctx, "The Question Was:"),
+                value=translate_text(ctx, str(q)),
+                inline=False,
+            )
             qembed.add_field(
                 name=translate_text(ctx, "The Submitted Answer Was:"),
                 value=translate_text(ctx, "EXPIRED (you lost 1 point)"),
                 inline=False,
             )
             qembed.add_field(
-                name=translate_text(ctx, "The Correct Answer Was:"), value=answers[correct], inline=False
+                name=translate_text(ctx, "The Correct Answer Was:"),
+                value=answers[correct],
+                inline=False,
             )
             message = await msg.edit(embed=qembed)
-            qembed.add_field(name=translate_text(ctx, "Points"), value=translate_text(ctx, "You lost 1 point!"), inline=False)
+            qembed.add_field(
+                name=translate_text(ctx, "Points"),
+                value=translate_text(ctx, "You lost 1 point!"),
+                inline=False,
+            )
             tbpoints("give", str(uid), -1)
         else:
             try:
-                diduservote = checkvote(ctx.message.author.id)
+                diduservote = await checkvote(ctx.message.author.id)
             except:
                 diduservote = False
             pointstogive = 1 if category in categories.keys() else 2
@@ -898,16 +1118,26 @@ async def multichoice(ctx, category=None):
                 pointchange = -0.5 if category in categories.keys() else -1.0
             qembed = discord.Embed(
                 title=translate_text(ctx, "Answered Problem"),
-                description=translate_text(ctx, "This problem has already been answered"),
+                description=translate_text(
+                    ctx, "This problem has already been answered"
+                ),
                 color=0xD75B45,
             )
             if category in categories.keys():
                 qembed.add_field(
-                    name=translate_text(ctx, "The Chosen Category Was:"), value=translate_text(ctx, str(category)), inline=False
+                    name=translate_text(ctx, "The Chosen Category Was:"),
+                    value=translate_text(ctx, str(category)),
+                    inline=False,
                 )
-            qembed.add_field(name=translate_text(ctx, "The Question Was:"), value=str(q), inline=False)
             qembed.add_field(
-                name=translate_text(ctx, "The Submitted Answer Was:"), value=answers[answered], inline=False
+                name=translate_text(ctx, "The Question Was:"),
+                value=str(q),
+                inline=False,
+            )
+            qembed.add_field(
+                name=translate_text(ctx, "The Submitted Answer Was:"),
+                value=answers[answered],
+                inline=False,
             )
             qembed.add_field(
                 name="Points",
@@ -919,17 +1149,22 @@ async def multichoice(ctx, category=None):
                 inline=False,
             )
             qembed.add_field(
-                name=translate_text(ctx, "The Correct Answer Was:"), value=answers[correct], inline=False
+                name=translate_text(ctx, "The Correct Answer Was:"),
+                value=answers[correct],
+                inline=False,
             )
             if not diduservote:
                 qembed.add_field(
                     name=translate_text(ctx, "Tip:"),
-                    value=translate_text(ctx, "Want to get 1.5 times the amount of points? Vote for us using ;vote"),
+                    value=translate_text(
+                        ctx,
+                        "Want to get 1.5 times the amount of points? Vote for us using ;vote",
+                    ),
                     inline=False,
                 )
             message = await msg.edit(embed=qembed)
-            
-            
+
+
 @multichoice.error
 async def multiplechoice_error(ctx, error):
     r = 215
@@ -941,7 +1176,8 @@ async def multiplechoice_error(ctx, error):
         color=discord.Colour.from_rgb(r, g, b),
     )
     print(error)
-    await ctx.send(embed=embed)   
+    await ctx.send(embed=embed)
+
 
 @client.command(aliases=["debug"])
 async def triviadebug(ctx):
@@ -1054,10 +1290,26 @@ async def globalleaderboard(ctx, number=None):
         firstmessage = "{0} with {1} points".format(str(user1), str(firstpoints))
         secondmessage = "{0} with {1} points".format(str(user2), str(secondpoints))
         thirdmessage = "{0} with {1} points".format(str(user3), str(thirdpoints))
-        embed.add_field(name=translate_text(ctx, "1st Place"), value=translate_text(ctx, firstmessage), inline=False)
-        embed.add_field(name=translate_text(ctx, "2nd Place"), value=translate_text(ctx, secondmessage), inline=False)
-        embed.add_field(name=translate_text(ctx, "3rd Place"), value=translate_text(ctx, thirdmessage), inline=False)
-        embed.add_field(name=translate_text(ctx, "Your Position"), value=translate_text(ctx, position), inline=False)
+        embed.add_field(
+            name=translate_text(ctx, "1st Place"),
+            value=translate_text(ctx, firstmessage),
+            inline=False,
+        )
+        embed.add_field(
+            name=translate_text(ctx, "2nd Place"),
+            value=translate_text(ctx, secondmessage),
+            inline=False,
+        )
+        embed.add_field(
+            name=translate_text(ctx, "3rd Place"),
+            value=translate_text(ctx, thirdmessage),
+            inline=False,
+        )
+        embed.add_field(
+            name=translate_text(ctx, "Your Position"),
+            value=translate_text(ctx, position),
+            inline=False,
+        )
     elif int(number) > 3 and int(number) <= 15:
         data = tbpoints("data", 0, 0)
         datalist = data.items()
@@ -1097,16 +1349,26 @@ async def globalleaderboard(ctx, number=None):
         )
         for i in range(int(number)):
             embed.add_field(
-                name=translate_text(ctx, "Place #" + str(int(i) + 1)), value=messages[i], inline=False
+                name=translate_text(ctx, "Place #" + str(int(i) + 1)),
+                value=messages[i],
+                inline=False,
             )
-        embed.add_field(name=translate_text(ctx, "Your Position"), value=translate_text(ctx, position), inline=False)
+        embed.add_field(
+            name=translate_text(ctx, "Your Position"),
+            value=translate_text(ctx, position),
+            inline=False,
+        )
     else:
         embed = discord.Embed(
             title=translate_text(ctx, "Error"),
-            description=translate_text(ctx, "The usage of this command is `;top` or `;top 3 - 15` (max 15, min 3)"),
+            description=translate_text(
+                ctx,
+                "The usage of this command is `;top` or `;top 3 - 15` (max 15, min 3)",
+            ),
             color=discord.Colour.from_rgb(r, g, b),
         )
     await ctx.send(embed=embed)
+
 
 @globalleaderboard.error
 async def globalleaderboard_error(ctx, error):
@@ -1118,13 +1380,16 @@ async def globalleaderboard_error(ctx, error):
         description="Try again in 5 seconds.",
         color=discord.Colour.from_rgb(r, g, b),
     )
-    await ctx.send(embed=embed)    
+    await ctx.send(embed=embed)
+
 
 @client.command(aliases=["servertop"])
 async def serverleaderboard(ctx):
     try:
         if not ctx.guild.chunked:
-            sent_message_x = await ctx.send('*Caching guild members, this should only take a couple seconds.*')
+            sent_message_x = await ctx.send(
+                "*Caching guild members, this should only take a couple seconds.*"
+            )
             await ctx.guild.chunk(cache=True)
             await sent_message_x.delete()
         data = tbpoints("data", 0, 0)
@@ -1173,18 +1438,24 @@ async def serverleaderboard(ctx):
             color=discord.Colour.from_rgb(r, g, b),
         )
         data = str(data)
-        firstmessage = (
-            translate_text(ctx, "<@" + str(firstuserid) + "> with " + str(firstpoints) + " points!")
+        firstmessage = translate_text(
+            ctx, "<@" + str(firstuserid) + "> with " + str(firstpoints) + " points!"
         )
-        secondmessage = (
-            translate_text(ctx, "<@" + str(seconduserid) + "> with " + str(secondpoints) + " points!")
+        secondmessage = translate_text(
+            ctx, "<@" + str(seconduserid) + "> with " + str(secondpoints) + " points!"
         )
-        thirdmessage = (
-            translate_text(ctx, "<@" + str(thirduserid) + "> with " + str(thirdpoints) + " points!")
+        thirdmessage = translate_text(
+            ctx, "<@" + str(thirduserid) + "> with " + str(thirdpoints) + " points!"
         )
-        embed.add_field(name=translate_text(ctx, "1st Place"), value=firstmessage, inline=False)
-        embed.add_field(name=translate_text(ctx, "2nd Place"), value=secondmessage, inline=False)
-        embed.add_field(name=translate_text(ctx, "3rd Place"), value=thirdmessage, inline=False)
+        embed.add_field(
+            name=translate_text(ctx, "1st Place"), value=firstmessage, inline=False
+        )
+        embed.add_field(
+            name=translate_text(ctx, "2nd Place"), value=secondmessage, inline=False
+        )
+        embed.add_field(
+            name=translate_text(ctx, "3rd Place"), value=thirdmessage, inline=False
+        )
     except:
         embed = discord.Embed(
             title="Error!",
@@ -1231,7 +1502,7 @@ async def points(ctx, member: discord.Member = None):
             description="Try using `;points` @mention",
             color=discord.Colour.from_rgb(r, g, b),
         )
-        await ctx.send(embed=embed)        
+        await ctx.send(embed=embed)
 
 
 @points.error
@@ -1244,8 +1515,9 @@ async def points_error(ctx, error):
         description="Try using `;points` @mention",
         color=discord.Colour.from_rgb(r, g, b),
     )
-    await ctx.send(embed=embed)            
-        
+    await ctx.send(embed=embed)
+
+
 @client.command()
 async def withdraw(ctx, points=None):
     r = 215
@@ -1316,7 +1588,10 @@ async def vote(ctx):
     b = 69
     embed = discord.Embed(
         title=translate_text(ctx, "Vote for Trivia Bot"),
-        description=translate_text(ctx, "Voting for Trivia Bot grants you a 1.5x points multiplier for 12 hours! (Please wait 5 minutes after voting)"),
+        description=translate_text(
+            ctx,
+            "Voting for Trivia Bot grants you a 1.5x points multiplier for 12 hours! (Please wait 5 minutes after voting)",
+        ),
         color=discord.Colour.from_rgb(r, g, b),
     )
     embed.add_field(name="top.gg", value="https://top.gg/bot/715047504126804000/vote")
@@ -1324,7 +1599,6 @@ async def vote(ctx):
         url="https://cdn.discordapp.com/attachments/699123435514888243/715285709187186688/icons8-brain-96.png"
     )
     await ctx.send(embed=embed)
-
 
 
 @client.command()
@@ -1374,9 +1648,7 @@ async def privacy(ctx):
         description="We respect user privacy. Read our privacy policy.",
         color=discord.Colour.from_rgb(r, g, b),
     )
-    embed.add_field(
-        name="triviabot.tech", value="https://triviabot.tech/privacy/"
-    )
+    embed.add_field(name="triviabot.tech", value="https://triviabot.tech/privacy/")
     embed.set_thumbnail(
         url="https://cdn.discordapp.com/attachments/699123435514888243/715285709187186688/icons8-brain-96.png"
     )
@@ -1476,7 +1748,7 @@ async def feedback(ctx):
 
 
 @client.remove_command("help")
-@client.command(aliases=["cmds","commands"], pass_context=True)
+@client.command(aliases=["cmds", "commands"], pass_context=True)
 async def help(ctx):
     r = 215
     g = 91
@@ -1569,7 +1841,9 @@ async def shop(ctx):
         inline=True,
     )
     embed.add_field(
-        name="`;buy pog       `", value="Pog gif (;pog) (25 points)", inline=True,
+        name="`;buy pog       `",
+        value="Pog gif (;pog) (25 points)",
+        inline=True,
     )
     embed.add_field(
         name="`;buy kappa       `",
@@ -1809,20 +2083,28 @@ async def clear_error(ctx, error):
     if isinstance(error, MissingPermissions):
         await ctx.send("Sorry, you do not have permissions to clear messages!")
 
+
 @client.command(aliases=["follow"], brief="Subscirbe to updates")
 # @has_permissions(manage_guild=True)
 async def subscribe(ctx):
     try:
         await client.get_channel(715442979623665695).follow(destination=ctx.channel)
-        await ctx.send('Successfully followed updates! The most important updates will appear in this channel.')
+        await ctx.send(
+            "Successfully followed updates! The most important updates will appear in this channel."
+        )
     except:
-        await ctx.send('Trivia Bot needs `manage_guild` permission to do this. Please grant Trivia Bot this perm and try again.')
+        await ctx.send(
+            "Trivia Bot needs `manage_guild` permission to do this. Please grant Trivia Bot this perm and try again."
+        )
 
 
 @subscribe.error
 async def subscribe_error(ctx, error):
     if isinstance(error, MissingPermissions):
-        await ctx.send("Sorry, you do not have permissions to follow updates. (`manage_guild`)")
+        await ctx.send(
+            "Sorry, you do not have permissions to follow updates. (`manage_guild`)"
+        )
+
 
 @client.command(pass_context=True)
 async def ping(ctx):
@@ -1834,24 +2116,35 @@ async def ping(ctx):
     )
     await ctx.send(embed=embed)
 
+
 @client.command(pass_context=True)
 async def pinglol(ctx, roleid):
     embed = discord.Embed(
         title=None,
-        description="Ok lol pinging <@"+str(roleid)+">",
+        description="Ok lol pinging <@" + str(roleid) + ">",
         color=0xD75B45,
     )
     await ctx.send(embed=embed)
-    await ctx.send("<@"+str(roleid)+">", allowed_mentions=discord.AllowedMentions(everyone=False, users=False, roles=False))
+    await ctx.send(
+        "<@" + str(roleid) + ">",
+        allowed_mentions=discord.AllowedMentions(
+            everyone=False, users=False, roles=False
+        ),
+    )
 
-@client.command(pass_context=True,aliases=["setlang", "set_lang", "setlangauge", "set_langauge"])
+
+@client.command(
+    pass_context=True, aliases=["setlang", "set_lang", "setlangauge", "set_langauge"]
+)
 @has_permissions(manage_guild=True)
 async def lang(ctx, lang_code=None):
-    if lang_code != None and lang_code in ['en','fr','zh-CN','ru']:
-        triviadb.set(str(ctx.guild.id)+'-lang-data', str(lang_code))
+    if lang_code != None and lang_code in ["en", "fr", "zh-CN", "ru"]:
+        triviadb.set(str(ctx.guild.id) + "-lang-data", str(lang_code))
         embed = discord.Embed(
             title="Done",
-            description="Your language has been set to `"+lang_code+'`! Try doing `;trivia`.\nPlease note that translations are a experimental feature and may not function correctly. If you notice any bugs please report them to `https://discord.gg/UHQ33Qe`',
+            description="Your language has been set to `"
+            + lang_code
+            + "`! Try doing `;trivia`.\nPlease note that translations are a experimental feature and may not function correctly. If you notice any bugs please report them to `https://discord.gg/UHQ33Qe`",
             color=0xD75B45,
         )
     else:
@@ -1862,10 +2155,14 @@ async def lang(ctx, lang_code=None):
         )
     await ctx.send(embed=embed)
 
+
 @lang.error
 async def clear_error(ctx, error):
     if isinstance(error, MissingPermissions):
-        await ctx.send("Sorry, you do not have permissions to set this server's language (`manage_guild`)!")
+        await ctx.send(
+            "Sorry, you do not have permissions to set this server's language (`manage_guild`)!"
+        )
+
 
 @client.command(pass_context=True)
 async def count(ctx):
@@ -1917,23 +2214,31 @@ async def givepoints(ctx, member: discord.Member, points=0):
         tbpoints("give", str(member.id), points)
         await ctx.send("Gave {} points to <@{}>".format(points, str(member.id)))
 
+
 @client.command(aliases=["accept"])
 async def approve(ctx, id):
     if str(ctx.message.author.id) in devs:
         try:
-            await client.get_user(int(id)).send('Your question has been approved! Nice job! Users will now see it when doing true/false questions.')
-            await ctx.send('DM Sent to ' + client.get_user(int(id)).name)
+            await client.get_user(int(id)).send(
+                "Your question has been approved! Nice job! Users will now see it when doing true/false questions."
+            )
+            await ctx.send("DM Sent to " + client.get_user(int(id)).name)
         except exception as e:
-            await ctx.send('Error!'  + e)
+            await ctx.send("Error!" + e)
+
 
 @client.command()
-async def deny(ctx, id, *, content:str):
+async def deny(ctx, id, *, content: str):
     if str(ctx.message.author.id) in devs:
         try:
-            await client.get_user(int(id)).send('Your question has been denied for `'+content+'`! Sorry about that :(')
-            await ctx.send('DM Sent to ' + client.get_user(int(id)).name)
+            await client.get_user(int(id)).send(
+                "Your question has been denied for `"
+                + content
+                + "`! Sorry about that :("
+            )
+            await ctx.send("DM Sent to " + client.get_user(int(id)).name)
         except exception as e:
-            await ctx.send('Error!'  + e)
+            await ctx.send("Error!" + e)
 
 
 @client.command()
@@ -1948,6 +2253,7 @@ async def ban(ctx, member: discord.Member):
     if str(ctx.message.author.id) in devs:
         tbpoints("set", str(member.id), -100000000000)
         await ctx.send("Banned <@{}> from playing trivia!".format(str(member.id)))
+
 
 @client.command()
 async def banid(ctx, id: int):
@@ -1984,6 +2290,7 @@ async def setplaying(ctx, message=None):
             )
     else:
         await ctx.send("You are not a admin :(")
+
 
 @client.command(pass_context=True, aliases=["eval", "run"])
 async def _eval(ctx, *, code="You need to input code."):
@@ -2025,7 +2332,8 @@ async def _eval(ctx, *, code="You need to input code."):
                 name="Input :inbox_tray:", value="```py\n" + code + "```", inline=False
             )
             embed.add_field(
-                name="Error :interrobang: ", value=error_value,
+                name="Error :interrobang: ",
+                value=error_value,
             )
             await ctx.send(embed=embed)
             return
@@ -2035,7 +2343,8 @@ async def _eval(ctx, *, code="You need to input code."):
             name="Input :inbox_tray:", value="```py\n" + code + "```", inline=False
         )
         embed.add_field(
-            name="Error :interrobang: ", value="```You are not a admin```",
+            name="Error :interrobang: ",
+            value="```You are not a admin```",
         )
         await ctx.send(embed=embed)
 
@@ -2070,11 +2379,18 @@ async def status_task_two():
         await channel.send(str(len(client.guilds)))
         triviadb.lpush("serverdata", int(len(client.guilds)))
 
+
 async def status_task_three():
     while True:
         await asyncio.sleep(360)
-        await client.get_channel(748286049075200072).edit(name="Server count: "+str(len(client.guilds)))
-        await client.get_channel(748339726041219082).edit(name="Question count: "+str(triviadb.get("trivia_question_count").decode("utf-8")))
+        await client.get_channel(748286049075200072).edit(
+            name="Server count: " + str(len(client.guilds))
+        )
+        await client.get_channel(748339726041219082).edit(
+            name="Question count: "
+            + str(triviadb.get("trivia_question_count").decode("utf-8"))
+        )
+
 
 @client.event
 async def on_ready():
@@ -2086,7 +2402,16 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print("------")
-    n = requests.get("https://opentdb.com/api_token.php?command=request").text
+    async with aiohttp.ClientSession() as session:
+        async with session.get(
+            "https://opentdb.com/api_token.php?command=request"
+        ) as response:
+
+            print("Status:", response.status)
+            print("Content-type:", response.headers["content-type"])
+
+            n = await response.text()
+            print("Body:", await response.text(), "...")
     global triviatoken
     triviatoken = urllib.parse.unquote(loads(n)["token"])
     print("OPENTDB TOKEN --> " + triviatoken)

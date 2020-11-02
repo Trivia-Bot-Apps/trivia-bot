@@ -46,7 +46,7 @@ from discord.ext.commands import (
     MissingPermissions,
     AutoShardedBot,
 )
-from discord.ext import commands, tasks
+from discord.ext import commands, tasks, CommandOnCooldown
 from discord.utils import find
 import time
 import redis

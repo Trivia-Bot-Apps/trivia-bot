@@ -627,20 +627,6 @@ async def truefalse(ctx, category=None):
                     r = await response.text()
                     print("Body:", await response.text(), "...")
             lesspoints = False
-        else:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(
-                    "https://opentdb.com/api.php?amount=1&type=boolean&encode=url3986&category="
-                    + categorynumber
-                ) as response:
-
-                    print("Status:", response.status)
-                    print("Content-type:", response.headers["content-type"])
-
-                    r = await response.text()
-                    print("Body:", await response.text(), "...")
-            lesspoints = True
-
     rc = loads(r)["response_code"]
     if rc != 0:
         async with aiohttp.ClientSession() as session:
@@ -711,7 +697,6 @@ async def truefalse(ctx, category=None):
         async with aiohttp.ClientSession() as session:
             async with session.get(
                 "https://opentdb.com/api.php?amount=1&type=boolean&encode=url3986"
-                + categorynumber
             ) as response:
 
                 print("Status:", response.status)

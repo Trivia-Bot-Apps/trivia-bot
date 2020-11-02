@@ -45,8 +45,9 @@ from discord.ext.commands import (
     has_permissions,
     MissingPermissions,
     AutoShardedBot,
+    CommandOnCooldown
 )
-from discord.ext import commands, tasks, CommandOnCooldown
+from discord.ext import commands, tasks
 from discord.utils import find
 import time
 import redis
@@ -956,7 +957,7 @@ async def truefalse_error(ctx, error):
     r = 215
     g = 91
     b = 69
-    if isinstance(error, discord.ext.CommandOnCooldown):
+    if isinstance(error, CommandOnCooldown):
         embed = discord.Embed(
             title="You are currently on a cooldown",
             description="Try again in 15 seconds.",

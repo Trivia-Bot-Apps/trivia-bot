@@ -956,12 +956,13 @@ async def truefalse_error(ctx, error):
     r = 215
     g = 91
     b = 69
-    embed = discord.Embed(
-        title="You are currently on a cooldown",
-        description="Try again in 15 seconds.",
-        color=discord.Colour.from_rgb(r, g, b),
-    )
-    await ctx.send(embed=embed)
+    if isinstance(error, discord.ext.CommandOnCooldown):
+        embed = discord.Embed(
+            title="You are currently on a cooldown",
+            description="Try again in 15 seconds.",
+            color=discord.Colour.from_rgb(r, g, b),
+        )
+        await ctx.send(embed=embed)
 
 
 @client.command(aliases=["multi", "multiplechoice", "multiple"])

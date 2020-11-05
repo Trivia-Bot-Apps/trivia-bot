@@ -395,7 +395,7 @@ async def on_guild_join(guild):
     if general and general.permissions_for(guild.me).send_messages:
         embed = discord.Embed(
             title="Thank you for adding Trivia Bot!",
-            description="Please do ;help for info and ;trivia to start playing!",
+            description="Please do ;help for info and ;trivia to start playing! For help, join our support server at https://triviabot.tech/server",
             color=discord.Colour.from_rgb(r, g, b),
         )
         embed.set_thumbnail(

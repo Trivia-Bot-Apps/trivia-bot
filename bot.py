@@ -505,7 +505,7 @@ async def on_message(message):
     user_points = tbpoints("get", str(message.author.id), 0)
     if user_points < -10000000 and message.content[
         0 : len(tbprefix("get", message.guild.id))
-    ] == tbprefix("get", message.guild.id):
+    ] == tbprefix("get", message.guild.id) and not (message.author.id in devs):
         embed = discord.Embed(
             title=None,
             description=translate_text(
@@ -725,7 +725,7 @@ async def truefalse(ctx, category=None):
         q = stop_copy(q)
     q = translate_text(ctx, q)
     a = translate_text(ctx, a)
-    if user_points < -10000000:
+    if user_points < -10000000 :
         embed = discord.Embed(
             title=None,
             description=translate_text(

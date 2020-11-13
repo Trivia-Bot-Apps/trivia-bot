@@ -51,8 +51,13 @@ import requests
 import sentry_sdk
 from discord import Game
 from discord.ext import commands, tasks
-from discord.ext.commands import (AutoShardedBot, Bot, CommandOnCooldown,
-                                  MissingPermissions, has_permissions)
+from discord.ext.commands import (
+    AutoShardedBot,
+    Bot,
+    CommandOnCooldown,
+    MissingPermissions,
+    has_permissions,
+)
 from discord.utils import find
 from googletrans import Translator
 from profanityfilter import ProfanityFilter
@@ -112,14 +117,14 @@ categories = {
     "cartoons": "32",
 }
 TOKEN = os.getenv("bottoken")
-if TOKEN == None:
+if TOKEN is None:
     TOKEN = input("Token Please:")
 
 redisurl = os.getenv("REDIS_URL")
-if redisurl == None:
+if redisurl is None:
     try:
         redisurl = input("Please enter the REDIS URL:")
-    except:
+    except BaseException:
         redisurl = "https://redis.triviabot.tech"
 
 dbl_token = os.getenv("DBL_TOKEN")
@@ -136,16 +141,16 @@ triviabotsecrettoken = "NzE1MDQ3NTA0MTI2ODA0MDAwXwsKAdShZjJ5a3d6dw.a=="
 def translate_text(ctx, message):
     try:
         lang_code = triviadb.get(str(ctx.guild.id) + "-lang-data").decode("utf-8")
-    except:
+    except BaseException:
         lang_code = None
-    if lang_code == None or lang_code == "en":
+    if lang_code is None or lang_code == "en":
         return message
     else:
         message = translator.translate(message, dest=lang_code).text
         return message
 
 
-if defaultprefix == None:
+if defaultprefix is None:
     defaultprefix = ";"
 
 
@@ -203,7 +208,7 @@ async def checkvote(userid):
 
                 voteurl = await response.text()
         voted = int(loads(voteurl)["voted"])
-    except:
+    except BaseException:
         print(str(loads(voteurl)))
     return voted == 1
 
@@ -252,7 +257,7 @@ async def get_reaction_answer(msg, author, q, a, ctx):
     except asyncio.TimeoutError:
         try:
             await msg.clear_reactions()
-        except:
+        except BaseException:
             thisisfornothing = 1
         tbpoints("take", author, 1)
         qembed = discord.Embed(
@@ -292,7 +297,7 @@ def tbpoints(statement, key, amount):
         userid = key
         try:
             points = float(triviadb.hgetall("data")[userid.encode("ascii")])
-        except:
+        except BaseException:
             points = 0
         return points
     if statement == "give":
@@ -303,7 +308,7 @@ def tbpoints(statement, key, amount):
             stringdb[key.decode("ascii")] = float(bytedb[key].decode("ascii"))
         try:
             stringdb[userid] += float(amount)
-        except:
+        except BaseException:
             stringdb[userid] = float(amount)
         triviadb.hmset("data", stringdb)
     if statement == "take":
@@ -342,7 +347,7 @@ def tbperms(statement, user, key):
                 return True
             else:
                 return False
-        except:
+        except BaseException:
             return False
     if statement == "give":
         triviadb.hmset(str(user) + "-" + str(key) + "-data", {1: 1})
@@ -356,9 +361,9 @@ def tbprefix(statement, guild, setto=None):
             for key in bytedata.keys():
                 data[key.decode("ascii")] = bytedata[key].decode("ascii")
             return data["prefix"]
-        except:
+        except BaseException:
             return defaultprefix
-    elif statement == "set" and not setto == None:
+    elif statement == "set" and setto is not None:
         triviadb.hmset(str(guild) + "-prefix", {"prefix": setto})
 
 
@@ -377,7 +382,7 @@ async def on_message_delete(message):
 async def snipe(ctx):
     try:
         await ctx.send(str(sniped_messages[ctx.guild.id]))
-    except:
+    except BaseException:
         await ctx.send("No messages found. :()")
 
 
@@ -457,7 +462,7 @@ async def on_guild_remove(guild):
 @has_permissions(manage_guild=True)
 async def setprefix(ctx, prefix=None):
     error = False
-    if prefix == None:
+    if prefix is None:
         error = True
     else:
         try:
@@ -498,9 +503,12 @@ async def on_message(message):
         )
 
     user_points = tbpoints("get", str(message.author.id), 0)
-    if user_points < -10000000 and message.content[
-        0 : len(tbprefix("get", message.guild.id))
-    ] == tbprefix("get", message.guild.id) and not (message.author.id in devs):
+    if (
+        user_points < -10000000
+        and message.content[0 : len(tbprefix("get", message.guild.id))]
+        == tbprefix("get", message.guild.id)
+        and not (message.author.id in devs)
+    ):
         embed = discord.Embed(
             title=None,
             description=translate_text(
@@ -524,7 +532,7 @@ async def bottedservers(ctx):
                 listofowners[str(guild.owner.id)] = (
                     listofowners[str(guild.owner.id)] + 1
                 )
-            except:
+            except BaseException:
                 listofowners[str(guild.owner.id)] = 1
         for serverowner in listofowners:
             if listofowners[serverowner] > 2:
@@ -580,7 +588,7 @@ async def truefalse(ctx, category=None):
     triviadb.incr("trivia_question_count")
     command_startup = time.perf_counter()
     global triviatoken
-    if category == None:
+    if category is None:
         async with aiohttp.ClientSession() as session:
             async with session.get(
                 "https://opentdb.com/api.php?amount=1&type=boolean&encode=url3986"
@@ -646,7 +654,7 @@ async def truefalse(ctx, category=None):
                 n = await response.text()
                 print("Body:", await response.text(), "...")
         triviatoken = urllib.parse.unquote(loads(n)["token"])
-        if category == None:
+        if category is None:
             async with aiohttp.ClientSession() as session:
                 async with session.get(
                     "https://opentdb.com/api.php?amount=1&type=boolean&encode=url3986"
@@ -720,7 +728,7 @@ async def truefalse(ctx, category=None):
         q = stop_copy(q)
     q = translate_text(ctx, q)
     a = translate_text(ctx, a)
-    if user_points < -10000000 :
+    if user_points < -10000000:
         embed = discord.Embed(
             title=None,
             description=translate_text(
@@ -749,7 +757,7 @@ async def truefalse(ctx, category=None):
         )
         try:
             diduservote = await checkvote(ctx.message.author.id)
-        except:
+        except BaseException:
             diduservote = False
         if not diduservote:
             qembed.add_field(
@@ -794,7 +802,7 @@ async def truefalse(ctx, category=None):
                 tbpoints("give", str(uid), pointstogive)
                 try:
                     await msg.clear_reactions()
-                except:
+                except BaseException:
                     hahalols = 1
                 qembed = discord.Embed(
                     title=translate_text(ctx, "Answered Problem"),
@@ -834,7 +842,7 @@ async def truefalse(ctx, category=None):
                 tbpoints("give", str(uid), -1)
                 try:
                     await msg.clear_reactions()
-                except:
+                except BaseException:
                     chatgoesboom = 12
                 qembed = discord.Embed(
                     title=translate_text(ctx, "Answered Problem"),
@@ -870,7 +878,7 @@ async def truefalse(ctx, category=None):
                 tbpoints("give", str(uid), -1)
                 try:
                     await msg.clear_reactions()
-                except:
+                except BaseException:
                     waitwhat = 9
                 qembed = discord.Embed(
                     title=translate_text(ctx, "Answered Problem"),
@@ -905,7 +913,7 @@ async def truefalse(ctx, category=None):
                 tbpoints("give", str(uid), pointstogive)
                 try:
                     await msg.clear_reactions()
-                except:
+                except BaseException:
                     finaloneyay = 1993
                 qembed = discord.Embed(
                     title=translate_text(ctx, "Answered Problem"),
@@ -964,7 +972,7 @@ async def multichoice(ctx, category=None):
     command_startup = time.perf_counter()
     f = open("custom_questions.json", "r")
     custom_data = json.load(f)
-    if not category in list(categories) and not category in list(custom_data["multi"]):
+    if category not in list(categories) and category not in list(custom_data["multi"]):
         async with aiohttp.ClientSession() as session:
             async with session.get(
                 "https://opentdb.com/api.php?amount=1&type=multiple&encode=url3986"
@@ -1057,7 +1065,7 @@ async def multichoice(ctx, category=None):
         )
         msg = await ctx.send(embed=qembed)
         answered = await get_multi_reaction_answer(msg, ctx.author, ctx)
-        if answered == None:
+        if answered is None:
             qembed = discord.Embed(
                 title=translate_text(ctx, "Answered Problem"),
                 description=translate_text(
@@ -1096,7 +1104,7 @@ async def multichoice(ctx, category=None):
         else:
             try:
                 diduservote = await checkvote(ctx.message.author.id)
-            except:
+            except BaseException:
                 diduservote = False
             pointstogive = 1 if category in categories.keys() else 2
             if diduservote:
@@ -1110,7 +1118,7 @@ async def multichoice(ctx, category=None):
             pointstogive = pointstogive * mult * mult2
             try:
                 await msg.clear_reactions()
-            except:
+            except BaseException:
                 print("someone didnt give me perms to clear messages. not poggers")
             if answered == correct:
                 await msg.add_reaction("✅")
@@ -1237,12 +1245,12 @@ async def globalleaderboard(ctx, number=None):
     g = 91
     b = 69
     check = False
-    if number == None:
+    if number is None:
         check = True
     try:
         if int(number) == 3:
             check = True
-    except:
+    except BaseException:
         print("oh well")
     if check:
         data = tbpoints("data", 0, 0)
@@ -1258,31 +1266,31 @@ async def globalleaderboard(ctx, number=None):
                     found = True
                 else:
                     i += 1
-        except:
+        except BaseException:
             position = translate_text(ctx, "You have not played trivia yet :(")
         try:
             firstuserid = int(sorteddata[0][0])
-        except:
+        except BaseException:
             firstuserid = "null"
         try:
             seconduserid = int(sorteddata[1][0])
-        except:
+        except BaseException:
             seconduserid = "null"
         try:
             thirduserid = int(sorteddata[2][0])
-        except:
+        except BaseException:
             thirduserid = "null"
         try:
             firstpoints = data[str(firstuserid)]
-        except:
+        except BaseException:
             firstpoints = "null"
         try:
             secondpoints = data[str(seconduserid)]
-        except:
+        except BaseException:
             secondpoints = "null"
         try:
             thirdpoints = data[str(thirduserid)]
-        except:
+        except BaseException:
             thirdpoints = "null"
         embed = discord.Embed(
             title=translate_text(ctx, "Leaderboard"),
@@ -1330,7 +1338,7 @@ async def globalleaderboard(ctx, number=None):
                     found = True
                 else:
                     i += 1
-        except:
+        except BaseException:
             position = translate_text(ctx, "You have not played trivia yet :(")
         userids = []
         userpoints = []
@@ -1413,27 +1421,27 @@ async def serverleaderboard(ctx):
         )
         try:
             firstuserid = server_members[0]
-        except:
+        except BaseException:
             firstuserid = "null"
         try:
             seconduserid = server_members[1]
-        except:
+        except BaseException:
             seconduserid = "null"
         try:
             thirduserid = server_members[2]
-        except:
+        except BaseException:
             thirduserid = "null"
         try:
             firstpoints = data[firstuserid]
-        except:
+        except BaseException:
             firstpoints = "null"
         try:
             secondpoints = data[seconduserid]
-        except:
+        except BaseException:
             secondpoints = "null"
         try:
             thirdpoints = data[thirduserid]
-        except:
+        except BaseException:
             thirdpoints = "null"
         r = 215
         g = 91
@@ -1462,7 +1470,7 @@ async def serverleaderboard(ctx):
         embed.add_field(
             name=translate_text(ctx, "3rd Place"), value=thirdmessage, inline=False
         )
-    except:
+    except BaseException:
         embed = discord.Embed(
             title="Error!",
             description="This command has been temporarily disabled while we tidy up things on our end. (ETA: 1 hour)",
@@ -1499,7 +1507,7 @@ async def points(ctx, member: discord.Member = None):
         embed.add_field(name=translate_text(ctx, "Username"), value=username)
         embed.add_field(name=translate_text(ctx, "Points"), value=current_points)
         await ctx.send(embed=embed)
-    except:
+    except BaseException:
         r = 215
         g = 91
         b = 69
@@ -1529,7 +1537,7 @@ async def withdraw(ctx, points=None):
     r = 215
     g = 91
     b = 69
-    if points == None or float(points) <= 0.0:
+    if points is None or float(points) <= 0.0:
         embed = discord.Embed(
             title="Notice:",
             description="You need to enter the amount of points you want to withdraw. (The amount of points must be positive.)",
@@ -1565,7 +1573,7 @@ async def withdraw(ctx, points=None):
                     color=discord.Colour.from_rgb(r, g, b),
                 )
                 tbpoints("take", str(ctx.message.author.id), points)
-            except:
+            except BaseException:
                 triviadb.set(
                     key,
                     "".join(
@@ -1612,7 +1620,7 @@ async def receive(ctx, key=None, value=None):
     r = 215
     g = 91
     b = 69
-    if key != None and value != None:
+    if key is not None and value is not None:
         if triviadb.get(key).decode("utf-8") == value:
             tbpoints("give", str(ctx.message.author.id), float(triviadb.get(value)))
             embed = discord.Embed(
@@ -1967,7 +1975,7 @@ async def buy(ctx, product=None):
     r = 215
     g = 91
     b = 69
-    if product == None:
+    if product is None:
         embed = discord.Embed(color=discord.Colour.from_rgb(r, g, b))
         embed.set_author(name="Store")
         embed.add_field(
@@ -2098,7 +2106,7 @@ async def subscribe(ctx):
         await ctx.send(
             "Successfully followed updates! The most important updates will appear in this channel."
         )
-    except:
+    except BaseException:
         await ctx.send(
             "Trivia Bot needs `manage_guild` permission to do this. Please grant Trivia Bot this perm and try again."
         )
@@ -2144,7 +2152,7 @@ async def pinglol(ctx, roleid):
 )
 @has_permissions(manage_guild=True)
 async def lang(ctx, lang_code=None):
-    if lang_code != None and lang_code in ["en", "fr", "zh-CN", "ru"]:
+    if lang_code is not None and lang_code in ["en", "fr", "zh-CN", "ru"]:
         triviadb.set(str(ctx.guild.id) + "-lang-data", str(lang_code))
         embed = discord.Embed(
             title="Done",
@@ -2288,7 +2296,7 @@ async def uptime(ctx):
 @client.command(pass_context=True)
 async def setplaying(ctx, message=None):
     if str(ctx.message.author.id) in devs:
-        if message == None:
+        if message is None:
             await ctx.send("Nothing Provided")
         else:
             await client.change_presence(
@@ -2400,7 +2408,8 @@ async def status_task_three():
 
 @client.event
 async def on_ready():
-    # await client.change_presence(activity=discord.Activity(name=';help || Discord Trivia', type=3))
+    # await client.change_presence(activity=discord.Activity(name=';help ||
+    # Discord Trivia', type=3))
     client.loop.create_task(status_task())
     client.loop.create_task(status_task_two())
     client.loop.create_task(status_task_three())
@@ -2425,19 +2434,19 @@ async def on_ready():
 
 try:
     client.load_extension("cogs.topgg")
-except:
+except BaseException:
     print("Top.gg Loading Failed")
 start_time = datetime.datetime.utcnow()  # Timestamp of when it came online
 try:
     client.load_extension("cogs.errors")
-except:
+except BaseException:
     print("Error Cog Loading Failed")
 try:
     client.load_extension("cogs.stat")
-except:
+except BaseException:
     print("Stats Cog Loading Failed")
 try:
     client.load_extension("jishaku")
-except:
+except BaseException:
     print("jsk loading failed")
 client.run(TOKEN)

@@ -20,47 +20,42 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-import smtplib
-import discord
-import base64
-from operator import itemgetter
-import requests
-import random
 import asyncio
-import aiohttp
-import psutil
-import urllib
+import base64
 import datetime
-import random
-import sys
-import traceback
-import string
-import random
-import secrets
-import urllib.parse, urllib.request, re
-from discord import Game
-from json import loads
-from discord.ext.commands import (
-    Bot,
-    has_permissions,
-    MissingPermissions,
-    AutoShardedBot,
-    CommandOnCooldown,
-)
-from discord.ext import commands, tasks
-from discord.utils import find
-import time
-import redis
-import os
 import json
-import dbl
 import logging
+import os
+import random
+import re
+import secrets
+import smtplib
+import string
 import subprocess
-from profanityfilter import ProfanityFilter
-import sentry_sdk
+import sys
+import time
+import traceback
+import urllib
+import urllib.parse
+import urllib.request
+from json import loads
+from operator import itemgetter
+
+import aiohttp
+import dbl
+import discord
 import homoglyphs as hg
+import psutil
+import redis
+import requests
+import sentry_sdk
+from discord import Game
+from discord.ext import commands, tasks
+from discord.ext.commands import (AutoShardedBot, Bot, CommandOnCooldown,
+                                  MissingPermissions, has_permissions)
+from discord.utils import find
 from googletrans import Translator
-import logging
+from profanityfilter import ProfanityFilter
 
 logging.basicConfig(level=logging.INFO)
 

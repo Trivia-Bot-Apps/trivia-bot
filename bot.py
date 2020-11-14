@@ -191,6 +191,7 @@ intents.presences = False
 client = commands.AutoShardedBot(
     intents=intents,
     command_prefix=determineprefix,
+    case_insensitive=True,
     allowed_mentions=discord.AllowedMentions(roles=False, users=True, everyone=False),
 )
 

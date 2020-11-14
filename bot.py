@@ -2153,7 +2153,7 @@ async def pinglol(ctx, roleid):
 )
 @has_permissions(manage_guild=True)
 async def lang(ctx, lang_code=None):
-    if lang_code is not None and lang_code in ["en", "fr", "zh-CN", "ru"]:
+    if lang_code is not None and lang_code in ["en", "fr", "zh-CN", "ru", "es"]:
         triviadb.set(str(ctx.guild.id) + "-lang-data", str(lang_code))
         embed = discord.Embed(
             title="Done",
@@ -2165,7 +2165,7 @@ async def lang(ctx, lang_code=None):
     else:
         embed = discord.Embed(
             title="Error",
-            description="You have not specified your language. Do it by doing `;setlang en` (English) or `;setlang fr` (French) or `;setlang zh-CN` (Chinese) or `;setlang ru` (Russian)",
+            description="You have not specified your language. Do it by doing `;setlang en` (English) or `;setlang fr` (French) or `;setlang zh-CN` (Chinese) or `;setlang ru` (Russian) or `;setlang es` (Spanish)",
             color=0xD75B45,
         )
     await ctx.send(embed=embed)

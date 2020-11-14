@@ -2086,7 +2086,7 @@ async def _categories(ctx):
     await ctx.send(embed=embed)
 
 
-@client.command(aliases=["Clear"], brief="Clear Messages")
+@client.command(aliases=["massdelete"], brief="Clear Messages")
 @has_permissions(manage_messages=True)
 async def clear(ctx, amount):
     amount = int(amount) + 1

@@ -140,7 +140,7 @@ triviabotsecrettoken = "NzE1MDQ3NTA0MTI2ODA0MDAwXwsKAdShZjJ5a3d6dw.a=="
 
 def translate_text(ctx, message):
     try:
-        lang_code = triviadb.get(str(ctx.guild.id) + "-lang-data").decode("utf-8")
+        lang_code = triviadb.hget('languages', str(ctx.guild.id)).decode("utf-8")
     except BaseException:
         lang_code = None
     if lang_code is None or lang_code == "en":
@@ -157,7 +157,7 @@ if defaultprefix is None:
 def stop_copy(input):
     output = ""
     for letter in input:
-        if random.randint(1, 9) == 1:
+        if random.randint(1, 4) == 1:
             if letter == " ":
                 new_letter = " "
             else:
@@ -297,7 +297,7 @@ def tbpoints(statement, key, amount):
     if statement == "get":
         userid = key
         try:
-            points = float(triviadb.hgetall("data")[userid.encode("ascii")])
+            points = float(triviadb.hget("data", userid.encode("ascii")))
         except BaseException:
             points = 0
         return points
@@ -338,6 +338,9 @@ def tbpoints(statement, key, amount):
 
 
 def tbperms(statement, user, key):
+    return False;
+    # Will add back later
+    """
     if statement == "check":
         try:
             bytedata = triviadb.hgetall(str(user) + "-" + str(key) + "-data")
@@ -352,20 +355,18 @@ def tbperms(statement, user, key):
             return False
     if statement == "give":
         triviadb.hmset(str(user) + "-" + str(key) + "-data", {1: 1})
+    """
 
 
 def tbprefix(statement, guild, setto=None):
     if statement == "get":
         try:
-            bytedata = triviadb.hgetall(str(guild) + "-prefix")
-            data = {}
-            for key in bytedata.keys():
-                data[key.decode("ascii")] = bytedata[key].decode("ascii")
-            return data["prefix"]
+            bytedata = triviadb.hget("prefixes", str(guild))
+            return bytedata.decode("ascii")
         except BaseException:
             return defaultprefix
     elif statement == "set" and setto is not None:
-        triviadb.hmset(str(guild) + "-prefix", {"prefix": setto})
+        triviadb.hset('prefixes', {str(guild): setto})
 
 
 @client.event
@@ -2152,12 +2153,12 @@ async def pinglol(ctx, roleid):
 
 
 @client.command(
-    pass_context=True, aliases=["setlang", "set_lang", "setlangauge", "set_langauge"]
+    pass_context=True, aliases=["setlang", "set_lang", "setlangauge", "set_langauge", "language"]
 )
 @has_permissions(manage_guild=True)
 async def lang(ctx, lang_code=None):
     if lang_code is not None and lang_code in ["en", "fr", "zh-CN", "ru", "es"]:
-        triviadb.set(str(ctx.guild.id) + "-lang-data", str(lang_code))
+        triviadb.hmset("languages", {str(ctx.guild.id), str(lang_code)})
         embed = discord.Embed(
             title="Done",
             description="Your language has been set to `"

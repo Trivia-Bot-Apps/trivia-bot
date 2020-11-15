@@ -1682,6 +1682,9 @@ async def botservers(ctx):
 async def pull(ctx):
     if str(ctx.message.author.id) in devs:
         await ctx.send("Updating!")
+        status_channel = client.get_channel(777336857943867394)
+        sent_message = await status_channel.send('<a:Yellow:772561528946950184> I\'m currently updating. Expect me to be online in the next 30 seconds!')
+        await sent_message.publish()
         subprocess.call(["systemctl", "restart", "updatescript"])
     else:
         await ctx.send("This command is admin-only")

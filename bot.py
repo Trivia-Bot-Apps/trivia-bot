@@ -338,24 +338,17 @@ def tbpoints(statement, key, amount):
 
 
 def tbperms(statement, user, key):
-    return False;
-    # Will add back later
-    """
     if statement == "check":
         try:
-            bytedata = triviadb.hgetall(str(user) + "-" + str(key) + "-data")
-            data = {}
-            for key in bytedata.keys():
-                data[key.decode("ascii")] = bytedata[key].decode("ascii")
-            if data["1"] == "1":
+            bytedata = triviadb.hget("perms", str(key) + '-' + str(user))
+            if bytedata.decode("ascii") == "1":
                 return True
             else:
                 return False
         except BaseException:
             return False
     if statement == "give":
-        triviadb.hmset(str(user) + "-" + str(key) + "-data", {1: 1})
-    """
+        bytedata = triviadb.hset("perms", str(key) + '-' + str(user), "1")
 
 
 def tbprefix(statement, guild, setto=None):

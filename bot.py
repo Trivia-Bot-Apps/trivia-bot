@@ -2454,4 +2454,8 @@ try:
     client.load_extension("jishaku")
 except BaseException:
     print("jsk loading failed")
+try:
+    client.load_extension("cogs.admin")
+except BaseException:
+    print("admin cog failed to load")
 client.run(TOKEN)

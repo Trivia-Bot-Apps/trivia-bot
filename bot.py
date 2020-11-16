@@ -50,13 +50,14 @@ import redis
 import requests
 import sentry_sdk
 from discord import Game
-from discord.ext import commands, tasks
+from discord.ext import commands, tasks, menus
 from discord.ext.commands import (
     AutoShardedBot,
     Bot,
     CommandOnCooldown,
     MissingPermissions,
     has_permissions,
+    MinimalHelpCommand,
 )
 from discord.utils import find
 from googletrans import Translator

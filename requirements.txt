@@ -17,3 +17,4 @@ statcord.py==3.0.4
 jishaku==1.19.1.200 
 cchardet==2.1.7
 aiodns==2.0.0
+discord-ext-menus @ git+https://github.com/Rapptz/discord-ext-menus@6f2b873bf0d28903eb752aa1166b3aac26dc9007

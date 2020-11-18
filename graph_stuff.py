@@ -10,13 +10,13 @@ Running = True
 
 byte_list = triviadb.lrange("serverdata", 0, 10000000)
 
-list = []
+results = []
 
 for count in byte_list:
-    list.append(int(count.decode('utf-8')))
+    results.append(int(count.decode('utf-8')))
 
-list.reverse()
-y = list
+results.reverse()
+y = results
 x = np.arange(len(y))
 
 fig = go.Figure(data=go.Scatter(x=x, y=y))

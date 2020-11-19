@@ -1717,14 +1717,13 @@ async def serverstats(ctx):
                 else:
                     botservers += 1
         returnvalue = f"""```css
-        Bot Servers     [ >30 Bots ]:  {numberofbots}
-        Nano Servers    [ <10      ]:  {nano}
-        Tiny Servers    [ 10+      ]:  {tiny}
-        Small Servers   [ 100+     ]:  {small}
-        Medium Servers  [ 500+     ]:  {medium}
-        Large Servers   [ 1000+    ]:  {large}
-        Massive Servers [ 5000+    ]:  {massive}
-        ```"""
+Bot Servers     [ >30 Bots ]:  {numberofbots}
+Nano Servers    [ <10      ]:  {nano}
+Tiny Servers    [ 10+      ]:  {tiny}
+Small Servers   [ 100+     ]:  {small}
+Medium Servers  [ 500+     ]:  {medium}
+Large Servers   [ 1000+    ]:  {large}
+Massive Servers [ 5000+    ]:  {massive}```"""
         await ctx.send(returnvalue)
 
 

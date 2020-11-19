@@ -1203,6 +1203,7 @@ async def triviadebug(ctx):
 
 
 @client.command(pass_context=True, aliases=["botstats", "botinfo", "stats", "info"])
+@commands.cooldown(1, 7, commands.BucketType.user)
 async def botstatus(ctx):
 
     start = time.perf_counter()

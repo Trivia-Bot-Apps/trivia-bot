@@ -1681,6 +1681,54 @@ async def botservers(ctx):
 
 
 @client.command(pass_context=True)
+async def serverstats(ctx):
+    if str(ctx.message.author.id) in devs:
+        botservers = 0
+        nano = 0
+        tiny = 0
+        small = 0
+        medium = 0
+        large = 0
+        massive = 0
+        for guild in client.guilds:
+            numberofbots = 0
+            for member in guild.members:
+                if member.bot:
+                    numberofbots += 1
+            if numberofbots < 30:
+                gl = len(guild.members)
+                if gl > 0:
+                    if gl > 10:
+                        if gl > 100:
+                            if gl > 500:
+                                if gl > 1000:
+                                    if gl > 5000:
+                                        massive += 1
+                                    else:
+                                        large += 1
+                                else:
+                                    medium += 1
+                            else:
+                                small += 1
+                        else:
+                            tiny += 1
+                    else:
+                        nano += 1
+                else:
+                    botservers += 1
+        returnvalue = f"""```css
+        Bot Servers     [ >30 Bots ]:  {numberofbots}
+        Nano Servers    [ <10      ]:  {nano}
+        Tiny Servers    [ 10+      ]:  {tiny}
+        Small Servers   [ 100+     ]:  {small}
+        Medium Servers  [ 500+     ]:  {medium}
+        Large Servers   [ 1000+    ]:  {large}
+        Massive Servers [ 5000+    ]:  {massive}
+        ```"""
+        await ctx.send(returnvalue)
+
+
+@client.command(pass_context=True)
 async def pull(ctx):
     if str(ctx.message.author.id) in devs:
         await ctx.send("Updating!")

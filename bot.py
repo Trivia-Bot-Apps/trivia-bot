@@ -520,7 +520,7 @@ async def on_message(message):
             color=0xD75B45,
         )
         await message.channel.send(embed=embed)
-    elif message.guild.id in banned_guilds:
+    elif message.guild.id in banned_guilds and and message.content[0 : len(tbprefix("get", message.guild.id))] == tbprefix("get", message.guild.id):
         embed = discord.Embed(
             title=None,
             description=translate_text(

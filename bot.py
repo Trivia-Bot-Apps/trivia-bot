@@ -62,7 +62,7 @@ from discord.ext.commands import (
 from discord.utils import find
 from googletrans import Translator
 from profanityfilter import ProfanityFilter
-
+banned_guilds = [579867551790661653]
 logging.basicConfig(level=logging.INFO)
 
 logger = logging.getLogger("discord")
@@ -511,6 +511,16 @@ async def on_message(message):
         == tbprefix("get", message.guild.id)
         and not (message.author.id in devs)
     ):
+        embed = discord.Embed(
+            title=None,
+            description=translate_text(
+                message,
+                "Hey! ~~A man has fallen into the river at Lego:tm: City!~~ Nah JK, you've been banned from playing trivia. Join the support server at https://discord.gg/unGJChm to appeal",
+            ),
+            color=0xD75B45,
+        )
+        await message.channel.send(embed=embed)
+    elif message.guild.id in banned_guilds:
         embed = discord.Embed(
             title=None,
             description=translate_text(
@@ -1679,7 +1689,11 @@ async def botservers(ctx):
         await ctx.send("I'm in " + str(len(client.guilds)) + " servers!")
     else:
         await ctx.send("This command is admin-only")
-
+        
+@client.command(pass_context=True)
+async def banserver(ctx, id: int):
+    if str(ctx.message.author.id) in devs:
+        banned_guilds.append(id)
 
 @client.command(pass_context=True)
 async def serverstats(ctx):

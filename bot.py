@@ -557,6 +557,7 @@ async def delete(ctx, channel_id, message_id):
 
 
 @client.command()
+@commands.cooldown(3, 5, commands.BucketType.user)
 async def trivia(ctx, category=None):
     random_number = random.randint(1, 100)
     if random_number == 69:
@@ -585,7 +586,7 @@ async def quickfire(ctx, number=None):
 
 
 @client.command(aliases=["tf"])
-@commands.cooldown(7, 5, commands.BucketType.user)
+@commands.cooldown(3, 5, commands.BucketType.user)
 async def truefalse(ctx, category=None):
     triviadb.incr("trivia_question_count")
     command_startup = time.perf_counter()
@@ -968,7 +969,7 @@ async def truefalse_error(ctx, error):
 
 
 @client.command(aliases=["multi", "multiplechoice", "multiple"])
-@commands.cooldown(7, 5, commands.BucketType.user)
+@commands.cooldown(3, 5, commands.BucketType.user)
 async def multichoice(ctx, category=None):
     triviadb.incr("trivia_question_count")
     command_startup = time.perf_counter()

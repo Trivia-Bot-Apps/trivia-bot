@@ -62,7 +62,9 @@ from discord.ext.commands import (
 from discord.utils import find
 from googletrans import Translator
 from profanityfilter import ProfanityFilter
+
 banned_guilds = [579867551790661653]
+
 logging.basicConfig(level=logging.INFO)
 
 logger = logging.getLogger("discord")

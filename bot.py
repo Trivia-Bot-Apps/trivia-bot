@@ -2475,6 +2475,11 @@ async def status_task_three():
             + str(triviadb.get("trivia_question_count").decode("utf-8"))
         )
 
+async def status_task_four():
+    while True:
+        await asyncio.sleep(86400)
+        channel = client.get_channel(779883179774836747)
+        await channel.send('New buckup!', file=discord.File('/var/lib/redis/dump.rdb'))
 
 @client.event
 async def on_ready():
@@ -2483,6 +2488,7 @@ async def on_ready():
     client.loop.create_task(status_task())
     client.loop.create_task(status_task_two())
     client.loop.create_task(status_task_three())
+    client.loop.create_task(status_task_four())
     print("Logged in as")
     print(client.user.name)
     print(client.user.id)

@@ -13,7 +13,7 @@ profanityfilter==2.0.6
 homoglyphs==2.0.3
 sentry-sdk==0.16.1
 googletrans==4.0.0-rc1
-statcord.py==3.0.4
+statcord.py==3.0.5
 jishaku==1.20.0.220 
 cchardet==2.1.7
 aiodns==2.0.0

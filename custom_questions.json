@@ -1,23 +1,298 @@
 {
-    "tf": {
-        "meta": {
-            "This bot is coded in JavaScript.": false,
-            "Discord was created in 2017.": false,
-            "Voting can give you more points.": true,
-            "A 1.5x points multipler can be bought from the shop for 500 points": true,
-            "Roles in the support server can be bought from the shop": true
-        } 
-    },
-    "multi": {
-        "nfl": {
-            "What does NFL stand for?": {
-                "correct_answer": "National Football League",
-                "incorrect_answers": [
-                    "Nation's Football Legends",
-                    "New Football Lords",
-                    "NFL Flordia League"
-                ]
-            }
-        }
-    }
+	"multi": {
+		"myths": {
+			"In Norse mythology, what is the name of the Giant who held a race, a drinking contest, and a brawl, and his team won all three?": {
+				"correct_answer": "Utgard-Loki",
+				"incorrect_answers": [
+					"Loki",
+					"Surtur",
+					"Skadi"
+				]
+			},
+			"What concept in the shape of a human did Thor lose to in a wrestling contest?": {
+				"correct_answer": "Time",
+				"incorrect_answers": [
+					"Luck",
+					"Thought",
+					"Wisdom"
+				]
+			},
+			"What element in the shape of a human did Loki lose to in an eating contest?": {
+				"correct_answer": "Fire",
+				"incorrect_answers": [
+					"Lightning",
+					"Water",
+					"Air"
+				]
+			},
+			"What concept in the shape of a human did Thjalfi lose to in a race?": {
+				"correct_answer": "Thought",
+				"incorrect_answers": [
+					"Time",
+					"Luck",
+					"Wisdom"
+				]
+			},
+			"How did Thor lose a drinking contest with a Giant?": {
+				"correct_answer": "His drinking horn was connected to the ocean",
+				"incorrect_answers": [
+					"Loki, in the shape of a fly, bit him as he was drinking",
+					"The Giant was actually the concept, Thirst",
+					"His stomach was smaller than the Giant's"
+				]
+			},
+			"Which body part did Skadi try to guess belonged to Baldr, in an attempt to marry him?": {
+				"correct_answer": "Feet",
+				"incorrect_answers": [
+					"Head",
+					"Arms",
+					"Hands"
+				]
+			},
+			"Which plant did the blind Hod launch at his brother, Baldr, to kill him?": {
+				"correct_answer": "Mistletoe",
+				"incorrect_answers": [
+					"Stinging Nettle",
+					"Rose",
+					"Holly"
+				]
+			},
+			"Why does Thor's hammer, Mjolnir, have a short haft?": {
+				"correct_answer": "Loki, in the shape of a fly, bit the blacksmith during forging",
+				"incorrect_answers": [
+					"It makes the hammer easier to throw",
+					"When the hammer was made, there was a shortage of divine wood",
+					"The head was so heavy and powerful, it couldn't be lifted with a longer haft"
+				]
+			},
+			"Which of these will NOT occur during Ragnarok?": {
+				"correct_answer": "Hod is killed by Nidhogg",
+				"incorrect_answers": [
+					"Odin is killed by Fenrir",
+					"Thor is killed by Jormungand",
+					"Loki is killed by Heimdall"
+				]
+			},
+			"How did Odin gain his wisdom?": {
+				"correct_answer": "He gave his eye to Mimir in exchange for a drink from his well, then hung himself on Yggdrasil for 9 days",
+				"incorrect_answers": [
+					"He had his liver pecked out by birds, which then regrew and was pecked out again for 40 days and 40 nights",
+					"He was born with it, being ruler of the Aesir in Asgard",
+					"He studied the runes beneath Yggdrasil"
+				]
+			},
+			"Who is the central protagonist of 'Journey to the West', whom the supporting characters assist on his journey?": {
+				"correct_answer": "Tripitaka",
+				"incorrect_answers": [
+					"Sun Wukong",
+					"Pigsy",
+					"Sandy"
+				]
+			},
+			"Who are the progenitors of humanity in Chinese mythology?": {
+				"correct_answer": "Nu Wa and Fu Xi",
+				"incorrect_answers": [
+					"Nu Wa and Shennong",
+					"Huang Di and Lei Zu",
+					"Shennong and Lei Zu"
+				]
+			},
+			"Who was responsible for finally stopping the Great Flood?": {
+				"correct_answer": "Yu the Great",
+				"incorrect_answers": [
+					"Chong Li",
+					"Nu Wa",
+					"Fu Xi"
+				]
+			},
+			"How was Yu the Great born?": {
+				"correct_answer": "Crawled out of his father's belly in animal form",
+				"incorrect_answers": [
+					"Sprung forth from his father's forehead, fully grown",
+					"As a baby, from his mother",
+					"He was not born, he always was"
+				]
+			},
+			"Which of these is Shennong NOT known for inventing?": {
+				"correct_answer": "Meditation",
+				"incorrect_answers": [
+					"The Five Grains",
+					"Acupuncture",
+					"Traditional Chinese Medicine"
+				]
+			},
+			"How long did the Jade Emperor cultivate Tao before attaining immortality?": {
+				"correct_answer": "226,800,000 years",
+				"incorrect_answers": [
+					"226,800,000 days",
+					"226,800 years",
+					"226,800 days"
+				]
+			},
+			"How many different things can Sun Wukong transform into?": {
+				"correct_answer": "72",
+				"incorrect_answers": [
+					"64",
+					"42",
+					"8"
+				]
+			},
+			"What was the armor and weaponry of the Terracotta Army made out of?": {
+				"correct_answer": "Bronze",
+				"incorrect_answers": [
+					"Steel",
+					"Iron",
+					"Wood"
+				]
+			},
+			"Which legendary figure did NOT kill his own brother?": {
+				"correct_answer": "Thor",
+				"incorrect_answers": [
+					"Hod",
+					"Set",
+					"Cain"
+				]
+			},
+			"Which of these is NOT a god of agriculture?": {
+				"correct_answer": "Isis",
+				"incorrect_answers": [
+					"Demeter",
+					"Kronos",
+					"Shennong"
+				]
+			},
+			"Who is the Egyptian god of virility?": {
+				"correct_answer": "Sobek",
+				"incorrect_answers": [
+					"Isis",
+					"Horus",
+					"Ra"
+				]
+			},
+			"Which god will weigh your heart against a feather to determine if you would be either allowed to enter the underworld, or instead have your heart eaten?": {
+				"correct_answer": "Anubis",
+				"incorrect_answers": [
+					"Thoth",
+					"Ptah",
+					"Osiris"
+				]
+			},
+			"Set has the head of what animal?": {
+				"correct_answer": "Unknown",
+				"incorrect_answers": [
+					"Jackal",
+					"Aardvark",
+					"Dog"
+				]
+			},
+			"What animals compose the goddess Ammit, devourer of the dead?": {
+				"correct_answer": "Crocodile, hippopotamus, and lion",
+				"incorrect_answers": [
+					"Human, eagle, and lion",
+					"Snake, goat, and lion",
+					"Falcon, eagle, and lion"
+				]
+			},
+			"In Egyptian mythology, what is a person's life force called, which is required to be alive?": {
+				"correct_answer": "Ka",
+				"incorrect_answers": [
+					"Ba",
+					"Sa",
+					"Ankh"
+				]
+			},
+			"Which of these is NOT a god or goddess related to violence?": {
+				"correct_answer": "Frey",
+				"incorrect_answers": [
+					"Sekhmet",
+					"Kali",
+					"Ares"
+				]
+			},
+			"Who is the ancient Egyptian god or goddess of beer?": {
+				"correct_answer": "Nephthys",
+				"incorrect_answers": [
+					"Ptah",
+					"Sobek",
+					"Isis"
+				]
+			},
+			"Which god attacks Ra at the end of every day, and must be defeated for a new day to begin?": {
+				"correct_answer": "Apep",
+				"incorrect_answers": [
+					"Set",
+					"Sobek",
+					"Anubis"
+				]
+			},
+			"How was the sky goddess, Nut, able to give birth to her five children, though the sun god, Ra, decreed she would not on any day of the year?": {
+				"correct_answer": "Nut stole light from the moon to make five additional days on top of the original 360",
+				"incorrect_answers": [
+					"Nut was older, larger, and therefore more powerful than Ra",
+					"With the combined power of her husband Geb, the earth god, they were more powerful than Ra",
+					"Nut struck a bargain with Anubis, that she could have her children in the underworld"
+				]
+			},
+			"Eating what fruit kept Persephone in the underworld for part of the year, her absence causing winter?": {
+				"correct_answer": "Pomegranate seeds",
+				"incorrect_answers": [
+					"Grapes",
+					"Olives",
+					"Apricots"
+				]
+			},
+			"Which is these is NOT a danger encountered by Odysseus on his way back home from Troy?": {
+				"correct_answer": "Talos, the bronze colossus",
+				"incorrect_answers": [
+					"Scylla and Charybdis",
+					"Circe, the Witch",
+					"Polyphemus, the Cyclops"
+				]
+			},
+			"Which is these is NOT a danger encountered by Jason and the Argonauts on their quest for the golden fleece?": {
+				"correct_answer": "Polyphemus, the Cyclops",
+				"incorrect_answers": [
+					"Scylla and Charybdis",
+					"Talos, the bronze colossus",
+					"The Sirens"
+				]
+			},
+			"Which legendary figure gave fire to man after it was taken away by Zeus?": {
+				"correct_answer": "Prometheus",
+				"incorrect_answers": [
+					"Hephaestus",
+					"Hercules",
+					"Helios"
+				]
+			},
+			"Which of these is one of the twelve labors of Hercules?": {
+				"correct_answer": "Hold the world up for Atlas",
+				"incorrect_answers": [
+					"Capture Cerberus",
+					"Clean the Augean Stables",
+					"Steal the belt of the Amazon Queen, Hippolyta"
+				]
+			}
+		}
+	},
+	"tf": {
+		"myths": {
+			"Skadi is an Aesir god.": false,
+			"Freyja is an Aesir god.": false,
+			"Njord is a Vanir god.": true,
+			"Odin is an Aesir god.": true,
+			"Loki is the father of Odin's eight-legged horse, Sleipnir.": true,
+			"Thor's wife, Sif, has hair made out of mithril.": false,
+			"After Ragnarok, the world will end, and life as we know it is forever gone.": false,
+			"Chong Li is the god of fire.": true,
+			"Huang Di is also called the Jade Emperor.": false,
+			"The ankh is the ancient Egyptian symbol for death.": false,
+			"As his punishment for opposing the gods, Sisyphus was tasked to roll the same enormous boulder up the same steep mountain every day for eternity.": true,
+			"As his punishment for opposing the gods, Orpheus was tasked to roll the same enormous boulder up the same steep mountain every day for eternity.": false,
+			"As her reward for winning a weaving contest, the impressed Athena turned Arachne into a spider, to spin beautiful webs for eternity.": false,
+			"Echidna and Typhon were the parents of most of the nymphs in Greek mythology.": false,
+			"Zeus is the father of Hercules, Athena, and the Minotaur.": true,
+			"Apollo and Artemis are twin siblings.": true
+		}
+	}
 }

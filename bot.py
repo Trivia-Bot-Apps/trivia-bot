@@ -576,7 +576,7 @@ async def trivia(ctx, category=None):
         await ctx.send(
             "**Pro Tip:** Subscribe to Trivia Bot updates using `;subscribe` to get the most important updates!"
         )
-    if random.randint(1, 3) > 1:
+    if random.randint(1, 3) > 1 or category == "myths":
         await multichoice(ctx, category)
     else:
         await truefalse(ctx, category)

@@ -265,7 +265,7 @@
 					"Helios"
 				]
 			},
-			"Which of these is one of the twelve labors of Hercules?": {
+			"Which of these is NOT one of the twelve labors of Hercules?": {
 				"correct_answer": "Hold the world up for Atlas",
 				"incorrect_answers": [
 					"Capture Cerberus",

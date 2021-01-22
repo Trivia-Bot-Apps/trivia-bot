@@ -190,6 +190,7 @@ def check(ctx):
 
 intents = discord.Intents.all()
 intents.presences = False
+intents.typing = False
 
 client = commands.AutoShardedBot(
     intents=intents,

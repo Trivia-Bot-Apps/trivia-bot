@@ -2,7 +2,7 @@ discord.py==1.5.1
 websockets==6.0
 requests==2.23.0
 asyncio==3.4.3
-aiohttp==3.6.2
+aiohttp==3.7.4
 typing==3.7.4.1
 future==0.18.2
 redis==3.5.3
